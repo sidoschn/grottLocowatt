@@ -449,7 +449,7 @@ def procdata(conf,data):
                         "device" : deviceid,
                         "time" : jsondate, 
                         "buffered" : buffered,
-                        "values" : {}
+                        "data" : {}
                     }
 
         for key in definedkey : 
@@ -461,7 +461,7 @@ def procdata(conf,data):
                 #print(type(definedkey[key]))                                 
                 #if type(definedkey[key]) == type(1) :                                                                     
                 #    jsonobj["values"][key] = definedkey[key]
-            jsonobj["values"][key] = definedkey[key]
+            jsonobj["data"][key] = definedkey[key]
                      
         jsonmsg = json.dumps(jsonobj) 
         
