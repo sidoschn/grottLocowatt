@@ -391,6 +391,7 @@ class Conf :
         if config.has_option("MQTT","auth"): self.mqttauth = config.getboolean("MQTT","auth")
         if config.has_option("MQTT","user"): self.mqttuser = config.get("MQTT","user")
         if config.has_option("MQTT","password"): self.mqttpsw = config.get("MQTT","password")
+        if config.has_option("locowatt","haDeviceConfigPath "): self.haDeviceConfigPath  = config.get("locowatt","haDeviceConfigPath")
         if config.has_option("PVOutput","pvoutput"): self.pvoutput = config.get("PVOutput","pvoutput")
         if config.has_option("PVOutput","pvtemp"): self.pvtemp = config.get("PVOutput","pvtemp")
         if config.has_option("PVOutput","pvdisv1"): self.pvdisv1 = config.get("PVOutput","pvdisv1")
