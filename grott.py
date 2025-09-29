@@ -29,6 +29,8 @@ if conf.verbose: conf.print()
 #To test config only remove # below
 #sys.exit(1)
 
+print(conf.haDeviceConfigPath)
+
 if conf.mode == 'proxy':
         proxy = Proxy(conf)
         try:
