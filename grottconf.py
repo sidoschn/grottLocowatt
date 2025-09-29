@@ -53,6 +53,9 @@ class Conf :
         self.mqttpsw = "growatt2020"
         self.mqttretain = False
 
+        #locowatt default
+        self.haDeviceConfigPath = "noninidefault"
+        
         #pvoutput default 
         self.pvoutput = False
         self.pvinverters = 1
@@ -65,7 +68,7 @@ class Conf :
         self.pvdisv1 = False
         self.pvtemp = False
         self.pvuplimit = 5
-        
+
         #influxdb default 
         self.influx = False
         self.influx2 = False

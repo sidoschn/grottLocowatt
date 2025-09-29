@@ -13,6 +13,7 @@ import textwrap
 from itertools import cycle # to support "cycling" the iterator
 import json, codecs
 from typing import Dict
+import sensorGenerator
 # requests
 
 #import mqtt                       
@@ -129,7 +130,9 @@ def procdata(conf,data):
     
         conf.layout = layout
         if conf.verbose : print("\t - " + "Record layout used : ", layout)
-    
+
+        # device generation needs to happen here!
+        
     #Decrypt 
     try: 
         #see if decrypt keyword is defined
@@ -451,7 +454,7 @@ def procdata(conf,data):
                         "buffered" : buffered,
                         "data" : {}
                     }
-
+        ## alternative to generating the devices from GROTT is to properly format the values here!! and send floats as strings through MQTT!!
         for key in definedkey : 
 
             #if key != "pvserial" : 
