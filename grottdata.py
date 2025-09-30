@@ -473,7 +473,7 @@ def procdata(conf,data):
             except:
                 jsonobj["data"][key] = definedkey[key]
 
-            jsonobj["data"][key] = definedkey[key]
+            #jsonobj["data"][key] = definedkey[key]
                      
         jsonmsg = json.dumps(jsonobj) 
         
