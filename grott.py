@@ -12,13 +12,14 @@
 
 # Updated: 2023-12-04
 
-verrel = "2.8.3"
+verrel = "2.8.4"
 
 import sys
 
 from grottconf import Conf
 from grottproxy import Proxy
 from grottsniffer import Sniff
+import sensorGenerator
 
 #proces config file
 conf = Conf(verrel)
@@ -30,6 +31,9 @@ if conf.verbose: conf.print()
 #sys.exit(1)
 
 print(conf.haDeviceConfigPath)
+sensorGenerator.checkSensors(conf.haDeviceConfigPath)
+
+
 
 if conf.mode == 'proxy':
         proxy = Proxy(conf)

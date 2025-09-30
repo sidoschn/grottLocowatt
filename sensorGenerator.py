@@ -1,4 +1,5 @@
 import yaml
+import os
 
 def keyPrinter(dictionary):
     for key in dictionary:
@@ -28,14 +29,18 @@ def sensorListMaker(dictionary):
         #print(key, dictionary['data'][key])
     return sensorList
 
-def writeSensorYaml(sensorList, outFile)
-    with open(outFile, 'w') as outputFile:
-        yaml.dump(sensorList, outputFile)
+# def writeSensorYaml(sensorList, outFile)
+#     with open(outFile, 'w') as outputFile:
+#         yaml.dump(sensorList, outputFile)
 
 
-asf = eval(open('growattOutputExample(MIN).yaml', 'r').read())
+def checkSensors(yamlFilePath):
+    print(os.path.isfile(yamlFilePath))
 
-ownDict = {"asf" : "klkjlk", "lllkk": "iririri"}
+
+#asf = eval(open('growattOutputExample(MIN).yaml', 'r').read())
+
+#ownDict = {"asf" : "klkjlk", "lllkk": "iririri"}
 
 #print(ownDict)
 #print(asf["data"]["pvstatus"])
@@ -48,10 +53,10 @@ ownDict = {"asf" : "klkjlk", "lllkk": "iririri"}
 #bb = [{'sensor':{'name':'asdf', 'device':'gggg'}},{'sensor':{'name':'asd2f', 'device':'gggg2'}}]
 
 
-af = sensorListMaker(asf)
+#af = sensorListMaker(asf)
 
-with open('testout.yaml', 'w') as outfile:
-    yaml.dump(af, outfile)
+#with open('testout.yaml', 'w') as outfile:
+#    yaml.dump(af, outfile)
 
 
-print('done')
+#print('done')

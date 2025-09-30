@@ -54,7 +54,7 @@ class Conf :
         self.mqttretain = False
 
         #locowatt default
-        self.haDeviceConfigPath = "noninidefault"
+        self.haDeviceConfigPath = "/home/admin/HA/config/grottLocowattMqttSensors.yaml"
         
         #pvoutput default 
         self.pvoutput = False

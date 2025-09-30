@@ -13,7 +13,7 @@ import textwrap
 from itertools import cycle # to support "cycling" the iterator
 import json, codecs
 from typing import Dict
-#import sensorGenerator
+import sensorGenerator
 # requests
 
 #import mqtt                       
