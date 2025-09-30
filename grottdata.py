@@ -131,8 +131,7 @@ def procdata(conf,data):
         conf.layout = layout
         if conf.verbose : print("\t - " + "Record layout used : ", layout)
 
-        # device generation is performed here
-        sensorGenerator.updateSensors(conf.recorddict[layout])
+       
         
     #Decrypt 
     try: 
@@ -337,6 +336,7 @@ def procdata(conf,data):
             timefromserver = True     
 
         dataprocessed = True
+        
 
     else:
         # old data processing only here for compatibility 
@@ -385,6 +385,9 @@ def procdata(conf,data):
     if dataprocessed: 
         # only sendout data to MQTT if it is processed. 
         
+        # device generation is performed here
+        sensorGenerator.updateSensors(conf.recorddict[layout])
+
         # Print values 
         if conf.verbose: 
             if conf.compat :
