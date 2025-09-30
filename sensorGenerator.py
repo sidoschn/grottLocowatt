@@ -90,7 +90,7 @@ def sensorListMaker(configDictionary, pvSerial):
 def writeSensorsToFile(sensorList, filePath):
     with open('testout4.yaml','w') as outfile:
         yaml.dump(sensorList,outfile)
-        print("written sensors to "+outfile)
+        print("written sensors to "+filePath)
 
 def updateSensors(configDictionary, filePath, pvSerial):
     print("checking if sensors need updating")
