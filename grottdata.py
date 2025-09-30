@@ -386,7 +386,7 @@ def procdata(conf,data):
         # only sendout data to MQTT if it is processed. 
         
         # device generation is performed here
-        sensorGenerator.updateSensors(conf.recorddict[layout], conf.haDeviceConfigPath)
+        sensorGenerator.updateSensors(conf.recorddict[layout], conf.haDeviceConfigPath, definedkey["pvserial"])
 
         # Print values 
         if conf.verbose: 
