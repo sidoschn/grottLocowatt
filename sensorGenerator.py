@@ -36,6 +36,31 @@ def sensorListMaker(dictionary):
 
 def checkSensors(yamlFilePath):
     print(os.path.isfile(yamlFilePath))
+    return 
+
+def getSensors(yamlFilePath):
+    if os.path.isfile(yamlFilePath):
+        with open(yamlFilePath) as fileStream:
+            readSensorList = yaml.safe_load(fileStream)
+    else:
+        readSensorList = []
+    return readSensorList
+
+def getListOfDevicesFromSensorList(sensorList):
+    listOfDevices = []
+
+    for listEntry in sensorList:
+        if not listEntry['sensor']['device']['identifiers'] in listOfDevices:
+            listOfDevices.append(listEntry['sensor']['device']['identifiers'])
+    
+    return listOfDevices
+        
+
+
+
+
+        
+
 
 
 #asf = eval(open('growattOutputExample(MIN).yaml', 'r').read())

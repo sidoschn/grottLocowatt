@@ -30,9 +30,17 @@ if conf.verbose: conf.print()
 #To test config only remove # below
 #sys.exit(1)
 
+print("sensor list path:")
 print(conf.haDeviceConfigPath)
-sensorGenerator.checkSensors(conf.haDeviceConfigPath)
+# sensorGenerator.checkSensors(conf.haDeviceConfigPath)
 
+existingSensorList = sensorGenerator.getSensors(conf.haDeviceConfigPath)
+
+print("first sensor")
+print(existingSensorList[0])
+
+print("list of devices in sensor list")
+print(sensorGenerator.getListOfDevicesFromSensorList(existingSensorList))
 
 
 if conf.mode == 'proxy':
