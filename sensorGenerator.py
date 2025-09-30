@@ -34,43 +34,43 @@ def sensorListMaker(configDictionary):
             bShouldBeIncluded = True
 
         if bShouldBeIncluded:
+            bUnitentry = False
             try:
                 bUnitentry = True
                 entryUnit = entry["unit"]
                 print(entryUnit)
-
-                match entryUnit:
-                    case "V":
-                        sensorUnit = "V"
-                        sensorType = "voltage"
-                    case "W":
-                        sensorUnit = "W"
-                        sensorType = "power"
-                    case "kWh":
-                        sensorUnit = "kWh"
-                        sensorType = "energy"
-                    case "W":
-                        sensorUnit = "W"
-                        sensorType = "power"
-                    case "A":
-                        sensorUnit = "A"
-                        sensorType = "current"
-                    case "degC":
-                        sensorUnit = "°C"
-                        sensorType = "temperature"
-                    case "%":
-                        sensorUnit = "%"
-                        sensorType = "battery"
-                    case _:
-                        print("no unit")
-                        bUnitEntry = False
-                        sensorType = "power"
+            except:
+                bUnitEntry = False
+            
+            if bUnitEntry:
+                if entryUnit=="V":
+                    sensorUnit = "V"
+                    sensorType = "voltage"
+                elif entryUnit=="W":
+                    sensorUnit = "W"
+                    sensorType = "power"
+                elif entryUnit=="kWh":
+                    sensorUnit = "kWh"
+                    sensorType = "energy"
+                elif entryUnit=="A":
+                    sensorUnit = "A"
+                    sensorType = "current"
+                elif entryUnit=="degC":
+                    sensorUnit = "°C"
+                    sensorType = "temperature"
+                elif entryUnit=="%":
+                    sensorUnit = "%"
+                    sensorType = "battery"
+                else:
+                    print("no unit")
+                    bHasUnit = False
+                    sensorType = "power"
                 
-                if bUnitEntry:
+                if bHasUnit:
                     newSensor = {'sensor':{'name':entry,'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':configDictionary['device']+entry, 'state_topic':'energy/growatt', 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': configDictionary['device'], 'name': 'Growatt '+configDictionary['device']}}}
                 else:
                     newSensor = {'sensor':{'name':entry,'device_class': sensorType, 'unique_id':configDictionary['device']+entry, 'state_topic':'energy/growatt', 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': configDictionary['device'], 'name': 'Growatt '+configDictionary['device']}}}
-            except:
+            else:
                 newSensor = {'sensor':{'name':entry, 'unique_id':configDictionary['device']+entry, 'state_topic':'energy/growatt', 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': configDictionary['device'], 'name': 'Growatt '+configDictionary['device']}}}
             sensorList.append(newSensor)
             #print(key, dictionary['data'][key])
