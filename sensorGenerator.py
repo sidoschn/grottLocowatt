@@ -71,7 +71,7 @@ def sensorListMaker(configDictionary, pvSerial):
                 else:
                     newSensor = {'sensor':{'name':entry,'device_class': sensorType, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
             
-                newSensor = {'sensor':{'name':entry, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+            newSensor = {'sensor':{'name':entry, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
             sensorList.append(newSensor)
             #print(key, dictionary['data'][key])
     return sensorList
