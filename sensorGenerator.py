@@ -24,6 +24,7 @@ def sensorListMaker(dictionary, fulldict):
 #make a new sensor list from a config dictionary
 def sensorListMaker(configDictionary, pvSerial):
     sensorList = []
+    print(configDictionary)
     for entry in configDictionary:
         print(entry)
         print(type(entry))
