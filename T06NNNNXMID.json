@@ -1,4 +1,4 @@
-{"T06NNNNXMIN": {
+{"T06NNNNXMID": {
             "decrypt"           : {"value" :"true"},
             "pvserial"          : {"value" :76, "length" : 10, "type" : "text", "divide" : 10},
             "date"              : {"value" :136, "divide" : 10}, 
