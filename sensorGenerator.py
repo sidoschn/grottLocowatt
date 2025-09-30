@@ -29,7 +29,10 @@ def sensorListMaker(configDictionary, pvSerial):
         entry = configDictionary[key]
         #print(configDictionary[entry])
         #print(type(configDictionary[entry]))
+        print(key)
+        print(type(key))
         print(entry)
+        print(type(entry))
         if (key != "decrypt") and (key != "date") and (key != "pvserial"):
             try:
                 if entry["incl"]=="no":
@@ -73,11 +76,11 @@ def sensorListMaker(configDictionary, pvSerial):
                         sensorType = "power"
                     
                     if bUnitEntry:
-                        newSensor = {'sensor':{'name':key,'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+key, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+key+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+                        newSensor = {'sensor':{'name':key,'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+key, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+key+'/'+ str(entry["divide"]) +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
                     else:
-                        newSensor = {'sensor':{'name':key,'device_class': sensorType, 'unique_id':pvSerial+key, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+key+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+                        newSensor = {'sensor':{'name':key,'device_class': sensorType, 'unique_id':pvSerial+key, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+key+'/'+ str(entry["divide"]) +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
                 else:
-                    newSensor = {'sensor':{'name':key, 'unique_id':pvSerial+key, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+key+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+                    newSensor = {'sensor':{'name':key, 'unique_id':pvSerial+key, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+key+'/'+ str(entry["divide"]) +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
                 
                 sensorList.append(newSensor)
             #print(key, dictionary['data'][key])
