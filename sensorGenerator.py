@@ -24,10 +24,12 @@ def sensorListMaker(dictionary, fulldict):
 #make a new sensor list from a config dictionary
 def sensorListMaker(configDictionary, pvSerial):
     sensorList = []
-    print(configDictionary)
-    for entry in configDictionary:
-        print(configDictionary[entry])
-        print(type(configDictionary[entry]))
+    #print(configDictionary)
+    for key in configDictionary:
+        entry = configDictionary[key]
+        #print(configDictionary[entry])
+        #print(type(configDictionary[entry]))
+        print(entry)
         try:
             if entry["incl"]=="no":
                 bShouldBeIncluded = False
