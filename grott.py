@@ -34,13 +34,13 @@ print("sensor list path:")
 print(conf.haDeviceConfigPath)
 # sensorGenerator.checkSensors(conf.haDeviceConfigPath)
 
-existingSensorList = sensorGenerator.getSensors(conf.haDeviceConfigPath)
+#existingSensorList = sensorGenerator.getSensors(conf.haDeviceConfigPath)
 
-print("first sensor")
-print(existingSensorList[0])
+#print("first sensor")
+#print(existingSensorList[0])
 
-print("list of devices in sensor list")
-print(sensorGenerator.getListOfDevicesFromSensorList(existingSensorList))
+#print("list of devices in sensor list")
+#print(sensorGenerator.getListOfDevicesFromSensorList(existingSensorList))
 
 
 if conf.mode == 'proxy':

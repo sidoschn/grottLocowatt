@@ -464,6 +464,15 @@ def procdata(conf,data):
                 #print(type(definedkey[key]))                                 
                 #if type(definedkey[key]) == type(1) :                                                                     
                 #    jsonobj["values"][key] = definedkey[key]
+            
+            ##!! we send floats as strings through MQTT
+            try:
+                keydivide =  conf.recorddict[layout][key]["divide"]
+
+                jsonobj["data"][key] = str("{:.1f}".format(definedkey[key]/keydivide))
+            except:
+                jsonobj["data"][key] = definedkey[key]
+
             jsonobj["data"][key] = definedkey[key]
                      
         jsonmsg = json.dumps(jsonobj) 
