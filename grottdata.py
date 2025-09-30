@@ -469,7 +469,13 @@ def procdata(conf,data):
             try:
                 keydivide =  conf.recorddict[layout][key]["divide"]
 
-                jsonobj["data"][key] = str("{:.1f}".format(definedkey[key]/keydivide))
+                if type(definedkey[key]) != type(str()) and keydivide != 1 :
+                    #printkey = "{:.1f}".format(definedkey[key]/keydivide)          
+                    jsonobj["data"][key] = str("{:.1f}".format(definedkey[key]/keydivide))
+                else :
+                    jsonobj["data"][key] = definedkey[key]
+                    #printkey = definedkey[key]
+                    
             except:
                 jsonobj["data"][key] = definedkey[key]
 
