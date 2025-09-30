@@ -70,8 +70,9 @@ def sensorListMaker(configDictionary, pvSerial):
                     newSensor = {'sensor':{'name':entry,'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
                 else:
                     newSensor = {'sensor':{'name':entry,'device_class': sensorType, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+            else:
+                newSensor = {'sensor':{'name':entry, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
             
-            newSensor = {'sensor':{'name':entry, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
             sensorList.append(newSensor)
             #print(key, dictionary['data'][key])
     return sensorList
@@ -87,6 +88,7 @@ def updateSensors(configDictionary, filePath, pvSerial):
     bSensorsNeedUpdating = True
     if bSensorsNeedUpdating:
         print("updating sensors")
+        print("for device: "+pvSerial)
         newSensorList = sensorListMaker(configDictionary, pvSerial)
         writeSensorsToFile(newSensorList, filePath)
 
