@@ -30,55 +30,56 @@ def sensorListMaker(configDictionary, pvSerial):
         #print(configDictionary[entry])
         #print(type(configDictionary[entry]))
         print(entry)
-        try:
-            if entry["incl"]=="no":
-                bShouldBeIncluded = False
-            else:
-                bShouldBeIncluded = True
-        except:
-            bShouldBeIncluded = True
-
-        if bShouldBeIncluded:
-            bUnitentry = False
+        if (key != "decrypt") and (key != "date") and (key != "pvserial"):
             try:
-                bUnitentry = True
-                entryUnit = entry["unit"]
-                print(entryUnit)
-            except:
-                bUnitEntry = False
-            
-            if bUnitEntry:
-                if entryUnit=="V":
-                    sensorUnit = "V"
-                    sensorType = "voltage"
-                elif entryUnit=="W":
-                    sensorUnit = "W"
-                    sensorType = "power"
-                elif entryUnit=="kWh":
-                    sensorUnit = "kWh"
-                    sensorType = "energy"
-                elif entryUnit=="A":
-                    sensorUnit = "A"
-                    sensorType = "current"
-                elif entryUnit=="degC":
-                    sensorUnit = "°C"
-                    sensorType = "temperature"
-                elif entryUnit=="%":
-                    sensorUnit = "%"
-                    sensorType = "battery"
+                if entry["incl"]=="no":
+                    bShouldBeIncluded = False
                 else:
-                    print("no unit")
+                    bShouldBeIncluded = True
+            except:
+                bShouldBeIncluded = True
+
+            if bShouldBeIncluded:
+                bUnitentry = False
+                try:
+                    bUnitentry = True
+                    entryUnit = entry["unit"]
+                    print(entryUnit)
+                except:
                     bUnitEntry = False
-                    sensorType = "power"
                 
                 if bUnitEntry:
-                    newSensor = {'sensor':{'name':entry,'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+                    if entryUnit=="V":
+                        sensorUnit = "V"
+                        sensorType = "voltage"
+                    elif entryUnit=="W":
+                        sensorUnit = "W"
+                        sensorType = "power"
+                    elif entryUnit=="kWh":
+                        sensorUnit = "kWh"
+                        sensorType = "energy"
+                    elif entryUnit=="A":
+                        sensorUnit = "A"
+                        sensorType = "current"
+                    elif entryUnit=="degC":
+                        sensorUnit = "°C"
+                        sensorType = "temperature"
+                    elif entryUnit=="%":
+                        sensorUnit = "%"
+                        sensorType = "battery"
+                    else:
+                        print("no unit")
+                        bUnitEntry = False
+                        sensorType = "power"
+                    
+                    if bUnitEntry:
+                        newSensor = {'sensor':{'name':entry,'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+                    else:
+                        newSensor = {'sensor':{'name':entry,'device_class': sensorType, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
                 else:
-                    newSensor = {'sensor':{'name':entry,'device_class': sensorType, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
-            else:
-                newSensor = {'sensor':{'name':entry, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
-            
-            sensorList.append(newSensor)
+                    newSensor = {'sensor':{'name':entry, 'unique_id':pvSerial+entry, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+                
+                sensorList.append(newSensor)
             #print(key, dictionary['data'][key])
     return sensorList
 
