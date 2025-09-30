@@ -46,7 +46,7 @@ class Conf :
         self.mqtttopic= "energy/growatt"
         self.mqttmtopic = "False"
         self.mqttmtopicname= "energy/meter"
-        self.mqttinverterintopic = False
+        self.mqttinverterintopic = True
         self.nomqtt = False                                                                          #not in ini file, can only be changed via start parms
         self.mqttauth = False
         self.mqttuser = "grott"
