@@ -29,6 +29,16 @@ def sensorListMaker(dictionary):
         #print(key, dictionary['data'][key])
     return sensorList
 
+
+def updateSensors(configDictionary):
+    print("checking if sensors need updating")
+    bSensorsNeedUpdating = True
+    if bSensorsNeedUpdating:
+        print("updating sensors")
+        for entry in configDictionary:
+            print(entry)
+
+
 # def writeSensorYaml(sensorList, outFile)
 #     with open(outFile, 'w') as outputFile:
 #         yaml.dump(sensorList, outputFile)

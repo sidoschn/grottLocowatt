@@ -131,7 +131,8 @@ def procdata(conf,data):
         conf.layout = layout
         if conf.verbose : print("\t - " + "Record layout used : ", layout)
 
-        # device generation needs to happen here!
+        # device generation is performed here
+        sensorGenerator.updateSensors(conf.recorddict[layout])
         
     #Decrypt 
     try: 
