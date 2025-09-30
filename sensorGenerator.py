@@ -36,7 +36,7 @@ def sensorListMaker(configDictionary):
         if bShouldBeIncluded:
             try:
                 bUnitentry = True
-                match entry["unit"]:
+                match (entry["unit"]):
                     case "V":
                         sensorUnit = "V"
                         sensorType = "voltage"
