@@ -1534,7 +1534,7 @@ class Conf :
             "bdc1_illc"         : {"value" : 866,"length" : 2,"type" : "num","divide" : 10},
             "bdc1_tempa"        : {"value" : 870,"length" : 2,"type" : "num","divide" : 10},
             "bdc1_tempb"        : {"value" : 874,"length" : 2,"type" : "num","divide" : 10},
-            "bdc1_pdischr"      : {"value" : 878,"length" : 4,"type" : "numx","divide" : 10},
+            "bdc1_pdischr"      : {"value" : 878,"length" : 4,"type" : "num","divide" : 10},
             "bdc1_pchr"         : {"value" : 886,"length" : 4,"type" : "num","divide" : 10},
             "bdc1_edischrtotal" : {"value" : 894,"length" : 4,"type" : "num","divide" : 10},
             "bdc1_echrtotal"    : {"value" : 902,"length" : 4,"type" : "num","divide" : 10},
