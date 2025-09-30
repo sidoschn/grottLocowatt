@@ -33,7 +33,7 @@ def sensorListMaker(configDictionary, pvSerial):
         print(type(key))
         print(entry)
         print(type(entry))
-        if (key != "decrypt") and (key != "date") and (key != "pvserial"):
+        if (key != "decrypt") and (key != "date") and (key != "pvserial") and (key != "datalogserial"):
             try:
                 if entry["incl"]=="no":
                     bShouldBeIncluded = False
