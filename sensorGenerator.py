@@ -21,22 +21,72 @@ def sensorListMaker(dictionary, fulldict):
                 print(key, dictionary[key])
     return sensorList
 
-def sensorListMaker(dictionary):
+#make a new sensor list from a config dictionary
+def sensorListMaker(configDictionary):
     sensorList = []
-    for key in dictionary['data']:
-        newSensor = {'sensor':{'name':key, 'unique_id':dictionary['device']+key, 'state_topic':'energy/growatt', 'value_template':'{{ value_json.data.'+key+' }}', 'device': {'identifiers': dictionary['device'], 'name': 'Growatt '+dictionary['device']}}}
-        sensorList.append(newSensor)
-        #print(key, dictionary['data'][key])
+    for entry in configDictionary:
+        try:
+            if entry["incl"]=="no":
+                bShouldBeIncluded = False
+            else:
+                bShouldBeIncluded = True
+        except:
+            bShouldBeIncluded = True
+
+        if bShouldBeIncluded:
+            try:
+                bUnitentry = True
+                match entry["unit"]:
+                    case "V":
+                        sensorUnit = "V"
+                        sensorType = "voltage"
+                    case "W":
+                        sensorUnit = "W"
+                        sensorType = "power"
+                    case "kWh":
+                        sensorUnit = "kWh"
+                        sensorType = "energy"
+                    case "W":
+                        sensorUnit = "W"
+                        sensorType = "power"
+                    case "A":
+                        sensorUnit = "A"
+                        sensorType = "current"
+                    case "degC":
+                        sensorUnit = "°C"
+                        sensorType = "temperature"
+                    case "%":
+                        sensorUnit = "%"
+                        sensorType = "battery"
+                    case _:
+                        print("no unit")
+                        bUnitEntry = False
+                        sensorType = "power"
+                
+                if bUnitEntry:
+                    newSensor = {'sensor':{'name':entry,'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':configDictionary['device']+entry, 'state_topic':'energy/growatt', 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': configDictionary['device'], 'name': 'Growatt '+configDictionary['device']}}}
+                else:
+                    newSensor = {'sensor':{'name':entry,'device_class': sensorType, 'unique_id':configDictionary['device']+entry, 'state_topic':'energy/growatt', 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': configDictionary['device'], 'name': 'Growatt '+configDictionary['device']}}}
+            except:
+                newSensor = {'sensor':{'name':entry, 'unique_id':configDictionary['device']+entry, 'state_topic':'energy/growatt', 'value_template':'{{ value_json.data.'+entry+'/'+ entry["divide"] +' }}', 'device': {'identifiers': configDictionary['device'], 'name': 'Growatt '+configDictionary['device']}}}
+            sensorList.append(newSensor)
+            #print(key, dictionary['data'][key])
     return sensorList
 
 
-def updateSensors(configDictionary):
+def writeSensorsToFile(sensorList, filePath):
+    with open('testout4.yaml','w') as outfile:
+        yaml.dump(sensorList,outfile)
+        print("written sensors to "+outfile)
+
+def updateSensors(configDictionary, filePath):
     print("checking if sensors need updating")
     bSensorsNeedUpdating = True
     if bSensorsNeedUpdating:
         print("updating sensors")
-        for entry in configDictionary:
-            print(entry)
+        newSensorList = sensorListMaker(configDictionary)
+        writeSensorsToFile(newSensorList, filePath)
+
 
 
 # def writeSensorYaml(sensorList, outFile)
