@@ -11,7 +11,7 @@ def debugPrintout(definedkey, deviceid, jsondate):
 
 
 def generateDashboard(definedkey, deviceid, jsondate):
-    minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"heading", "heading":"deviceId"}, {"type":"gauge", "entity":"sensorID"}]}]}
+    minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"deviceId"}, {"type":"gauge", "entity":"sensorID"}]}]}]}
     
     with open('/home/admin/HA/config/grottDashboardConfig.yaml', 'w') as outfile:
         yaml.dump(minimalDashboard, outfile)
@@ -24,3 +24,15 @@ def generateDashboard(definedkey, deviceid, jsondate):
 #   - entity: sensorID
 #     type: gauge
 #   title: title
+
+# views:
+#   - title: Home
+#     sections:
+#       - type: grid
+#         cards:
+#           - type: heading
+#             heading: Section 01
+#             heading_style: title
+#           - type: gauge
+#             entity: sensor.dlp0dyt037_battery_1_soc
+#             name: gauge 01
