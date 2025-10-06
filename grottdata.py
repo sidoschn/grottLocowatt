@@ -382,10 +382,6 @@ def procdata(conf,data):
     if dataprocessed: 
         # only sendout data to MQTT if it is processed. 
         
-        # add sensor generation and dashboard generation here
-
-        dashboardGenerator.debugPrintout(definedkey)
-
         # Print values 
         if conf.verbose: 
             if conf.compat :
@@ -474,6 +470,7 @@ def procdata(conf,data):
             print("\t - " + "MQTT jsonmsg: ")        
             print(format_multi_line("\t\t\t ", jsonmsg))   
 
+        
         #do not process invalid records (e.g. buffered records with time from server) or buffered records if sendbuf = False
         if (buffered == "yes") : 
             if (conf.sendbuf == False) or (timefromserver == True) :
@@ -506,6 +503,11 @@ def procdata(conf,data):
                 if conf.verbose: print("\t - "+ 'MQTT send failed:', str(error)) 
         else:
             if conf.verbose: print("\t - " + 'No MQTT message sent, MQTT disabled') 
+
+        # add sensor generation and dashboard generation here
+
+        dashboardGenerator.debugPrintout(definedkey, deviceid, jsondate)
+
 
         # process pvoutput if enabled
         if conf.pvoutput :      
