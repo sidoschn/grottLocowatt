@@ -13,6 +13,7 @@ import textwrap
 from itertools import cycle # to support "cycling" the iterator
 import json, codecs
 from typing import Dict
+import dashboardGenerator
 # requests
 
 #import mqtt                       
@@ -381,6 +382,10 @@ def procdata(conf,data):
     if dataprocessed: 
         # only sendout data to MQTT if it is processed. 
         
+        # add sensor generation and dashboard generation here
+
+        dashboardGenerator.debugPrintout(definedkey)
+
         # Print values 
         if conf.verbose: 
             if conf.compat :
