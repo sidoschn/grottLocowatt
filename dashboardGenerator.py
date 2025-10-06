@@ -1,6 +1,8 @@
 # generates dashboards for HomeAssistant
 import yaml
 
+locoWattYamlDashboardLocation = '/home/admin/HA/config/grottDashboardConfig.yaml'
+
 def debugPrintout(definedkey, deviceid, jsondate):
     print("--- debugout:")
     print(definedkey)
@@ -10,12 +12,15 @@ def debugPrintout(definedkey, deviceid, jsondate):
     print("--- end debugout")
 
 
-def generateDashboard(definedkey, deviceid, jsondate):
+def generateMinimalDashboard(definedkey, deviceid, jsondate):
     minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
     
-    with open('/home/admin/HA/config/grottDashboardConfig.yaml', 'w') as outfile:
+    with open(locoWattYamlDashboardLocation, 'w') as outfile:
         yaml.dump(minimalDashboard, outfile)
 
+
+def generateDashboard(definedkey, deviceid, jsondate):
+    print("not implemented yet")
 
 # views:
 # - sections:

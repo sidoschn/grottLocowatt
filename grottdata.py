@@ -506,7 +506,10 @@ def procdata(conf,data):
 
         # add sensor generation and dashboard generation here
 
+        dashboardGenerator.generateMinimalDashboard(definedkey,deviceid, jsondate)
+        
         dashboardGenerator.generateDashboard(definedkey,deviceid, jsondate)
+
         dashboardGenerator.debugPrintout(definedkey, deviceid, jsondate)
         
 
