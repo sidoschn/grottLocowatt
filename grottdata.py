@@ -506,8 +506,9 @@ def procdata(conf,data):
 
         # add sensor generation and dashboard generation here
 
+        dashboardGenerator.generateDashboard(definedkey,deviceid, jsondate)
         dashboardGenerator.debugPrintout(definedkey, deviceid, jsondate)
-
+        
 
         # process pvoutput if enabled
         if conf.pvoutput :      
