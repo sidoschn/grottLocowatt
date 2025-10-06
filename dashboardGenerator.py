@@ -20,7 +20,28 @@ def generateMinimalDashboard(definedkey, deviceid, jsondate):
 
 
 def generateDashboard(definedkey, deviceid, jsondate):
-    print("not implemented yet")
+
+    minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
+    
+    dashboardConfig = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
+
+    
+
+    dashboardSections = dashboardConfig["views"][0]["sections"]
+
+    newSection = {"type":"grid", "cards":[]}
+    sectionHeader = {"type":"heading", "heading":deviceid}
+    newSection["cards"].append(sectionHeader)
+    pvInGauge = {"type":"gauge", "entity":"dlp0dyt037_pv_all_power", "name":"PV Eingangsleistung"}
+    newSection["cards"].append(pvInGauge)
+    #dashboardSections.append(newSection)
+    dashboardConfig["views"][0]["sections"][0]= newSection
+
+    with open(locoWattYamlDashboardLocation, 'w') as outfile:
+        yaml.dump(dashboardConfig, outfile)
+
+
+
 
 # views:
 # - sections:
