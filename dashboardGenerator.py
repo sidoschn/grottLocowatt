@@ -11,7 +11,7 @@ def debugPrintout(definedkey, deviceid, jsondate):
 
 
 def generateDashboard(definedkey, deviceid, jsondate):
-    minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"deviceId"}, {"type":"tile", "entity":"sensor.sun_next_dawn", "vertical": "false", "features_position":"bottom"}]}]}]}
+    minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
     
     with open('/home/admin/HA/config/grottDashboardConfig.yaml', 'w') as outfile:
         yaml.dump(minimalDashboard, outfile)
