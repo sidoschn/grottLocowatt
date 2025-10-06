@@ -13,7 +13,7 @@ def debugPrintout(definedkey, deviceid, jsondate):
 def generateDashboard(definedkey, deviceid, jsondate):
     minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"heading", "heading":"deviceId"}, {"type":"gauge", "entity":"sensorID"}]}]}
     
-    with open('grottDashboardConfig.yaml', 'w') as outfile:
+    with open('/home/admin/HA/config/grottDashboardConfig.yaml', 'w') as outfile:
         yaml.dump(minimalDashboard, outfile)
 
 
