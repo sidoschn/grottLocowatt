@@ -41,14 +41,20 @@ def generateDashboard(definedkey, deviceid, jsondate):
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerout", "name":"Inverter Ausgangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total output of inverter
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptoloadtotal", "name":"Eigenverbrauch", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total self conumed power
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pgridimportexport", "name":"Netz Exportleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":definedkey["opfullwatt"], "min":-definedkey["opfullwatt"], "needle":"true"}) #power exported to grid
+        # battery related
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc1chrdischr", "name":"Batterie 1 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":(definedkey["opfullwatt"]/2), "min":-(definedkey["opfullwatt"]/2), "needle":"true"}) #power exported to grid
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc2chrdischr", "name":"Batterie 2 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":(definedkey["opfullwatt"]/2), "min":-(definedkey["opfullwatt"]/2), "needle":"true"}) #power exported to grid
-        #newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptousertotal", "name":"Netz Importleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #power imported from grid
-        #newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptousertotal", "name":"Netz Importleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #power imported from grid
-
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"bdc1_soc", "name":"Ladestand Batterie 1", "severity":{"green":50,"yellow":15,"red":0}, "grid_options":{"columns":6,"rows":"auto"}})
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"bdc2_soc", "name":"Ladestand Batterie 2", "severity":{"green":50,"yellow":15,"red":0}, "grid_options":{"columns":6,"rows":"auto"}})
-        
+
+        entitiesToAdd =[]
+        for i in range(10):
+            try:
+                entitiesToAdd.append({"entity":sensorNameTag+"pv"+str(i)+"voltage"})
+            except:
+                asdf = 1
+
+        newSection["cards"].append({"type":"history-graph", "entities":entitiesToAdd, "name":"PV Strang Spannungen", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
         
         
         
