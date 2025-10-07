@@ -32,6 +32,8 @@ def generateDashboard(definedkey, deviceid, jsondate):
         newSection = {"type":"grid", "cards":[]}
         sectionHeader = {"type":"heading", "heading":deviceid}
         newSection["cards"].append(sectionHeader)
+        lastUpdate= {"type":"heading", "heading": "Last Update:", "badges":[{"type":"entity","entity":sensorNameTag+"last_update"}]}
+        newSection["cards"].append(lastUpdate)
         pvInGauge = {"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "max":definedkey["opfullwatt"]}
         newSection["cards"].append(pvInGauge)
         bat01Gauge = {"type":"gauge", "entity":sensorNameTag+"bdc1_soc", "name":"Ladestand Batterie 1"}
