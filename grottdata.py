@@ -14,6 +14,7 @@ from itertools import cycle # to support "cycling" the iterator
 import json, codecs
 from typing import Dict
 import sensorGenerator
+import dashboardGenerator
 # requests
 
 #import mqtt                       
@@ -384,10 +385,6 @@ def procdata(conf,data):
         
     if dataprocessed: 
         # only sendout data to MQTT if it is processed. 
-        
-        # device generation is performed here
-        sensorGenerator.updateSensors(conf.recorddict[layout], conf.haDeviceConfigPath, definedkey["pvserial"])
-
         # Print values 
         if conf.verbose: 
             if conf.compat :
@@ -523,6 +520,11 @@ def procdata(conf,data):
                 if conf.verbose: print("\t - "+ 'MQTT send failed:', str(error)) 
         else:
             if conf.verbose: print("\t - " + 'No MQTT message sent, MQTT disabled') 
+
+        # device generation is performed here
+        sensorGenerator.updateSensors(conf.recorddict[layout], conf.haDeviceConfigPath, definedkey["pvserial"])
+
+        dashboardGenerator.generateDashboard(definedkey, deviceid, jsondate)
 
         # process pvoutput if enabled
         if conf.pvoutput :      
