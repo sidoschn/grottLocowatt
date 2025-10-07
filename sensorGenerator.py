@@ -97,7 +97,7 @@ def sensorListMaker(configDictionary, pvSerial, jsondate):
         print(configDictionary["ptogridtotal"])
         sensorUnit = "W"
         sensorType = "power"
-        newSensor = {'sensor':{'name':"gridimportexport",'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+"gridimportexport", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ float(value_json.data.ptogridtotal-value_json.data.ptousertotal)/'+ str(configDictionary["ptogridtotal"]["divider"]) +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+        newSensor = {'sensor':{'name':"gridimportexport",'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+"gridimportexport", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ float(value_json.data.ptogridtotal-value_json.data.ptousertotal)/'+ str(configDictionary["ptogridtotal"]["divide"]) +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
 
 
     return sensorList
