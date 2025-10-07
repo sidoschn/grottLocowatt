@@ -54,6 +54,7 @@ def sensorListMaker(configDictionary, pvSerial):
                 except:
                     bUnitEntry = False
                 
+                bHasUnit = True
                 if bUnitEntry:
                     if entryUnit=="V":
                         sensorUnit = "V"
