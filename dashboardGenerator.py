@@ -21,24 +21,29 @@ def generateMinimalDashboard(definedkey, deviceid, jsondate):
 
 def generateDashboard(definedkey, deviceid, jsondate):
     try:
-        minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
+        #minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
         
         dashboardConfig = {"views":[{"title":"Solar Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
 
         sensorNameTag = "sensor.growatt_"+deviceid.lower()+"_"
 
-        dashboardSections = dashboardConfig["views"][0]["sections"]
-
+        # initialize new section
         newSection = {"type":"grid", "cards":[]}
-        sectionHeader = {"type":"heading", "heading":deviceid}
-        newSection["cards"].append(sectionHeader)
-        lastUpdate= {"type":"heading", "heading": "Last Update:", "badges":[{"type":"entity","entity":sensorNameTag+"last_update"}]}
-        newSection["cards"].append(lastUpdate)
-        pvInGauge = {"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "max":definedkey["opfullwatt"]}
-        newSection["cards"].append(pvInGauge)
-        bat01Gauge = {"type":"gauge", "entity":sensorNameTag+"bdc1_soc", "name":"Ladestand Batterie 1"}
-        newSection["cards"].append(bat01Gauge)
+        
+        #fill the new section with cards
+        #sectionHeader = {"type":"heading", "heading":deviceid}
+        newSection["cards"].append({"type":"heading", "heading":deviceid})
+        #lastUpdate= {"type":"heading", "heading": "Last Update:", "badges":[{"type":"entity","entity":sensorNameTag+"last_update"}]}
+        newSection["cards"].append({"type":"heading", "heading": "Last Update:", "badges":[{"type":"entity","entity":sensorNameTag+"last_update"}]})
+        #pvInGauge = {"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "max":definedkey["opfullwatt"]}
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]})
+        #bat01Gauge = {"type":"gauge", "entity":sensorNameTag+"bdc1_soc", "name":"Ladestand Batterie 1"}
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"bdc1_soc", "name":"Ladestand Batterie 1"})
         #dashboardSections.append(newSection)
+        
+        
+        
+        # add new section to dashboard
         dashboardConfig["views"][0]["sections"][0]= newSection
 
         with open(locoWattYamlDashboardLocation, 'w') as outfile:

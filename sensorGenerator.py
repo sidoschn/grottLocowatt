@@ -55,7 +55,7 @@ def sensorListMaker(configDictionary, pvSerial, jsondate):
                 try:
                     bUnitEntry = True
                     entryUnit = entry["unit"]
-                    print(entryUnit)
+                    #print(entryUnit)
                 except:
                     bUnitEntry = False
                 
@@ -80,7 +80,7 @@ def sensorListMaker(configDictionary, pvSerial, jsondate):
                         sensorUnit = "%"
                         sensorType = "battery"
                     else:
-                        print("no unit")
+                        #print("no unit")
                         bHasUnit = False
                         sensorType = "power"
                     
