@@ -25,17 +25,22 @@ def keyPrinter(dictionary):
 #     return sensorList
 
 #make a new sensor list from a config dictionary
-def sensorListMaker(configDictionary, pvSerial):
+def sensorListMaker(configDictionary, pvSerial, jsondate):
     sensorList = []
     #print(configDictionary)
     for key in configDictionary:
         entry = configDictionary[key]
         #print(configDictionary[entry])
         #print(type(configDictionary[entry]))
-        print(key)
-        print(type(key))
-        print(entry)
-        print(type(entry))
+        # print(key)
+        # print(type(key))
+        # print(entry)
+        # print(type(entry))
+        
+        # always add a new sensor that displays the timestamp received sent from grott through MQTT
+        newSensor = {'sensor':{'name':'last Update', 'unique_id': pvSerial+"lastUpdate", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ float(value_json.time | as_datetime }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+
+        
         if (key != "decrypt") and (key != "date") and (key != "pvserial") and (key != "datalogserial"):
             try:
                 if entry["incl"]=="no":
@@ -96,7 +101,7 @@ def writeSensorsToFile(sensorList, filePath):
         yaml.dump(sensorList,outfile)
         print("sensor update written sensors to "+ filePath)
 
-def updateSensors(configDictionary, pvSerial, deviceid):
+def updateSensors(configDictionary, pvSerial, deviceid, jsondate):
     print("checking if sensors need updating")
     
     if deviceid==pvSerial:
@@ -107,7 +112,7 @@ def updateSensors(configDictionary, pvSerial, deviceid):
     if bSensorsNeedUpdating:
         print("updating sensors")
         print("for device: "+deviceid)
-        newSensorList = sensorListMaker(configDictionary, deviceid)
+        newSensorList = sensorListMaker(configDictionary, deviceid, jsondate)
         writeSensorsToFile(newSensorList, locoWattYamlSensorsLocation)
 
 

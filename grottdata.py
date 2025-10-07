@@ -524,7 +524,7 @@ def procdata(conf,data):
         # device generation is performed here
         
 
-        sensorGenerator.updateSensors(conf.recorddict[layout], definedkey["pvserial"], deviceid)
+        sensorGenerator.updateSensors(conf.recorddict[layout], definedkey["pvserial"], deviceid, jsondate)
 
         dashboardGenerator.generateDashboard(definedkey, deviceid, jsondate)
 
