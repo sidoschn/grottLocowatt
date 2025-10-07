@@ -40,7 +40,7 @@ def generateDashboard(definedkey, deviceid, jsondate):
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total input of PV panels
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerout", "name":"Inverter Ausgangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total output of inverter
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptoloadtotal", "name":"Eigenverbrauch", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total self conumed power
-        #newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptogridtotal", "name":"Netz Exportleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #power exported to grid
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pgridimportexport", "name":"Netz Exportleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"], "min":-definedkey["opfullwatt"]}) #power exported to grid
         #newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptousertotal", "name":"Netz Importleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #power imported from grid
         #newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptousertotal", "name":"Netz Importleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #power imported from grid
 
