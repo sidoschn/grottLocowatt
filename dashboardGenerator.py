@@ -45,6 +45,8 @@ def generateDashboard(definedkey, deviceid, jsondate):
         
         # add new section to dashboard
         dashboardConfig["views"][0]["sections"][0]= newSection
+        
+        print(dashboardConfig)
 
         with open(locoWattYamlDashboardLocation, 'w') as outfile:
             yaml.dump(dashboardConfig, outfile)
