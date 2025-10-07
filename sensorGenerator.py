@@ -46,9 +46,9 @@ def sensorListMaker(configDictionary, pvSerial):
                 bShouldBeIncluded = True
 
             if bShouldBeIncluded:
-                bUnitentry = False
+                bUnitEntry = False
                 try:
-                    bUnitentry = True
+                    bUnitEntry = True
                     entryUnit = entry["unit"]
                     print(entryUnit)
                 except:
