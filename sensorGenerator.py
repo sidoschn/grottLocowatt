@@ -38,7 +38,7 @@ def sensorListMaker(configDictionary, pvSerial, jsondate):
         # print(type(entry))
         
         # always add a new sensor that displays the timestamp received sent from grott through MQTT
-        newSensor = {'sensor':{'name':'last Update', 'unique_id': pvSerial+"lastUpdate", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ float(value_json.time | as_datetime }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+        newSensor = {'sensor':{'name':'last Update', 'unique_id': pvSerial+"lastUpdate", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.time | as_datetime }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
         sensorList.append(newSensor)
         
         if (key != "decrypt") and (key != "date") and (key != "pvserial") and (key != "datalogserial"):
