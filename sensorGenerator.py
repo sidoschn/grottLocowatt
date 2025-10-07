@@ -28,18 +28,14 @@ def keyPrinter(dictionary):
 def sensorListMaker(configDictionary, pvSerial, jsondate):
     sensorList = []
     #print(configDictionary)
+
+    # always add a new sensor that displays the timestamp received sent from grott through MQTT
+    newSensor = {'sensor':{'name':'last Update', 'unique_id': pvSerial+"lastUpdate", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.time | as_datetime }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+    sensorList.append(newSensor)
+
+    # add sensors according to the applied config dictionary for the device
     for key in configDictionary:
         entry = configDictionary[key]
-        #print(configDictionary[entry])
-        #print(type(configDictionary[entry]))
-        # print(key)
-        # print(type(key))
-        # print(entry)
-        # print(type(entry))
-        
-        # always add a new sensor that displays the timestamp received sent from grott through MQTT
-        newSensor = {'sensor':{'name':'last Update', 'unique_id': pvSerial+"lastUpdate", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ value_json.time | as_datetime }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
-        sensorList.append(newSensor)
         
         if (key != "decrypt") and (key != "date") and (key != "pvserial") and (key != "datalogserial"):
             try:
@@ -93,6 +89,16 @@ def sensorListMaker(configDictionary, pvSerial, jsondate):
                 
                 sensorList.append(newSensor)
             #print(key, dictionary['data'][key])
+    
+    # add custom and composit sensors here:
+
+    # add power import-export sensor with + for export and - for import
+    if ("ptogridtotal" in configDictionary and "ptousertotal" in configDictionary):
+        sensorUnit = "W"
+        sensorType = "power"
+        newSensor = {'sensor':{'name':"gridimportexport",'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+"gridimportexport", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ float(value_json.data.ptogridtotal-value_json.data.ptousertotal)/'+ str(configDictionary["ptogridtotal"]["divider"]) +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+
+
     return sensorList
 
 

@@ -30,16 +30,22 @@ def generateDashboard(definedkey, deviceid, jsondate):
         # initialize new section
         newSection = {"type":"grid", "cards":[]}
         
+        #additional sensors needed:
+        #grid import export sensor (with +-)
+        #battery charge sensor (with +-)
+
         #fill the new section with cards
-        #sectionHeader = {"type":"heading", "heading":deviceid}
-        newSection["cards"].append({"type":"heading", "heading":deviceid})
-        #lastUpdate= {"type":"heading", "heading": "Last Update:", "badges":[{"type":"entity","entity":sensorNameTag+"last_update"}]}
-        newSection["cards"].append({"type":"heading", "heading": "Last Update:", "badges":[{"type":"entity","entity":sensorNameTag+"last_update"}]})
-        #pvInGauge = {"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "max":definedkey["opfullwatt"]}
-        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]})
-        #bat01Gauge = {"type":"gauge", "entity":sensorNameTag+"bdc1_soc", "name":"Ladestand Batterie 1"}
-        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"bdc1_soc", "name":"Ladestand Batterie 1"})
-        #dashboardSections.append(newSection)
+        newSection["cards"].append({"type":"heading", "heading":deviceid}) #heading of the section
+        newSection["cards"].append({"type":"heading", "heading": "Last Update:", "badges":[{"type":"entity","entity":sensorNameTag+"last_update"}]}) #time of last update (in header)
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total input of PV panels
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerout", "name":"Inverter Ausgangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total output of inverter
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptoloadtotal", "name":"Eigenverbrauch", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total self conumed power
+        #newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptogridtotal", "name":"Netz Exportleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #power exported to grid
+        #newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptousertotal", "name":"Netz Importleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #power imported from grid
+        #newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptousertotal", "name":"Netz Importleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #power imported from grid
+
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"bdc1_soc", "name":"Ladestand Batterie 1", "grid_options":{"columns":6,"rows":"auto"}})
+        
         
         
         
