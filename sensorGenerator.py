@@ -100,6 +100,21 @@ def sensorListMaker(configDictionary, pvSerial, jsondate):
         newSensor = {'sensor':{'name':"pgridimportexport",'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+"pgridimportexport", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ float(value_json.data.ptogridtotal-value_json.data.ptousertotal)/'+ str(configDictionary["ptogridtotal"]["divide"]) +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
         sensorList.append(newSensor)
 
+    # add charge-discharge sensor for battery 1
+    if ("bdc1_pchr" in configDictionary and "bdc1_pdischr" in configDictionary):
+        #print(configDictionary["ptogridtotal"])
+        sensorUnit = "W"
+        sensorType = "power"
+        newSensor = {'sensor':{'name':"pbdc1chrdischr",'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+"pbdc1chrdischr", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ float(value_json.data.bdc1_pchr - value_json.data.bdc1_pdischr)/'+ str(configDictionary["bdc1_pchr"]["divide"]) +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+        sensorList.append(newSensor)
+
+    # add charge-discharge sensor for battery 2
+    if ("bdc2_pchr" in configDictionary and "bdc2_pdischr" in configDictionary):
+        #print(configDictionary["ptogridtotal"])
+        sensorUnit = "W"
+        sensorType = "power"
+        newSensor = {'sensor':{'name':"pbdc2chrdischr",'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+"pbdc2chrdischr", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ float(value_json.data.bdc2_pchr - value_json.data.bdc2_pdischr)/'+ str(configDictionary["bdc2_pchr"]["divide"]) +' }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+        sensorList.append(newSensor)
 
     return sensorList
 
