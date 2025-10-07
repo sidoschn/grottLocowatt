@@ -50,11 +50,11 @@ def generateDashboard(definedkey, deviceid, jsondate):
         entitiesToAdd =[]
         for i in range(10):
             try:
-                entitiesToAdd.append({"entity":sensorNameTag+"pv"+str(i)+"voltage"})
+                entitiesToAdd.append({"entity":sensorNameTag+"pv"+str(i)+"voltage", "name":"Tracker " + str(i)})
             except:
                 asdf = 1
 
-        newSection["cards"].append({"type":"history-graph", "entities":entitiesToAdd, "name":"PV Strang Spannungen", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
+        newSection["cards"].append({"type":"history-graph", "entities":entitiesToAdd, "name":"PV Tracker Spannungen", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
         
         
         
