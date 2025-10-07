@@ -1,6 +1,9 @@
 import yaml
 import os
 
+locoWattYamlSensorsLocation = "/home/admin/HA/config/mqttSensors.yaml"
+
+
 def keyPrinter(dictionary):
     for key in dictionary:
         if type(dictionary[key]) == dict:
@@ -8,18 +11,18 @@ def keyPrinter(dictionary):
         else:
             print(key, dictionary[key])
         
-def sensorListMaker(dictionary, fulldict):
-    sensorList = []
-    for key in dictionary:
-            if type(dictionary[key]) == dict:
-                subSensorList = sensorListMaker(dictionary[key], fulldict)
-                for key in subSensorList:
-                    sensorList.append(subSensorList[key])
-            else:
-                newSensor = {'sensor':{'name':key, 'unique_id':fulldict['device']}}
-                sensorList.append(newSensor)
-                print(key, dictionary[key])
-    return sensorList
+# def sensorListMaker(dictionary, fulldict):
+#     sensorList = []
+#     for key in dictionary:
+#             if type(dictionary[key]) == dict:
+#                 subSensorList = sensorListMaker(dictionary[key], fulldict)
+#                 for key in subSensorList:
+#                     sensorList.append(subSensorList[key])
+#             else:
+#                 newSensor = {'sensor':{'name':key, 'unique_id':fulldict['device']}}
+#                 sensorList.append(newSensor)
+#                 print(key, dictionary[key])
+#     return sensorList
 
 #make a new sensor list from a config dictionary
 def sensorListMaker(configDictionary, pvSerial):
@@ -88,18 +91,23 @@ def sensorListMaker(configDictionary, pvSerial):
 
 
 def writeSensorsToFile(sensorList, filePath):
-    with open('testout4.yaml','w') as outfile:
+    with open(filePath,'w') as outfile:
         yaml.dump(sensorList,outfile)
-        print("written sensors to "+filePath)
+        print("sensor update written sensors to "+ filePath)
 
-def updateSensors(configDictionary, filePath, pvSerial):
+def updateSensors(configDictionary, pvSerial, deviceid):
     print("checking if sensors need updating")
-    bSensorsNeedUpdating = True
+    
+    if deviceid==pvSerial:
+        bSensorsNeedUpdating = True
+    else:
+        bSensorsNeedUpdating = False
+
     if bSensorsNeedUpdating:
         print("updating sensors")
-        print("for device: "+pvSerial)
-        newSensorList = sensorListMaker(configDictionary, pvSerial)
-        writeSensorsToFile(newSensorList, filePath)
+        print("for device: "+deviceid)
+        newSensorList = sensorListMaker(configDictionary, deviceid)
+        writeSensorsToFile(newSensorList, locoWattYamlSensorsLocation)
 
 
 

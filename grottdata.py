@@ -522,7 +522,9 @@ def procdata(conf,data):
             if conf.verbose: print("\t - " + 'No MQTT message sent, MQTT disabled') 
 
         # device generation is performed here
-        sensorGenerator.updateSensors(conf.recorddict[layout], conf.haDeviceConfigPath, definedkey["pvserial"])
+        
+
+        sensorGenerator.updateSensors(conf.recorddict[layout], definedkey["pvserial"], deviceid)
 
         dashboardGenerator.generateDashboard(definedkey, deviceid, jsondate)
 
