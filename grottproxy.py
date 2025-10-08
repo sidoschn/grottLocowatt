@@ -170,13 +170,13 @@ class Proxy:
         return bAvailable
 
     def on_accept(self,conf):
-        print("checking remote availability...")
-        bAvailable = self.checkServerAvailability()
-        print("growatt remote server not available, falling back to local grott server")
+        #print("checking remote availability...")
+        #bAvailable = self.checkServerAvailability()
+        #print("growatt remote server not available, falling back to local grott server")
 
-        if bAvailable:
-            forward = Forward().start(self.forward_to[0], self.forward_to[1])
-        else:
+        
+        forward = Forward().start(self.forward_to[0], self.forward_to[1])
+        if not forward:
             forward = Forward().start(self.forward_to_fallback[0], self.forward_to_fallback[1])
 
         clientsock, clientaddr = self.server.accept()
