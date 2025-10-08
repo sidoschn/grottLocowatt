@@ -178,6 +178,7 @@ class Proxy:
         
         forward = Forward().start(self.forward_to[0], self.forward_to[1])
         if not forward:
+            print("Growatt webservers are not responding, falling back to local grott server")
             forward = Forward().start(self.forward_to_fallback[0], self.forward_to_fallback[1])
 
         clientsock, clientaddr = self.server.accept()
