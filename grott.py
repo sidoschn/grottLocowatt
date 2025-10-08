@@ -20,6 +20,7 @@ from grottconf import Conf
 from grottproxy import Proxy
 from grottsniffer import Sniff
 import sensorGenerator
+import git
 
 #proces config file
 conf = Conf(verrel)
@@ -27,11 +28,19 @@ conf = Conf(verrel)
 #print configuration
 if conf.verbose: conf.print()
 
+
+try:
+     g = git.cmd.Git()
+     g.pull()
+     print("pulled from repo")
+except:
+     print("did not work")
+
 #To test config only remove # below
 #sys.exit(1)
 
-print("sensor list path:")
-print(conf.haDeviceConfigPath)
+#print("sensor list path:")
+#print(conf.haDeviceConfigPath)
 # sensorGenerator.checkSensors(conf.haDeviceConfigPath)
 
 #existingSensorList = sensorGenerator.getSensors(conf.haDeviceConfigPath)
