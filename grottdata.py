@@ -85,8 +85,6 @@ def procdata(conf,data):
     if conf.verbose: 
         print("\t - " + "Growatt original Data:") 
         print(format_multi_line("\t\t ", data))
-
-    print("grottData.py was updated")
     
     header = "".join("{:02x}".format(n) for n in data[0:8])
     ndata = len(data)
