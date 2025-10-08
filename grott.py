@@ -29,6 +29,8 @@ conf = Conf(verrel)
 #print configuration
 if conf.verbose: conf.print()
 
+print("argvs:")
+print(sys.argv)
 
 #pullResult = os.system("git pull")
 pullResult = subprocess.check_output("git pull", shell=True,text=True)
