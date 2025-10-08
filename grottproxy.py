@@ -77,6 +77,11 @@ class Forward:
         self.forward = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     def start(self, host, port):
+        # fallback forwarding to grottserver if remote server is unreachable
+        # if not forward:
+        #     print("\t - Can't establish connection growatt server, attempting to fall back to local grott server.")
+        #     forward = Forward().start(self.forward_to_fallback[0], self.forward_to_fallback[1])
+
         try:
             self.forward.connect((host, port))
             return self.forward
@@ -150,12 +155,28 @@ class Proxy:
                 else:
                     self.on_recv(conf)
 
-    def on_accept(self,conf):
-        forward = Forward().start(self.forward_to[0], self.forward_to[1])
+    def checkServerAvailability(self):
+        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        s.settimeout(5)
 
-        # fallback forwarding to grottserver if remote server is unreachable
-        if not forward:
-            print("\t - Can't establish connection growatt server, attempting to fall back to local grott server.")
+        try:
+            bAvailable = (s.connect_ex(self.forward_to[0], self.forward_to[1])==0)
+            if bAvailable:
+                s.shutdown(socket.SHUT_RDWR)
+        except:
+            bAvailable = False
+        s.close()
+
+        return bAvailable
+
+    def on_accept(self,conf):
+        print("checking remote availability...")
+        bAvailable = self.checkServerAvailability()
+        print("growatt remote server not available, falling back to local grott server")
+
+        if bAvailable:
+            forward = Forward().start(self.forward_to[0], self.forward_to[1])
+        else:
             forward = Forward().start(self.forward_to_fallback[0], self.forward_to_fallback[1])
 
         clientsock, clientaddr = self.server.accept()
