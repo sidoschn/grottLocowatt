@@ -75,6 +75,7 @@ def validate_record(xdata):
 class Forward:
     def __init__(self):
         self.forward = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.forward.settimeout(5)
 
     def start(self, host, port):
         # fallback forwarding to grottserver if remote server is unreachable
