@@ -31,7 +31,11 @@ if conf.verbose: conf.print()
 
 print("Grott running auto-update")
 #pullResult = os.system("git pull")
-pullResult = subprocess.check_output("git pull", shell=True,text=True)
+try:
+    pullResult = subprocess.check_output("git pull", shell=True,text=True)
+except:
+    print("autoupdate failure, no internet connection?")
+    pullResult = "cannot resolve git link"
 
 if pullResult[0:7] == "Already":
     print("no update available")
