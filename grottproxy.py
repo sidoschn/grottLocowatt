@@ -155,7 +155,8 @@ class Proxy:
 
         clientsock, clientaddr = self.server.accept()
         if forward:
-            if conf.verbose: print("\t -", clientaddr, "has connected")
+            #if conf.verbose: print("\t -", clientaddr, "has connected")
+            print("\t -", clientaddr, "has connected")
             self.input_list.append(clientsock)
             self.input_list.append(forward)
             self.channel[clientsock] = forward
