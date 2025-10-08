@@ -121,7 +121,12 @@ class Proxy:
         self.server.listen(200)
         self.forward_to = (conf.growattip, conf.growattport)
         # ! these fallback port ip and port options need to be moved to the config at some point
-        self.forward_to_fallback = ("127.0.0.1", 5280)
+        self.forward_to_fallback = ("127.0.0.1", 5281)
+
+        print("trying to connect to:")
+        print(self.forward_to)
+        print("fallback is:")
+        print(self.forward_to_fallback)
         
     def main(self,conf):
         self.input_list.append(self.server)

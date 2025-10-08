@@ -20,7 +20,7 @@ verrel = "0.0.14e"
 
 # Declare Variables (to be moved to config file later)
 serverhost = "0.0.0.0"
-serverport = 5780
+serverport = 5781
 httphost = "0.0.0.0"
 httpport = 5782
 verbose = True 
