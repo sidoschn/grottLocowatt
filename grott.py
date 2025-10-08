@@ -39,6 +39,9 @@ if pullResult[0:7] == "Already":
     print("no update required")
 elif pullResult[0:7] == "Updatin":
     print("update recieved, restarting grott to apply changes...")
+    os.system("python "+ sys.argv[0])
+    sys.exit()
+
 else:
     print("autoupdate failure, no internet connection?")
 
