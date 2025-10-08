@@ -12,7 +12,7 @@
 
 # Updated: 2023-12-04
 
-verrel = "2.8.5"
+verrel = "2.8.6"
 
 import sys
 
@@ -38,7 +38,7 @@ except:
     pullResult = "cannot resolve git link"
 
 if pullResult[0:7] == "Already":
-    print("no update available")
+    print("grottLocowatt is up to date!")
 elif pullResult[0:7] == "Updatin":
     print("update recieved, restarting grott to apply changes...")
     argumentString = ""
