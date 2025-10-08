@@ -43,9 +43,14 @@ def generateDashboard(definedkey, deviceid, jsondate):
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pgridimportexport", "name":"Netz Exportleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":definedkey["opfullwatt"], "min":-definedkey["opfullwatt"], "needle":"true"}) #power exported to grid
         # battery related
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc1chrdischr", "name":"Batterie 1 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":(definedkey["opfullwatt"]/2), "min":-(definedkey["opfullwatt"]/2), "needle":"true"}) #power exported to grid
-        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc2chrdischr", "name":"Batterie 2 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":(definedkey["opfullwatt"]/2), "min":-(definedkey["opfullwatt"]/2), "needle":"true"}) #power exported to grid
+        
+        if not(definedkey["bdc2_pdischr"] > definedkey["opfullwatt"]):
+            newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc2chrdischr", "name":"Batterie 2 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":(definedkey["opfullwatt"]/2), "min":-(definedkey["opfullwatt"]/2), "needle":"true"}) #power exported to grid
+        
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"bdc1_soc", "name":"Ladestand Batterie 1", "severity":{"green":50,"yellow":15,"red":0}, "grid_options":{"columns":6,"rows":"auto"}})
-        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"bdc2_soc", "name":"Ladestand Batterie 2", "severity":{"green":50,"yellow":15,"red":0}, "grid_options":{"columns":6,"rows":"auto"}})
+        
+        if not(definedkey["bdc2_pdischr"] > definedkey["opfullwatt"]):
+            newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"bdc2_soc", "name":"Ladestand Batterie 2", "severity":{"green":50,"yellow":15,"red":0}, "grid_options":{"columns":6,"rows":"auto"}})
 
         entitiesToAdd =[]
         for i in range(10):
