@@ -35,8 +35,10 @@ pullResult = subprocess.check_output("git pull", shell=True,text=True)
 
 if pullResult[0:7] == "Already":
     print("no update required")
+elif pullResult[0:7] == "Updatin":
+    print("update recieved, restarting grott to apply changes...")
 else:
-     print("update recieved, restarting grott to apply changes...")
+    print("autoupdate failure, no internet connection?")
 
 #print("grott.py was updated")
 
