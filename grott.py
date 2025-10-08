@@ -41,7 +41,7 @@ else:
 #print("grott.py was updated")
 
 print("pull result:")
-print(pullResult)
+print("<"+pullResult+">")
 
 #To test config only remove # below
 #sys.exit(1)
