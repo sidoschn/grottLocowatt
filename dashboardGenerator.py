@@ -20,6 +20,7 @@ def generateMinimalDashboard(definedkey, deviceid, jsondate):
 
 
 def generateDashboard(definedkey, deviceid, jsondate):
+    print("dashboardGenerator.py was updated")
     try:
         #minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
         

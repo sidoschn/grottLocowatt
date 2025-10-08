@@ -31,6 +31,8 @@ if conf.verbose: conf.print()
 
 os.system("git pull")
 
+print("grott.py was updated")
+
 #To test config only remove # below
 #sys.exit(1)
 
