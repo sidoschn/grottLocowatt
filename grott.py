@@ -42,6 +42,7 @@ else:
 
 print("pull result:")
 print("<"+pullResult[0:7]+">")
+print("<"+pullResult+">")
 
 #To test config only remove # below
 #sys.exit(1)
