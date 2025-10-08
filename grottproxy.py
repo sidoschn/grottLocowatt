@@ -120,6 +120,8 @@ class Proxy:
 
         self.server.listen(200)
         self.forward_to = (conf.growattip, conf.growattport)
+        # ! these fallback port ip and port options need to be moved to the config at some point
+        self.forward_to_fallback = ("127.0.0.1", "5280")
         
     def main(self,conf):
         self.input_list.append(self.server)
@@ -145,6 +147,12 @@ class Proxy:
 
     def on_accept(self,conf):
         forward = Forward().start(self.forward_to[0], self.forward_to[1])
+
+        # fallback forwarding to grottserver if remote server is unreachable
+        if not forward:
+            print("\t - Can't establish connection growatt server, attempting to fall back to local grott server.")
+            forward = Forward().start(self.forward_to_fallback[0], self.forward_to_fallback[1])
+
         clientsock, clientaddr = self.server.accept()
         if forward:
             if conf.verbose: print("\t -", clientaddr, "has connected")
