@@ -29,28 +29,23 @@ conf = Conf(verrel)
 #print configuration
 if conf.verbose: conf.print()
 
-print("argvs:")
-print(sys.argv)
-
+print("Grott running auto-update")
 #pullResult = os.system("git pull")
 pullResult = subprocess.check_output("git pull", shell=True,text=True)
 
 if pullResult[0:7] == "Already":
-    print("no update required")
+    print("no update available")
 elif pullResult[0:7] == "Updatin":
     print("update recieved, restarting grott to apply changes...")
-    os.system("python "+ sys.argv[0])
+    argumentString = ""
+    for argument in sys.argv:
+         argumentString = argumentString + argument + " "
+    os.system("python "+ argumentString)
     sys.exit()
-
 else:
     print("autoupdate failure, no internet connection?")
 
 #print("grott.py was updated")
-
-print("pull result:")
-print("<"+pullResult[0:7]+">")
-print("<"+pullResult+">")
-
 #To test config only remove # below
 #sys.exit(1)
 
