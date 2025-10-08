@@ -21,6 +21,7 @@ from grottproxy import Proxy
 from grottsniffer import Sniff
 import sensorGenerator
 import os
+import subprocess
 
 #proces config file
 conf = Conf(verrel)
@@ -29,8 +30,8 @@ conf = Conf(verrel)
 if conf.verbose: conf.print()
 
 
-pullResult = os.system("git pull")
-
+#pullResult = os.system("git pull")
+pullResult = subprocess.check_output("git pull", shell=True,text=True)
 
 
 print("grott.py was updated")
