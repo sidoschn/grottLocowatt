@@ -48,7 +48,7 @@ else:
 #print("grott.py was updated")
 #To test config only remove # below
 #sys.exit(1)
-
+print(sys.argv)
 #print("sensor list path:")
 #print(conf.haDeviceConfigPath)
 # sensorGenerator.checkSensors(conf.haDeviceConfigPath)
