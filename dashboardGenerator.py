@@ -23,7 +23,7 @@ def generateDashboard(definedkey, deviceid, jsondate):
     try:
         #minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
         
-        dashboardConfig = {"views":[{"title":"Solar Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
+        dashboardConfig = {"views":[{"title":"Solar Dashboard from Servics","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
 
         sensorNameTag = "sensor.growatt_"+deviceid.lower()+"_"
 
