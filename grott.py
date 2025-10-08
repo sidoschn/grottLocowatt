@@ -33,7 +33,7 @@ if conf.verbose: conf.print()
 #pullResult = os.system("git pull")
 pullResult = subprocess.check_output("git pull", shell=True,text=True)
 
-if pullResult[0:6] == "Already":
+if pullResult[1:7] == "Already":
     print("no update required")
 else:
      print("update recieved, restarting grott to apply changes...")
@@ -41,7 +41,7 @@ else:
 #print("grott.py was updated")
 
 print("pull result:")
-print("<"+pullResult[0:6]+">")
+print("<"+pullResult[1:7]+">")
 
 #To test config only remove # below
 #sys.exit(1)
