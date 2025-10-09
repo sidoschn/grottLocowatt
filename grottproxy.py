@@ -302,17 +302,21 @@ class Proxy:
         
 
         if (self.s == self.input_list[2]):
-            print("package from remote server")
-            print(self.s.getpeername())
-            serverContactTime = datetime.now()
-            print(serverContactTime)
-            print("time since last remote server contact:")
-            print((serverContactTime-self.lastServerContactTime).total_seconds())
-            print("print actual remote server:")
-            print(self.s.getpeername()[0] == socket.gethostbyname(self.forward_to[0]))
-            print(self.s.getpeername()[0])
-            print(socket.gethostbyname(self.forward_to[0]))
-            self.lastServerContactTime = serverContactTime
+            
+
+            
+            print("package from server")
+            
+            if (self.s.getpeername()[0] == socket.gethostbyname(self.forward_to[0])):
+                print("server is remote growatt server")
+                serverContactTime = datetime.now()
+                print("time since last contact with growatt server:")
+                print((serverContactTime-self.lastServerContactTime).total_seconds())
+                self.lastServerContactTime = serverContactTime
+            #print(self.s.getpeername())
+            
+            #print(serverContactTime)
+            
 
         elif(self.s == self.input_list[1]):
             print("package from datalogger")
