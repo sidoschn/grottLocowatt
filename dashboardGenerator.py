@@ -78,7 +78,7 @@ def generateDashboard(definedkey, deviceid, jsondate):
             entitiesToAdd.append({"entity":sensorNameTag+"bdc2_pchr", "name":"Batterie 2 Ladung"})
             entitiesToAdd.append({"entity":sensorNameTag+"bdc2_pdischr", "name":"Batterie 2 Entladung"})
         
-        newSection["cards"].append({"type":"history-graph", "title":"Anlagenleistung Übersicht", "entities":entitiesToAdd, "name":"Anlagenleistung Übersicht", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
+        newSection["cards"].append({"type":"history-graph", "title":"Anlagenleistung Übersicht", "entities":entitiesToAdd, "name":"Anlagenleistung Übersicht", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":6}})
 
         # -- pv MPPT powers
 
