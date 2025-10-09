@@ -139,14 +139,15 @@ class Proxy:
         while 1:
             time.sleep(delay)
             ss = select.select
-            print(">")
-            print(ss)
-            print("<")           
             inputready, outputready, exceptready = ss(self.input_list, [], [])
             print(">")
             print(inputready)
             print("<")
             for self.s in inputready:
+                print(">")
+                print(self.s)
+                print("<")           
+            
                 if self.s == self.server:
                     self.on_accept(conf)
                     break
