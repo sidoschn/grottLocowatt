@@ -37,7 +37,7 @@ def generateDashboard(definedkey, deviceid, jsondate):
         #fill the new section with cards
         # power related cards: 
         newSection["cards"].append({"type":"heading", "heading":deviceid}) #heading of the section
-        newSection["cards"].append({"type":"heading", "heading": "Last Update:", "badges":[{"type":"entity","entity":sensorNameTag+"last_update"}]}) #time of last update (in header)
+        newSection["cards"].append({"type":"heading", "heading": "Letztes Update:", "badges":[{"type":"entity","entity":sensorNameTag+"last_update"}]}) #time of last update (in header)
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total input of PV panels
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerout", "name":"Inverter Ausgangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total output of inverter
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptoloadtotal", "name":"Eigenverbrauch", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total self conumed power
