@@ -212,7 +212,7 @@ class Proxy:
         print("clientsock:")
         print(clientsock)
         print("forwardsock:")
-        print(forwardsock)
+        print(forward)
 
         if forward:
             #if conf.verbose: print("\t -", clientaddr, "has connected")
