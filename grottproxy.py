@@ -298,7 +298,7 @@ class Proxy:
         rectype = header[14:16]
         if rectype in "04":
             print("data package from:")
-            print(self.addr)
+            print(self.s.getpeername())
         
             print("content:")
             print(data)
