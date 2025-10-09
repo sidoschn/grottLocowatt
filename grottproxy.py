@@ -140,6 +140,9 @@ class Proxy:
             time.sleep(delay)
             ss = select.select
             inputready, outputready, exceptready = ss(self.input_list, [], [])
+            print(">")
+            print(inputready)
+            print("<")
             for self.s in inputready:
                 if self.s == self.server:
                     self.on_accept(conf)
