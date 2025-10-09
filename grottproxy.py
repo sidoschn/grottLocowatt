@@ -140,7 +140,7 @@ class Proxy:
             time.sleep(delay)
             ss = select.select
             print(">")
-            print(inputready)
+            print(ss)
             print("<")           
             inputready, outputready, exceptready = ss(self.input_list, [], [])
             print(">")
