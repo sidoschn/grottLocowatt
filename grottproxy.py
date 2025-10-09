@@ -144,7 +144,10 @@ class Proxy:
             print(self.input_list)    
 
             inputready, outputready, exceptready = ss(self.input_list, [], [])
-                   
+
+            print("checking remote server availability:")
+            self.checkServerAvailability()
+
             print("input ready:>")
             print(inputready)
             for self.s in inputready:
@@ -166,16 +169,29 @@ class Proxy:
                     self.on_recv(conf)
 
     def checkServerAvailability(self):
-        s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        s.settimeout(5)
+        bAvailable = False
+        if len(self.input_list)==3:
+            print("remote server in input list")
+            remoteServerSocket = self.input_list[3]
+            data = remoteServerSocket.recv(16, socket.MSG_DONTWAIT | socket.MSG_PEEK)
+            print(len(data))
+            print(data)
+            
+        else:
+            print("input list too short")
 
-        try:
-            bAvailable = (s.connect_ex(self.forward_to[0], self.forward_to[1])==0)
-            if bAvailable:
-                s.shutdown(socket.SHUT_RDWR)
-        except:
-            bAvailable = False
-        s.close()
+
+        
+        # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        # s.settimeout(5)
+
+        # try:
+        #     bAvailable = (s.connect_ex(self.forward_to[0], self.forward_to[1])==0)
+        #     if bAvailable:
+        #         s.shutdown(socket.SHUT_RDWR)
+        # except:
+        #     bAvailable = False
+        # s.close()
 
         return bAvailable
 
