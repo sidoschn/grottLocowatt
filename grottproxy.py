@@ -300,6 +300,9 @@ class Proxy:
                 print(format_multi_line("\t\t ",blockeddata))
                 return
 
+        header = "".join("{:02x}".format(n) for n in data[0:8])
+        print("dataHeader:")
+        print(header)
         # send data to destination
         self.channel[self.s].send(data)
         if len(data) > conf.minrecl :
