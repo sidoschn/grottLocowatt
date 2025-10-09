@@ -48,10 +48,10 @@ def generateDashboard(definedkey, deviceid, jsondate):
         # bcdonoffstates: 0=no battery, 1 = battery1 connected, 2 = battery2 connected, 3 = battery1 and battery2 connected
               
         if (definedkey["bdconoffstate"] == 1 or definedkey["bdconoffstate"] == 3): 
-            newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc1chrdischr", "name":"Batterie 1 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":(8000), "min":(8000), "needle":"true"}) #power exported to grid
+            newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc1chrdischr", "name":"Batterie 1 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":(8000), "min":-(8000), "needle":"true"}) #power exported to grid
         
         if (definedkey["bdconoffstate"] > 1): 
-            newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc2chrdischr", "name":"Batterie 2 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":(8000), "min":(8000), "needle":"true"}) #power exported to grid
+            newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc2chrdischr", "name":"Batterie 2 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":(8000), "min":-(8000), "needle":"true"}) #power exported to grid
         
         if (definedkey["bdconoffstate"] == 1 or definedkey["bdconoffstate"] == 3): 
             newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"bdc1_soc", "name":"Ladestand Batterie 1", "severity":{"green":50,"yellow":15,"red":0}, "grid_options":{"columns":6,"rows":"auto"}})
