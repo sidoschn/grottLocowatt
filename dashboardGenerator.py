@@ -63,6 +63,25 @@ def generateDashboard(definedkey, deviceid, jsondate):
         # history graph cards
 
         entitiesToAdd =[]
+        entitiesToAdd.append({"entity":sensorNameTag+"pvpowerin", "name":"PV Eingang"})
+        entitiesToAdd.append({"entity":sensorNameTag+"pvpowerout", "name":"Inverter Ausgang"})
+        entitiesToAdd.append({"entity":sensorNameTag+"ptoloadtotal", "name":"Eigenverbrauch"})
+        entitiesToAdd.append({"entity":sensorNameTag+"ptogridtotal", "name":"Netz Export"})
+        entitiesToAdd.append({"entity":sensorNameTag+"ptousertotal", "name":"Netz Import"})
+        
+        if (definedkey["bdconoffstate"] == 1 or definedkey["bdconoffstate"] == 3): 
+            entitiesToAdd.append({"entity":sensorNameTag+"bdc1_pchr", "name":"Batterie 1 Ladung"})
+            entitiesToAdd.append({"entity":sensorNameTag+"bdc1_pdischr", "name":"Batterie 1 Entladung"})
+        
+        if (definedkey["bdconoffstate"] > 1): 
+            entitiesToAdd.append({"entity":sensorNameTag+"bdc2_pchr", "name":"Batterie 2 Ladung"})
+            entitiesToAdd.append({"entity":sensorNameTag+"bdc2_pdischr", "name":"Batterie 2 Entladung"})
+        
+        newSection["cards"].append({"type":"history-graph", "entities":entitiesToAdd, "name":"Anlagenleistung Übersicht", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
+
+
+
+        entitiesToAdd =[]
         for i in range(10):
             try:
                 entitiesToAdd.append({"entity":sensorNameTag+"pv"+str(i)+"voltage", "name":"Tracker " + str(i)})

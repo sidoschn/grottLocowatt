@@ -91,6 +91,9 @@ def procdata(conf,data):
     buffered = "nodetect"                                               # set buffer detection to nodetect (for compat mode), wil in auto detection changed to no or yes        
     is_smart_meter = header[14:16] in ("20","1b")
 
+    #debug printing of header
+    print(header)
+
     # automatic detect protocol (decryption and protocol) only if compat = False!
     novalidrec = False
     if conf.compat is False : 
