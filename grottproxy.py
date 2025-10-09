@@ -303,6 +303,9 @@ class Proxy:
         header = "".join("{:02x}".format(n) for n in data[0:8])
         print("dataHeader:")
         print(header)
+        rectype = header[14:16]
+        print("rectype:")
+        print(rectype)
         # send data to destination
         self.channel[self.s].send(data)
         if len(data) > conf.minrecl :
