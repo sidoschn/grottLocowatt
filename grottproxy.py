@@ -294,14 +294,18 @@ class Proxy:
 
         
         
+        header = "".join("{:02x}".format(n) for n in data[0:8])
+        rectype = header[14:16]
+        
+
         if (self.s == self.input_list[2]):
             print("package from remote server")
         elif(self.s == self.input_list[1]):
             print("package from datalogger")
     
-
-        # header = "".join("{:02x}".format(n) for n in data[0:8])
-        # rectype = header[14:16]
+        print(header)
+        print(rectype)
+        
         # if rectype in "04":
         #     print("data package from:")
         #     print(self.s.getpeername())
