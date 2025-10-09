@@ -15,6 +15,8 @@ import time, json, datetime, codecs
 if sys.platform != 'win32' :
    from signal import signal, SIGPIPE, SIG_DFL
 
+from datetime import datetime
+
 from grottdata import procdata, decrypt, format_multi_line
 
 #import mqtt                       
@@ -300,6 +302,14 @@ class Proxy:
 
         if (self.s == self.input_list[2]):
             print("package from remote server")
+            print(self.s.getpeername())
+            serverContactTime = datetime.now()
+            print(serverContactTime)
+            print("time since last remote server contact:")
+            print((serverContactTime-self.lastServerContactTime).total_seconds())
+            
+            self.lastServerContactTime = serverContactTime
+
         elif(self.s == self.input_list[1]):
             print("package from datalogger")
     
