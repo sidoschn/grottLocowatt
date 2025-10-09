@@ -139,6 +139,9 @@ class Proxy:
         while 1:
             time.sleep(delay)
             ss = select.select
+            print(">")
+            print(inputready)
+            print("<")           
             inputready, outputready, exceptready = ss(self.input_list, [], [])
             print(">")
             print(inputready)
