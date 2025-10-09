@@ -62,6 +62,7 @@ def generateDashboard(definedkey, deviceid, jsondate):
 
         # history graph cards
 
+        # -- system power overview
         entitiesToAdd =[]
         entitiesToAdd.append({"entity":sensorNameTag+"pvpowerin", "name":"PV Eingang"})
         entitiesToAdd.append({"entity":sensorNameTag+"pvpowerout", "name":"Inverter Ausgang"})
@@ -79,7 +80,18 @@ def generateDashboard(definedkey, deviceid, jsondate):
         
         newSection["cards"].append({"type":"history-graph", "title":"Anlagenleistung Übersicht", "entities":entitiesToAdd, "name":"Anlagenleistung Übersicht", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
 
+        # -- pv MPPT powers
 
+        entitiesToAdd =[]
+        for i in range(10):
+            try:
+                entitiesToAdd.append({"entity":sensorNameTag+"pv"+str(i)+"watt", "name":"Tracker " + str(i)})
+            except:
+                asdf = 1
+
+        newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Leistungen", "entities":entitiesToAdd, "name":"PV Tracker Leistungen", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
+        
+        # -- pv MPPT voltages
 
         entitiesToAdd =[]
         for i in range(10):
@@ -89,6 +101,17 @@ def generateDashboard(definedkey, deviceid, jsondate):
                 asdf = 1
 
         newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Spannungen", "entities":entitiesToAdd, "name":"PV Tracker Spannungen", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
+        
+        # -- pv MPPT currents
+
+        entitiesToAdd =[]
+        for i in range(10):
+            try:
+                entitiesToAdd.append({"entity":sensorNameTag+"pv"+str(i)+"current", "name":"Tracker " + str(i)})
+            except:
+                asdf = 1
+
+        newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Stromstärken", "entities":entitiesToAdd, "name":"PV Tracker Stromstärken", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
         
         
         
