@@ -308,7 +308,10 @@ class Proxy:
             print(serverContactTime)
             print("time since last remote server contact:")
             print((serverContactTime-self.lastServerContactTime).total_seconds())
-            
+            print("print actual remote server:")
+            print(self.s.getpeername() == socket.gethostbyname(conf.growattip))
+            print(self.s.getpeername())
+            print(socket.gethostbyname(conf.growattip))
             self.lastServerContactTime = serverContactTime
 
         elif(self.s == self.input_list[1]):
