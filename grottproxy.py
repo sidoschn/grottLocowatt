@@ -301,7 +301,7 @@ class Proxy:
             print(self.s.getpeername())
         
             print("content:")
-            print(data)
+            print(format_multi_line("\t\t ",data))
 
         # send data to destination
         self.channel[self.s].send(data)
