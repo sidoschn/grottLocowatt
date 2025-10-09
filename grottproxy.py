@@ -145,8 +145,8 @@ class Proxy:
 
             inputready, outputready, exceptready = ss(self.input_list, [], [])
 
-            print("checking remote server availability:")
-            self.checkServerAvailability()
+            #print("checking remote server availability:")
+            #self.checkServerAvailability()
 
             print("input ready:>")
             print(inputready)
@@ -208,6 +208,12 @@ class Proxy:
             forward = Forward().start(self.forward_to_fallback[0], self.forward_to_fallback[1])
 
         clientsock, clientaddr = self.server.accept()
+
+        print("clientsock:")
+        print(clientsock)
+        print("forwardsock:")
+        print(forwardsock)
+
         if forward:
             #if conf.verbose: print("\t -", clientaddr, "has connected")
             print("\t -", clientaddr, "has connected")
