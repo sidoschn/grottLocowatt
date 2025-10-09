@@ -173,6 +173,7 @@ class Proxy:
         if len(self.input_list)==3:
             print("remote server in input list")
             remoteServerSocket = self.input_list[2]
+            print(remoteServerSocket)
             data = remoteServerSocket.recv(16, socket.MSG_DONTWAIT | socket.MSG_PEEK)
             print(len(data))
             print(data)
