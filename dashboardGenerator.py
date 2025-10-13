@@ -19,7 +19,7 @@ def generateMinimalDashboard(definedkey, deviceid, jsondate):
         yaml.dump(minimalDashboard, outfile)
 
 
-def generateDashboard(definedkey, deviceid, jsondate):
+def generateDashboard(definedkey, deviceid, jsondate, recordlayout):
     try:
         #minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
         
@@ -33,25 +33,25 @@ def generateDashboard(definedkey, deviceid, jsondate):
         #additional sensors needed:
         #grid import export sensor (with +-)
         #battery charge sensor (with +-)
-
+        maximumSystemPower = (definedkey["opfullwatt"]/recordlayout["opfullwatt"]["divide"])
         #fill the new section with cards
         # power related cards: 
         newSection["cards"].append({"type":"heading", "heading":deviceid}) #heading of the section
         newSection["cards"].append({"type":"heading", "heading": "Letztes Update:", "badges":[{"type":"entity","entity":sensorNameTag+"last_update"}]}) #time of last update (in header)
-        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total input of PV panels
-        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerout", "name":"Inverter Ausgangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total output of inverter
-        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptoloadtotal", "name":"Eigenverbrauch", "grid_options":{"columns":6,"rows":"auto"}, "max":definedkey["opfullwatt"]}) #total self conumed power
-        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pgridimportexport", "name":"Netz Exportleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":definedkey["opfullwatt"], "min":-definedkey["opfullwatt"], "needle":"true"}) #power exported to grid
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":maximumSystemPower}) #total input of PV panels
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerout", "name":"Inverter Ausgangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":maximumSystemPower}) #total output of inverter
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptoloadtotal", "name":"Eigenverbrauch", "grid_options":{"columns":6,"rows":"auto"}, "max":maximumSystemPower}) #total self conumed power
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pgridimportexport", "name":"Netz Exportleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-maximumSystemPower,"red":(-maximumSystemPower-10)}, "max":maximumSystemPower, "min":-maximumSystemPower, "needle":"true"}) #power exported to grid
         
         # battery related cards:
         # checking for battery states before displaying the battery cards
         # bcdonoffstates: 0=no battery, 1 = battery1 connected, 2 = battery2 connected, 3 = battery1 and battery2 connected
               
         if (definedkey["bdconoffstate"] == 1 or definedkey["bdconoffstate"] == 3): 
-            newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc1chrdischr", "name":"Batterie 1 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":(8000), "min":-(8000), "needle":"true"}) #power exported to grid
+            newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc1chrdischr", "name":"Batterie 1 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-maximumSystemPower,"red":(-maximumSystemPower-10)}, "max":(8000), "min":-(8000), "needle":"true"}) #power exported to grid
         
         if (definedkey["bdconoffstate"] > 1): 
-            newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc2chrdischr", "name":"Batterie 2 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-definedkey["opfullwatt"],"red":(-definedkey["opfullwatt"]-10)}, "max":(8000), "min":-(8000), "needle":"true"}) #power exported to grid
+            newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pbdc2chrdischr", "name":"Batterie 2 Ladeleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-maximumSystemPower,"red":(-maximumSystemPower-10)}, "max":(8000), "min":-(8000), "needle":"true"}) #power exported to grid
         
         if (definedkey["bdconoffstate"] == 1 or definedkey["bdconoffstate"] == 3): 
             newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"bdc1_soc", "name":"Ladestand Batterie 1", "severity":{"green":50,"yellow":15,"red":0}, "grid_options":{"columns":6,"rows":"auto"}})
