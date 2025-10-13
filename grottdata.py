@@ -529,7 +529,7 @@ def procdata(conf,data):
 
         sensorGenerator.updateSensors(conf.recorddict[layout], definedkey["pvserial"], deviceid, jsondate)
 
-        dashboardGenerator.generateDashboard(definedkey, deviceid, jsondate)
+        dashboardGenerator.generateDashboard(definedkey, deviceid, jsondate, conf.recorddict[layout])
 
         # process pvoutput if enabled
         if conf.pvoutput :      
