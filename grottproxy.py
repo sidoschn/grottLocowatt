@@ -306,15 +306,16 @@ class Proxy:
 
             
             print("package from server")
-            
-            if (self.s.getpeername()[0] == socket.gethostbyname(self.forward_to[0])):
-                print("server is remote growatt server")
-                serverContactTime = datetime.now()
-                print("time since last contact with growatt server:")
-                print((serverContactTime-self.lastServerContactTime).total_seconds())
-                self.lastServerContactTime = serverContactTime
-            #print(self.s.getpeername())
-            
+            try:
+                if (self.s.getpeername()[0] == socket.gethostbyname(self.forward_to[0])):
+                    print("server is remote growatt server")
+                    serverContactTime = datetime.now()
+                    print("time since last contact with growatt server:")
+                    print((serverContactTime-self.lastServerContactTime).total_seconds())
+                    self.lastServerContactTime = serverContactTime
+                #print(self.s.getpeername())
+            except:
+                print("server seems to be the local fallback server")
             #print(serverContactTime)
             
 
