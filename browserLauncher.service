@@ -1,0 +1,12 @@
+[Unit]
+Description=Call the browser launcher on startup
+After=network.target
+
+[Service]
+Type=simple
+ExecStart=/home/admin/grottLocowatt/browserLauncher.sh
+User=admin
+Restart=on-failure
+
+[Install]
+WantedBy=multi-user.target
