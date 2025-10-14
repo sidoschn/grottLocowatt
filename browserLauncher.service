@@ -1,12 +1,16 @@
 [Unit]
-Description=Call the browser launcher on startup
+Description=Launch PiOSK runner to start Chromium
 After=network.target
 
 [Service]
 Type=simple
-ExecStart=startx /usr/bin/chromium http://127.0.0.1/solar-board/0 --kiosk --window-size=720,1280 --window-position=0,0 --no-first-run --noerrdialogs
+ExecStart=chromium
 User=admin
+WorkingDirectory=/home/admin
+Environment=DISPLAY=:0
+Environment=XAUTHORITY=PI_HOME/.Xauthority
+Environment=XDG_RUNTIME_DIR=/run/user/PI_SUID
 Restart=on-failure
 
 [Install]
-WantedBy=multi-user.target
+WantedBy=graphical.target
