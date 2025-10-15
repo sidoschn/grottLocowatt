@@ -41,11 +41,14 @@ if pullResult[0:7] == "Already":
     print("grottLocowatt is up to date!")
 elif pullResult[0:7] == "Updatin":
     print("update recieved, restarting grott to apply changes...")
-    argumentString = ""
-    for argument in sys.argv:
-         argumentString = argumentString + argument + " "
-    os.system("python "+ argumentString)
-    sys.exit()
+    
+    os.execv(sys.argv[0], sys.argv)
+    
+    # argumentString = ""
+    # for argument in sys.argv:
+    #      argumentString = argumentString + argument + " "
+    # os.system("python "+ argumentString)
+    # sys.exit()
 else:
     print("autoupdate failure, no internet connection?")
 
