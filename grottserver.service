@@ -10,7 +10,7 @@ SyslogIdentifier=grottserver
 Type=simple
 User=admin
 
-WorkingDirectory=/home/admin/grottLocowatt/
+WorkingDirectory=/home/admin/grottLocowatt
 ExecStart=-/usr/bin/python3 -u /home/admin/grottLocowatt/grottserver.py
 #StandardInput=socket
 StandardOutput=journal

@@ -34,7 +34,7 @@ print("Grott running auto-update")
 try:
     pullResult = subprocess.check_output("git pull", shell=True,text=True)
 except:
-    print("autoupdate failure, no internet connection?")
+    print("cannot resolve git link")
     pullResult = "cannot resolve git link"
 
 if pullResult[0:7] == "Already":
