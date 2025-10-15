@@ -131,7 +131,7 @@ class Proxy:
         # ! these fallback port ip and port options need to be moved to the config at some point
         self.forward_to_fallback = ("127.0.0.1", 5781)
 
-        print("trying to connect to: " + self.forward_to + " with fallback: "+self.forward_to_fallback)
+        print("trying to connect to: " + str(self.forward_to) + " with fallback: "+ str(self.forward_to_fallback))
         #print(self.forward_to)
         #print("fallback is:")
         #print(self.forward_to_fallback)
