@@ -65,6 +65,7 @@ else:
 #print("list of devices in sensor list")
 #print(sensorGenerator.getListOfDevicesFromSensorList(existingSensorList))
 
+print(os.getcwd())
 
 if conf.mode == 'proxy':
         proxy = Proxy(conf)
