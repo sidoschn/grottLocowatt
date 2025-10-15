@@ -1,7 +1,9 @@
 # generates dashboards for HomeAssistant
 import yaml
+import os
 
 locoWattYamlDashboardLocation = '/home/admin/HA/config/grottDashboardConfig.yaml'
+
 
 def debugPrintout(definedkey, deviceid, jsondate):
     print("--- debugout:")
@@ -20,6 +22,12 @@ def generateMinimalDashboard(definedkey, deviceid, jsondate):
 
 
 def generateDashboard(definedkey, deviceid, jsondate, recordlayout):
+    bFirstrun = False
+    if not os.path.isfile(locoWattYamlDashboardLocation):
+        print("first run conditions detected!")
+        bFirstrun = True
+
+
     try:
         #minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
         
@@ -121,6 +129,10 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout):
         with open(locoWattYamlDashboardLocation, 'w') as outfile:
             yaml.dump(dashboardConfig, outfile)
             print("Dashboard update written to "+locoWattYamlDashboardLocation)
+
+        if bFirstrun:
+            os.system("sudo docker restart homeassistant")
+
     except:
         print("unable to generate dashboard")
 
