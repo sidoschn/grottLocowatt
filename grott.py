@@ -42,6 +42,7 @@ if pullResult[0:7] == "Already":
 elif pullResult[0:7] == "Updatin":
     print("update recieved, restarting grott to apply changes...")
     
+    os.system("sudo systemctl restart grottserver.service")
     os.execv(sys.argv[0], sys.argv)
     
     # argumentString = ""
