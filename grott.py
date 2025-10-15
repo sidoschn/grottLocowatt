@@ -29,7 +29,7 @@ conf = Conf(verrel)
 #print configuration
 if conf.verbose: conf.print()
 
-print("Grott running auto-update")
+print("Grott running auto-update (current version is: "+verrel+" )")
 #pullResult = os.system("git pull")
 try:
     pullResult = subprocess.check_output("git pull", shell=True,text=True)
