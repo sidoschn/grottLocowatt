@@ -244,9 +244,9 @@ class Proxy:
 
     def on_recv(self,conf):
         data = self.data      
-        print("")
-        print("\t - " + "Growatt packet received:") 
-        print("\t\t ", self.channel[self.s])
+        #print("")
+        #print("\t - " + "Growatt packet received:") 
+        #print("\t\t ", self.channel[self.s])
         
         #test if record is not corrupted
         vdata = "".join("{:02x}".format(n) for n in data)
@@ -322,8 +322,8 @@ class Proxy:
         elif(self.s == self.input_list[1]):
             print("package from datalogger")
     
-        print(header)
-        print(rectype)
+        #print(header)
+        #print(rectype)
         
         # if rectype in "04":
         #     print("data package from:")
