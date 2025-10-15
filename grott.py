@@ -12,7 +12,7 @@
 
 # Updated: 2023-12-04
 
-verrel = "2.8.6"
+verrel = "2.8.7"
 
 import sys
 
