@@ -15,7 +15,6 @@
 
 
 import sys
-
 from grottconf import Conf
 from grottproxy import Proxy
 from grottsniffer import Sniff
@@ -23,10 +22,14 @@ import sensorGenerator
 import os
 import subprocess
 import time
-
+import psutil
 
 
 verrel = "2.9.0"
+
+print("Process id:")
+print(psutil.Process(os.getpid()).ppid())
+print(os.getpid())
 
 #proces config file
 conf = Conf(verrel)
