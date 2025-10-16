@@ -63,7 +63,7 @@ elif pullResult[0:7] == "Updatin":
     if not bPsutil:
          print("attempting to install missing packages")
          try: 
-              installSuccess = os.system("sudo apt install python3-psutil")s
+              installSuccess = os.system("sudo apt install python3-psutil")
          except:
               print("install failed")
         
