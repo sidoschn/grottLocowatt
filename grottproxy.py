@@ -136,7 +136,7 @@ class Proxy:
 
         print("trying to connect to: " + str(self.forward_to) + " with fallback: "+ str(self.forward_to_fallback))
 
-        self.isConnectedToGrowattTimer = threading.Timer(10, self.growattserverUnreachable)
+        self.isConnectedToGrowattTimer = threading.Timer(1.0, self.growattserverUnreachable)
         #print(self.forward_to)
         #print("fallback is:")
         #print(self.forward_to_fallback)
@@ -176,7 +176,7 @@ class Proxy:
                     self.on_recv(conf)
 
     def growattserverUnreachable(self):
-        print("Growatt servers are unreachable!")
+        print("#### Growatt servers are unreachable! ####")
         #self.isConnectedToGrowattTimer.start()
 
     def checkServerAvailability(self):
@@ -217,10 +217,8 @@ class Proxy:
         if not forward:
             print("Growatt webservers are not responding, falling back to local grott server")
             forward = Forward().start(self.forward_to_fallback[0], self.forward_to_fallback[1])
-        else:
-            if self.isConnectedToGrowattTimer.is_alive():
-                self.isConnectedToGrowattTimer.cancel()
-            self.isConnectedToGrowattTimer.start()
+        
+            
 
         self.lastServerContactTime = datetime.now()
         clientsock, clientaddr = self.server.accept()
@@ -331,6 +329,11 @@ class Proxy:
                     print(timeSinceLastServerContact)
                     self.lastServerContactTime = serverContactTime
                     self.bHadServerContact = True
+                    print(">> starting server response timer")
+                    if self.isConnectedToGrowattTimer.is_alive():
+                        self.isConnectedToGrowattTimer.cancel()
+                    self.isConnectedToGrowattTimer.start()
+
                 #print(self.s.getpeername())
             except:
                 print("server seems to be the local fallback server")
