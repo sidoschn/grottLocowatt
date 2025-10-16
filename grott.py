@@ -22,12 +22,12 @@ import sensorGenerator
 import os
 import subprocess
 import time
-try:
-     import psutil
-     bPsutil = True
-except:
-     print("psutil package missing")
-     bPsutil = False
+# try:
+#      import psutil
+#      bPsutil = True
+# except:
+#      print("psutil package missing")
+#      bPsutil = False
 
 
 verrel = "2.9.0"
@@ -59,27 +59,29 @@ while pullResult == "cannot resolve git link":
 if pullResult[0:7] == "Already":
     print("grottLocowatt is up to date!")
 elif pullResult[0:7] == "Updatin":
-    print("update recieved, restarting grott to apply changes...")
-    if not bPsutil:
-         print("attempting to install missing packages")
-         try: 
-              installSuccess = os.system("sudo apt install python3-psutil")
-         except:
-              print("install failed")
+    print("update recieved, closing grott to apply changes...")
+    exit()
+    
+    # if not bPsutil:
+    #      print("attempting to install missing packages")
+    #      try: 
+    #           installSuccess = os.system("sudo apt install python3-psutil")
+    #      except:
+    #           print("install failed")
         
 
     
-    if bPsutil:
-         print("exiting service ...")
-         if (psutil.Process(os.getpid()).ppid())== 1:
-              #the script is run as a service, just exiting will restart it
-              exit()
+    # if bPsutil:
+    #      print("exiting service ...")
+    #      if (psutil.Process(os.getpid()).ppid())== 1:
+    #           #the script is run as a service, just exiting will restart it
+    #           exit()
     
     
-    #otherwise use a system command and execv to restart the script 
-    print("restarting script...")
-    os.system("sudo systemctl restart grottserver.service")
-    os.execv(sys.argv[0], sys.argv)
+    # #otherwise use a system command and execv to restart the script 
+    # print("restarting script...")
+    # os.system("sudo systemctl restart grottserver.service")
+    # os.execv(sys.argv[0], sys.argv)
     
 else:
     print("autoupdate failure, no internet connection?")
