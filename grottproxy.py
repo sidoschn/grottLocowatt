@@ -177,7 +177,7 @@ class Proxy:
 
     def growattserverUnreachable(self):
         print("Growatt servers are unreachable!")
-        self.isConnectedToGrowattTimer.start()
+        #self.isConnectedToGrowattTimer.start()
 
     def checkServerAvailability(self):
         bAvailable = False
