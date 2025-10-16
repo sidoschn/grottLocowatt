@@ -70,7 +70,8 @@ elif pullResult[0:7] == "Updatin":
 
     
     if bPsutil:
-         print("process ID is:" +str(psutil.Process(os.getpid()).ppid()))
+         print("process ID is:")
+         print(psutil.Process(os.getpid()).ppid())
          if (psutil.Process(os.getpid()).ppid())== 1:
               #the script is run as a service, just exiting will restart it
               exit()
