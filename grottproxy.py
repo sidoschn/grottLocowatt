@@ -3,6 +3,7 @@
 # Updated: 2022-08-07
 # Version 2.7.5
 
+import threading
 import socket
 import select
 import time
@@ -134,6 +135,8 @@ class Proxy:
         self.forward_to_fallback = ("127.0.0.1", 5781)
 
         print("trying to connect to: " + str(self.forward_to) + " with fallback: "+ str(self.forward_to_fallback))
+
+        self.isConnectedToGrowattTimer = threading.Timer(10, self.growattserverUnreachable)
         #print(self.forward_to)
         #print("fallback is:")
         #print(self.forward_to_fallback)
@@ -144,8 +147,9 @@ class Proxy:
             time.sleep(delay)
             ss = select.select
             
-            if self.bHadServerContact:
-                print((datetime.now()-self.lastServerContactTime).total_seconds())
+            self.isConnectedToGrowattTimer.start()
+            # if self.bHadServerContact:
+            #     print((datetime.now()-self.lastServerContactTime).total_seconds())
             
             inputready, outputready, exceptready = ss(self.input_list, [], [])
 
@@ -170,6 +174,10 @@ class Proxy:
                     break
                 else:
                     self.on_recv(conf)
+
+    def growattserverUnreachable(self):
+        print("Growatt servers are unreachable!")
+        self.isConnectedToGrowattTimer.start()
 
     def checkServerAvailability(self):
         bAvailable = False
