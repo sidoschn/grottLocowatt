@@ -146,8 +146,9 @@ class Proxy:
             ss = select.select
             
             
-            # if self.bHadServerContact:
-            #     print((datetime.now()-self.lastServerContactTime).total_seconds())
+            if self.bHadServerContact:
+                print(">>>> Time since last contact to growatt servers:")
+                print((datetime.now()-self.lastServerContactTime).total_seconds())
             
             inputready, outputready, exceptready = ss(self.input_list, [], [])
 
