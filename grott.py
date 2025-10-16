@@ -26,7 +26,7 @@ import time
 
 
 
-verrel = "2.8.9"
+verrel = "2.9.0"
 
 #proces config file
 conf = Conf(verrel)
