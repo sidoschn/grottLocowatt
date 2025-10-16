@@ -97,6 +97,7 @@ class Proxy:
     input_list = []
     channel = {}
     timeSinceLastServerContact = 0
+    lastServerContactTime = datetime.now()
 
     def __init__(self, conf):
         print("\nGrott proxy mode started")
