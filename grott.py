@@ -70,14 +70,14 @@ elif pullResult[0:7] == "Updatin":
 
     
     if bPsutil:
-         print("process ID is:")
-         print(psutil.Process(os.getpid()).ppid())
+         print("exiting service ...")
          if (psutil.Process(os.getpid()).ppid())== 1:
               #the script is run as a service, just exiting will restart it
               exit()
     
     
     #otherwise use a system command and execv to restart the script 
+    print("restarting script...")
     os.system("sudo systemctl restart grottserver.service")
     os.execv(sys.argv[0], sys.argv)
     
