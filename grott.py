@@ -12,7 +12,7 @@
 
 # Updated: 2023-12-04
 
-verrel = "2.8.9"
+
 
 import sys
 
@@ -22,6 +22,11 @@ from grottsniffer import Sniff
 import sensorGenerator
 import os
 import subprocess
+import time
+
+time.sleep(1) # this delay is added in order to make sure network is configured when the script is launched as a service
+
+verrel = "2.8.9"
 
 #proces config file
 conf = Conf(verrel)
