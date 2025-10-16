@@ -96,6 +96,7 @@ class Forward:
 class Proxy:
     input_list = []
     channel = {}
+    timeSinceLastServerContact = 0
 
     def __init__(self, conf):
         print("\nGrott proxy mode started")
@@ -141,7 +142,8 @@ class Proxy:
         while 1:
             time.sleep(delay)
             ss = select.select
-
+            
+            print(self.lastServerContactTime)
             
             inputready, outputready, exceptready = ss(self.input_list, [], [])
 
@@ -311,7 +313,8 @@ class Proxy:
                     print("server is remote growatt server")
                     serverContactTime = datetime.now()
                     print("time since last contact with growatt server:")
-                    print((serverContactTime-self.lastServerContactTime).total_seconds())
+                    self.timeSinceLastServerContact = (serverContactTime-self.lastServerContactTime).total_seconds()
+                    print(self.timeSinceLastServerContact)
                     self.lastServerContactTime = serverContactTime
                 #print(self.s.getpeername())
             except:
