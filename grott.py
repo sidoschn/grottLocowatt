@@ -1,6 +1,6 @@
 #Grott Growatt monitor based on TCPIP sniffing or proxy (new 2.0) 
 #             
-#       Monitor needs to run on a (linux) system that is abble to see TCPIP that is sent from inverter to Growatt Server
+#       Monitor needs to run on a (linux) system that is able to see TCPIP that is sent from inverter to Growatt Server
 #       
 #       In the TCPIP sniffer mode this can be achieved by rerouting the growatt WIFI data via a Linux server with port forwarding
 #
@@ -45,11 +45,6 @@ elif pullResult[0:7] == "Updatin":
     os.system("sudo systemctl restart grottserver.service")
     os.execv(sys.argv[0], sys.argv)
     
-    # argumentString = ""
-    # for argument in sys.argv:
-    #      argumentString = argumentString + argument + " "
-    # os.system("python "+ argumentString)
-    # sys.exit()
 else:
     print("autoupdate failure, no internet connection?")
 

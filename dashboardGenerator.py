@@ -131,6 +131,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout):
             print("Dashboard update written to "+locoWattYamlDashboardLocation)
 
         if bFirstrun:
+            
             os.system("sudo docker restart homeassistant")
 
     except:
