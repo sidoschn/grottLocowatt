@@ -59,7 +59,9 @@ while pullResult == "cannot resolve git link":
 if pullResult[0:7] == "Already":
     print("grottLocowatt is up to date!")
 elif pullResult[0:7] == "Updatin":
+    print("")
     print("update recieved, closing grott to apply changes...")
+    print("")
     exit()
     
     # if not bPsutil:
