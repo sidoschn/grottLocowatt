@@ -147,7 +147,7 @@ class Proxy:
             time.sleep(delay)
             ss = select.select
             
-            self.isConnectedToGrowattTimer.start()
+            
             # if self.bHadServerContact:
             #     print((datetime.now()-self.lastServerContactTime).total_seconds())
             
@@ -217,6 +217,10 @@ class Proxy:
         if not forward:
             print("Growatt webservers are not responding, falling back to local grott server")
             forward = Forward().start(self.forward_to_fallback[0], self.forward_to_fallback[1])
+        else:
+            if self.isConnectedToGrowattTimer.is_alive():
+                self.isConnectedToGrowattTimer.cancel()
+            self.isConnectedToGrowattTimer.start()
 
         self.lastServerContactTime = datetime.now()
         clientsock, clientaddr = self.server.accept()
