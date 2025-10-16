@@ -39,7 +39,7 @@ print("Grott running auto-update ( current version is: "+verrel+" )")
 pullResult = "cannot resolve git link"
 pullAttempt = 0
 while pullResult == "cannot resolve git link":
-    print("attempt "+pullAttempt+" to connect to github...")
+    print("attempt "+str(pullAttempt)+" to connect to github...")
     try:
         pullResult = subprocess.check_output("git pull", shell=True,text=True)
     except:
