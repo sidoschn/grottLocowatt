@@ -24,7 +24,7 @@ import os
 import subprocess
 import time
 
-time.sleep(1) # this delay is added in order to make sure network is configured when the script is launched as a service
+
 
 verrel = "2.8.9"
 
@@ -36,11 +36,19 @@ if conf.verbose: conf.print()
 
 print("Grott running auto-update ( current version is: "+verrel+" )")
 #pullResult = os.system("git pull")
-try:
-    pullResult = subprocess.check_output("git pull", shell=True,text=True)
-except:
-    print("cannot resolve git link")
-    pullResult = "cannot resolve git link"
+pullResult = "cannot resolve git link"
+pullAttempt = 0
+while pullResult == "cannot resolve git link":
+    print("attempt "+pullAttempt+" to connect to github...")
+    try:
+        pullResult = subprocess.check_output("git pull", shell=True,text=True)
+    except:
+        print("cannot resolve git link")
+        pullAttempt += 1
+        time.sleep(1) # this delay is added in order to give the network time to setup
+        if pullAttempt > 10:
+             break
+        
 
 if pullResult[0:7] == "Already":
     print("grottLocowatt is up to date!")
