@@ -136,7 +136,7 @@ class Proxy:
 
         print("trying to connect to: " + str(self.forward_to) + " with fallback: "+ str(self.forward_to_fallback))
 
-        self.isConnectedToGrowattTimer = threading.Timer(1.0, self.growattserverUnreachable)
+        self.isConnectedToGrowattTimer = threading.Timer(5.0, self.growattserverUnreachable)
         #print(self.forward_to)
         #print("fallback is:")
         #print(self.forward_to_fallback)
