@@ -175,9 +175,9 @@ class Proxy:
                 else:
                     self.on_recv(conf)
 
-    def growattserverUnreachable(self):
+    def growattserverUnreachable():
         print(">>>> Growatt servers are unreachable! ")
-        print(datetime.now-self.lastServerContactTime)
+        #print(datetime.now-self.lastServerContactTime)
         #self.isConnectedToGrowattTimer.start()
 
     def checkServerAvailability(self):
