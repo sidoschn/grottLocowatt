@@ -3,7 +3,6 @@
 # Updated: 2022-08-07
 # Version 2.7.5
 
-import threading
 import socket
 import select
 import time
@@ -175,10 +174,6 @@ class Proxy:
                 else:
                     self.on_recv(conf)
 
-    def growattserverUnreachable():
-        print(">>>> Growatt servers are unreachable! ")
-        #print(datetime.now-self.lastServerContactTime)
-        #self.isConnectedToGrowattTimer.start()
 
     def checkServerAvailability(self):
         bAvailable = False
@@ -329,11 +324,7 @@ class Proxy:
                     timeSinceLastServerContact = (serverContactTime-self.lastServerContactTime).total_seconds()
                     print(timeSinceLastServerContact)
                     self.lastServerContactTime = serverContactTime
-                    self.bHadServerContact = True
-                    print(">> starting server response timer")
-                    if self.isConnectedToGrowattTimer.is_alive():
-                        self.isConnectedToGrowattTimer.cancel()
-                    self.isConnectedToGrowattTimer.start()
+                    self.bHadServerContact = True                   
 
                 #print(self.s.getpeername())
             except:
