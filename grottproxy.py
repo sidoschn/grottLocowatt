@@ -96,7 +96,7 @@ class Forward:
 class Proxy:
     input_list = []
     channel = {}
-    timeSinceLastServerContact = 0
+    bHadServerContact = False
     lastServerContactTime = datetime.now()
 
     def __init__(self, conf):
@@ -144,7 +144,8 @@ class Proxy:
             time.sleep(delay)
             ss = select.select
             
-            print(self.lastServerContactTime)
+            if self.bHadServerContact:
+                print((datetime.now()-self.lastServerContactTime).total_seconds())
             
             inputready, outputready, exceptready = ss(self.input_list, [], [])
 
@@ -314,9 +315,10 @@ class Proxy:
                     print("server is remote growatt server")
                     serverContactTime = datetime.now()
                     print("time since last contact with growatt server:")
-                    self.timeSinceLastServerContact = (serverContactTime-self.lastServerContactTime).total_seconds()
-                    print(self.timeSinceLastServerContact)
+                    timeSinceLastServerContact = (serverContactTime-self.lastServerContactTime).total_seconds()
+                    print(timeSinceLastServerContact)
                     self.lastServerContactTime = serverContactTime
+                    self.bHadServerContact = True
                 #print(self.s.getpeername())
             except:
                 print("server seems to be the local fallback server")
