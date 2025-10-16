@@ -30,7 +30,7 @@ import time
 #      bPsutil = False
 
 
-verrel = "2.9.0"
+verrel = "2.9.1"
 
 #proces config file
 conf = Conf(verrel)
