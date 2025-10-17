@@ -159,11 +159,14 @@ class Proxy:
             
             for self.s in inputready:
                 
-                print(self.s.getpeername())
+                
             
                 if self.s == self.server:
                     self.on_accept(conf)
                     break
+                else:
+                    print(self.s.getpeername())
+                    
                 try: 
                     self.data, self.addr = self.s.recvfrom(buffer_size)
                 except: 
