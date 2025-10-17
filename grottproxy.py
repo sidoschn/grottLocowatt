@@ -99,6 +99,7 @@ class Proxy:
     bHadServerContact = False
     lastServerContactTime = datetime.now()
     forwardToList= []
+    remoteServerTimeout = 120
 
     def __init__(self, conf):
         print("\nGrott proxy mode started")
@@ -260,8 +261,6 @@ class Proxy:
         self.lastServerContactTime = datetime.now()
         clientsock, clientaddr = self.server.accept()
 
-        
-        
 
         if forward:
             #if conf.verbose: print("\t -", clientaddr, "has connected")
@@ -369,8 +368,14 @@ class Proxy:
         except:
             print("Growatt servers unavailable!")
             print("Time since last contact with growatt server:")
-            print((datetime.now()-self.lastServerContactTime).total_seconds())
             bRemoteAvailable = False
+            timeSinceLastServerContact = (datetime.now()-self.lastServerContactTime).total_seconds()
+            print(timeSinceLastServerContact)
+            if timeSinceLastServerContact> self.remoteServerTimeout:
+                print("Remote servers unavailable too long, switching to local fallback:")
+                self.on_switchRemoteServer(conf)
+
+            
 
             
         if bRemoteAvailable:
@@ -380,7 +385,8 @@ class Proxy:
             elif(self.s.getpeername()[0] == (self.forward_to_fallback[0])):
                 print("package from local fallback server")
                 print(">> remote growatt server should be avialable!")
-                print(">> we need to switch back here!")
+                print(">> attempting to switch back")
+                self.on_switchRemoteServer(conf)
             elif(self.s.getpeername()[0] == (self.currentClientSocket.getpeername()[0])):
                 print("package from datalogger")
                 print(self.s.getpeername())
