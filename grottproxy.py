@@ -146,11 +146,11 @@ class Proxy:
             time.sleep(delay)
             ss = select.select
             
-            
-            if self.bHadServerContact:
-                print(">>>> Time since last contact to growatt servers:")
-                lastContactDelay = (datetime.now()-self.lastServerContactTime).total_seconds()
-                print(lastContactDelay)
+            #this is obsolete now
+            # if self.bHadServerContact:
+            #     print(">>>> Time since last contact to growatt servers:")
+            #     lastContactDelay = (datetime.now()-self.lastServerContactTime).total_seconds()
+            #     print(lastContactDelay)
             
             inputready, outputready, exceptready = ss(self.input_list, [], [])
 
@@ -357,27 +357,45 @@ class Proxy:
         header = "".join("{:02x}".format(n) for n in data[0:8])
         rectype = header[14:16]
       
+        try:
+            forwardSocketIp = socket.gethostbyname(self.forward_to[0])
+            serverContactTime = datetime.now()
+            print("time since last contact with growatt server:")
+            timeSinceLastServerContact = (serverContactTime-self.lastServerContactTime).total_seconds()
+            print(timeSinceLastServerContact)
+            self.lastServerContactTime = serverContactTime
+            self.bHadServerContact = True
+            bRemoteAvailable = True
+        except:
+            print("Growatt servers unavailable!")
+            print("Time since last contact with growatt server:")
+            print((datetime.now()-self.lastServerContactTime).total_seconds())
+            bRemoteAvailable = False
 
             
-        
-        try:
-            if (self.s.getpeername()[0] == socket.gethostbyname(self.forward_to[0])):
-                print("server is remote growatt server")
-                serverContactTime = datetime.now()
-                print("time since last contact with growatt server:")
-                timeSinceLastServerContact = (serverContactTime-self.lastServerContactTime).total_seconds()
-                print(timeSinceLastServerContact)
-                self.lastServerContactTime = serverContactTime
-                self.bHadServerContact = True                   
+        if bRemoteAvailable:
+            if (self.s.getpeername()[0] == forwardSocketIp):
+                print("package from remote growatt server")
+                
+            elif(self.s.getpeername()[0] == (self.forward_to_fallback[0])):
+                print("package from local fallback server")
+                print(">> remote growatt server should be avialable!")
+                print(">> we need to switch back here!")
+            elif(self.s.getpeername()[0] == (self.currentClientSocket.getpeername()[0])):
+                print("package from datalogger")
+                print(self.s.getpeername())
             else:
-                print("package from datalogger!?")
+                print("package unknown peer that somehow ended up on input list!?!?")
                 print(self.s.getpeername())
             #print(self.s.getpeername())
-        except:
+        else:
             if (self.s.getpeername()[0] == (self.forward_to_fallback[0])):
-                print("server seems to be the local fallback server")
+                print("package from local fallback server")
+            elif(self.s.getpeername()[0] == (self.currentClientSocket.getpeername()[0])):
+                print("package from datalogger")
+                print(self.s.getpeername())
             else:
-                print("package from datalogger!?")
+                print("package unknown peer that somehow ended up on input list!?!?")
                 print(self.s.getpeername())
             
         #print(serverContactTime)
