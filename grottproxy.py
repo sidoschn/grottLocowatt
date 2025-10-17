@@ -98,6 +98,7 @@ class Proxy:
     channel = {}
     bHadServerContact = False
     lastServerContactTime = datetime.now()
+    forwardToList= []
 
     def __init__(self, conf):
         print("\nGrott proxy mode started")
@@ -207,6 +208,41 @@ class Proxy:
         # s.close()
 
         return bAvailable
+    
+    def on_switchRemoteServer(self,conf):
+        print("switching forwarding server")
+
+        # switch from remote to local
+        
+        # remove remote server from input list self.input_list.append(forward)
+        self.input_list.remove(self.currentForwardSocket)
+        # remove remote server from channel dict self.channel[clientsock] = forward
+        del self.channel[self.currentClientSocket]
+        del self.channel[self.currentForwardSocket]
+        # close the connection to forward
+        self.currentForwardSocket.close()
+
+        # open new connection to remote server, pick fallback if remote is unresponsive
+        forward = Forward().start(self.forward_to[0], self.forward_to[1])
+        if not forward:
+            print("Growatt webservers are not responding, falling back to local grott server")
+            forward = Forward().start(self.forward_to_fallback[0], self.forward_to_fallback[1])
+        
+        if forward:
+            #if conf.verbose: print("\t -", clientaddr, "has connected")
+            print("\t now forwarding to ", str(forward.getpeername()))
+            
+            self.input_list.append(forward)
+            self.channel[self.currentClientSocket] = forward
+            self.channel[forward] = self.currentClientSocket
+        else:
+            if conf.verbose: 
+                print("\t - Can't establish connection with remote server."),
+                print("\t - Closing connection with client side", str(self.currentClientSocket.getpeername()))
+            self.currentClientSocket.close()
+
+
+
 
     def on_accept(self,conf):
         #print("checking remote availability...")
@@ -224,6 +260,9 @@ class Proxy:
         self.lastServerContactTime = datetime.now()
         clientsock, clientaddr = self.server.accept()
 
+        
+        
+
         if forward:
             #if conf.verbose: print("\t -", clientaddr, "has connected")
             print("\t -", clientaddr, "has connected")
@@ -236,6 +275,9 @@ class Proxy:
                 print("\t - Can't establish connection with remote server."),
                 print("\t - Closing connection with client side", clientaddr)
             clientsock.close()
+        
+        self.currentClientSocket = clientsock
+        self.currentForwardSocket = forward
 
     def on_close(self,conf):
         if conf.verbose: 
