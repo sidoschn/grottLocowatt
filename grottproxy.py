@@ -159,7 +159,7 @@ class Proxy:
             
             for self.s in inputready:
                 
-                print(self.s)
+                print(self.s.getpeername())
             
                 if self.s == self.server:
                     self.on_accept(conf)
