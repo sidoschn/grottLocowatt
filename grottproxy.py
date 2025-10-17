@@ -166,7 +166,7 @@ class Proxy:
                     break
                 else:
                     print(self.s.getpeername())
-                    
+
                 try: 
                     self.data, self.addr = self.s.recvfrom(buffer_size)
                 except: 
@@ -314,31 +314,32 @@ class Proxy:
         
         header = "".join("{:02x}".format(n) for n in data[0:8])
         rectype = header[14:16]
+      
+
+            
         
-
-        if (self.s == self.input_list[2]):
-            
-
-            
-            print("package from server")
-            try:
-                if (self.s.getpeername()[0] == socket.gethostbyname(self.forward_to[0])):
-                    print("server is remote growatt server")
-                    serverContactTime = datetime.now()
-                    print("time since last contact with growatt server:")
-                    timeSinceLastServerContact = (serverContactTime-self.lastServerContactTime).total_seconds()
-                    print(timeSinceLastServerContact)
-                    self.lastServerContactTime = serverContactTime
-                    self.bHadServerContact = True                   
-
-                #print(self.s.getpeername())
-            except:
+        try:
+            if (self.s.getpeername()[0] == socket.gethostbyname(self.forward_to[0])):
+                print("server is remote growatt server")
+                serverContactTime = datetime.now()
+                print("time since last contact with growatt server:")
+                timeSinceLastServerContact = (serverContactTime-self.lastServerContactTime).total_seconds()
+                print(timeSinceLastServerContact)
+                self.lastServerContactTime = serverContactTime
+                self.bHadServerContact = True                   
+            else:
+                print("package from datalogger!?")
+                print(self.s.getpeername())
+            #print(self.s.getpeername())
+        except:
+            if (self.s.getpeername()[0] == (self.forward_to_fallback[0])):
                 print("server seems to be the local fallback server")
-            #print(serverContactTime)
+            else:
+                print("package from datalogger!?")
+                print(self.s.getpeername())
             
-
-        elif(self.s == self.input_list[1]):
-            print("package from datalogger")
+        #print(serverContactTime)
+            
     
         #print(header)
         #print(rectype)
