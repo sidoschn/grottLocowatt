@@ -242,6 +242,8 @@ class Proxy:
                 print("\t - Closing connection with client side", str(self.currentClientSocket.getpeername()))
             self.currentClientSocket.close()
 
+        self.currentForwardSocket = forward
+
 
 
 
@@ -372,8 +374,10 @@ class Proxy:
             timeSinceLastServerContact = (datetime.now()-self.lastServerContactTime).total_seconds()
             print(timeSinceLastServerContact)
             if timeSinceLastServerContact> self.remoteServerTimeout:
-                print("Remote servers unavailable too long, switching to local fallback:")
-                self.on_switchRemoteServer(conf)
+                if not (self.currentForwardSocket.getpeername()[0]==(self.forward_to_fallback[0])):
+                    #only do something if we are not already on the fallback server
+                    print("Remote servers unavailable too long, switching to local fallback:")
+                    self.on_switchRemoteServer(conf)
 
             
 
