@@ -361,27 +361,38 @@ class Proxy:
         try:
             forwardSocketIp = socket.gethostbyname(self.forward_to[0])
             serverContactTime = datetime.now()
-            print("time since last contact with growatt server:")
-            timeSinceLastServerContact = (serverContactTime-self.lastServerContactTime).total_seconds()
-            print(timeSinceLastServerContact)
-            self.lastServerContactTime = serverContactTime
+            # print("time since last contact with growatt server:")
+            # timeSinceLastServerContact = (serverContactTime-self.lastServerContactTime).total_seconds()
+            # print(timeSinceLastServerContact)
+            # self.lastServerContactTime = serverContactTime
             self.bHadServerContact = True
             bRemoteAvailable = True
         except:
             print("Growatt servers unavailable!")
             print("Time since last contact with growatt server:")
             bRemoteAvailable = False
-            timeSinceLastServerContact = (datetime.now()-self.lastServerContactTime).total_seconds()
-            print(timeSinceLastServerContact)
-            if timeSinceLastServerContact> self.remoteServerTimeout:
-                if not (self.currentForwardSocket.getpeername()[0]==(self.forward_to_fallback[0])):
-                    #only do something if we are not already on the fallback server
-                    print("Remote servers unavailable too long, switching to local fallback:")
-                    self.on_switchRemoteServer(conf)
+            # timeSinceLastServerContact = (datetime.now()-self.lastServerContactTime).total_seconds()
+            # print(timeSinceLastServerContact)
+            # if timeSinceLastServerContact> self.remoteServerTimeout:
+            #     if not (self.currentForwardSocket.getpeername()[0]==(self.forward_to_fallback[0])):
+            #         #only do something if we are not already on the fallback server
+            #         print("Remote servers unavailable too long, switching to local fallback:")
+            #         self.on_switchRemoteServer(conf)
+        
+        if bRemoteAvailable:
+            #if remote is available but the current forward socket is local, reboot to switch to remote
+            if self.currentForwardSocket.getpeername()[0] == self.forward_to_fallback[0]:
+                print("remote server went online again, restart to switch server...")
+                exit()
+        else:
+            #if remote is unavailable but the current forward socket is not local, reboot to switch to local
+            if not self.currentForwardSocket.getpeername()[0] == self.forward_to_fallback[0]:
+                print("remote server went offline, restart to switch server...")
+                exit()
 
-            
 
-            
+
+
         if bRemoteAvailable:
             if (self.s.getpeername()[0] == forwardSocketIp):
                 print("package from remote growatt server")
@@ -389,8 +400,8 @@ class Proxy:
             elif(self.s.getpeername()[0] == (self.forward_to_fallback[0])):
                 print("package from local fallback server")
                 print(">> remote growatt server should be avialable!")
-                print(">> attempting to switch back")
-                self.on_switchRemoteServer(conf)
+                print(">> grott should have been rebooted by now!?")
+                #self.on_switchRemoteServer(conf)
             elif(self.s.getpeername()[0] == (self.currentClientSocket.getpeername()[0])):
                 print("package from datalogger")
                 print(self.s.getpeername())
