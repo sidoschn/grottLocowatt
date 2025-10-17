@@ -148,7 +148,8 @@ class Proxy:
             
             if self.bHadServerContact:
                 print(">>>> Time since last contact to growatt servers:")
-                print((datetime.now()-self.lastServerContactTime).total_seconds())
+                lastContactDelay = (datetime.now()-self.lastServerContactTime).total_seconds()
+                print(lastContactDelay)
             
             inputready, outputready, exceptready = ss(self.input_list, [], [])
 
@@ -157,7 +158,8 @@ class Proxy:
 
             
             for self.s in inputready:
-                         
+                
+                print(self.s)
             
                 if self.s == self.server:
                     self.on_accept(conf)
