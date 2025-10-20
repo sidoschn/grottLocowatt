@@ -311,6 +311,9 @@ class Proxy:
         print(header)
         print(">>raw data:")
         print(data)
+        print(">>reforamtted data:")
+        formData = "".join("{:02x}".format(n) for n in data)
+        print(formData)
         #test if record is not corrupted
         vdata = "".join("{:02x}".format(n) for n in data)
         validatecc = validate_record(vdata)
