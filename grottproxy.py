@@ -314,6 +314,8 @@ class Proxy:
         print(">>reforamtted data:")
         formData = "".join("{:02x}".format(n) for n in data)
         print(formData)
+        print(">> decrypted data:")
+        print(decrypt(data))
         #test if record is not corrupted
         vdata = "".join("{:02x}".format(n) for n in data)
         validatecc = validate_record(vdata)
