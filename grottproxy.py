@@ -307,7 +307,8 @@ class Proxy:
         #print("\t\t ", self.channel[self.s])
         print(type(data))
         print(">>header:")
-        print(header = "".join("{:02x}".format(n) for n in data[0:8]))
+        header = "".join("{:02x}".format(n) for n in data[0:8])
+        print(header)
         print(">>raw data:")
         print(data)
         #test if record is not corrupted
