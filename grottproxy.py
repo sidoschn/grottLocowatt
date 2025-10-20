@@ -305,7 +305,11 @@ class Proxy:
         #print("")
         #print("\t - " + "Growatt packet received:") 
         #print("\t\t ", self.channel[self.s])
-        
+        print(type(data))
+        print(">>header:")
+        print(header = "".join("{:02x}".format(n) for n in data[0:8]))
+        print(">>raw data:")
+        print(data)
         #test if record is not corrupted
         vdata = "".join("{:02x}".format(n) for n in data)
         validatecc = validate_record(vdata)
