@@ -749,6 +749,7 @@ def procdata(conf,data):
 
     try: 
         loggerId = definedkey["datalogserial"]
+        print(type(loggerId))
         return loggerId
     except:
         print("not a datalogger")
