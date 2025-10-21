@@ -199,7 +199,7 @@ class Proxy:
     def compileCommand(self,conf,commandType, value):
         match commandType:
             case "ExportPower":
-                print("compiling command setting "+ commandType+ " to " + value+"%")
+                print("compiling command setting "+ commandType+ " to " + str(value)+"%")
                 byHeader = bytes.fromhex("0001000600240106")
                 try:
                     deviceId = self.loggerId #still need to actually find this
