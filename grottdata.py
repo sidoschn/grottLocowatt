@@ -67,13 +67,16 @@ def decryptEncryptPayload(byData):
     for i,j in zip(range(0,nByData),cycle(range(0,ncypher))): 
         decrypted = decrypted + [byData[i] ^ int(hex_cypher[j],16)]
     
-    print(type(decrypted))
-
+    
     resultHexString = "".join("{:02x}".format(n) for n in decrypted)
     resultByteArray = bytes.fromhex(resultHexString)
     print(type(resultByteArray))
     print("\t - " + "Growatt data decrypted V2")   
-    return resultHexString        
+    print(bytes(decrypted))
+    print(bytes.fromhex(resultHexString))
+    print("--")
+
+    return resultByteArray        
 
 
 

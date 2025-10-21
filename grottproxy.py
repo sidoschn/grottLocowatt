@@ -362,10 +362,10 @@ class Proxy:
         print(">> decrypted payload:")
         print(decryptedPayload)
 
-        reEncryptedPayload = decryptEncryptPayload(bytes.fromhex(decryptedPayload))
+        reEncryptedPayload = decryptEncryptPayload(decryptedPayload)
         print(">> reencrypted payload:")
         print(reEncryptedPayload)
-        print(bytes.fromhex(reEncryptedPayload))
+        
 
         #test if record is not corrupted
         vdata = "".join("{:02x}".format(n) for n in data)
