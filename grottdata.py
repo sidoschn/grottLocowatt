@@ -62,17 +62,18 @@ def decryptEncryptPayload(byData):
     nByData = len(byData)
 
     #start decrypt routine 
-    unscrambled = []
+    decrypted = []
     
     for i,j in zip(range(0,nByData),cycle(range(0,ncypher))): 
-        unscrambled = unscrambled + [byData[i] ^ int(hex_cypher[j],16)]
+        decrypted = decrypted + [byData[i] ^ int(hex_cypher[j],16)]
     
-    print(type(unscrambled))
+    print(type(decrypted))
 
-    result_string = "".join("{:02x}".format(n) for n in unscrambled)
-    
+    resultHexString = "".join("{:02x}".format(n) for n in decrypted)
+    resultByteArray = bytes.fromhex(resultHexString)
+    print(type(resultByteArray))
     print("\t - " + "Growatt data decrypted V2")   
-    return result_string        
+    return resultHexString        
 
 
 
