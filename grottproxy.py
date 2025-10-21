@@ -344,9 +344,10 @@ class Proxy:
         print(formData)
         print(">> decrypted data:")
         decryptedData = decrypt(data)
+        byteDecryptedData = "".join("{:02x}".format(n) for n in decryptedData)
         print(decryptedData)
         print(">> re-encrypted data:")
-        reencryptedData = decrypt(decryptedData)
+        reencryptedData = decrypt(byteDecryptedData)
         print(decrypt(reencryptedData))
         #test if record is not corrupted
         vdata = "".join("{:02x}".format(n) for n in data)
