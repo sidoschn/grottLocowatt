@@ -525,7 +525,7 @@ class Proxy:
         if len(data) > conf.minrecl :
             #process received data
             loggerId = procdata(conf,data)
-            if not (loggerId == ""):
+            if (len(loggerId) > 4):
                 self.loggerId = loggerId
                 print(self.loggerId)
         else:     
