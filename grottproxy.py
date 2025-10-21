@@ -196,7 +196,35 @@ class Proxy:
             print("input list too short")
 
 
+    def compileCommand(self,conf,commandType, value):
+        match commandType:
+            case "ExportPower":
+                print("compiling command setting "+ commandType+ " to " + value+"%")
+                byHeader = bytes.fromhex("0001000600240106")
+                try:
+                    deviceId = self.loggerId #still need to actually find this
+                    byDeviceId = bytes(deviceId,"utf-8")
+                except:
+                    print("no logger found yet! aborting injection...")
+                    return
+                byEmptyPart = bytes.fromhex("00"*20)
+                byCommandRegister = int.to_bytes(123,2,"big")
+                byExportLimitPercent = int.to_bytes(value*10,2,"big")
+                byPayload = byDeviceId+byEmptyPart+byCommandRegister+byExportLimitPercent
+                encByPayload = decrypt(byPayload)
+
+
         
+
+
+    def injectCommand(self,conf, command):
+        print("injecting command to client")
+
+        #self.channel[self.s].send(data)
+        try:
+            self.currentClientSocket(command)
+        except:
+            print("could not inject command")
         # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # s.settimeout(5)
 
@@ -315,7 +343,11 @@ class Proxy:
         formData = "".join("{:02x}".format(n) for n in data)
         print(formData)
         print(">> decrypted data:")
-        print(decrypt(data))
+        decryptedData = decrypt(data)
+        print(decryptedData)
+        print(">> re-encrypted data:")
+        reencryptedData = decrypt(decryptedData)
+        print(decrypt(reencryptedData))
         #test if record is not corrupted
         vdata = "".join("{:02x}".format(n) for n in data)
         validatecc = validate_record(vdata)
@@ -446,7 +478,7 @@ class Proxy:
         self.channel[self.s].send(data)
         if len(data) > conf.minrecl :
             #process received data
-            procdata(conf,data)    
+            self.loggerId = procdata(conf,data)    
         else:     
             if conf.verbose: print("\t - " + 'Data less then minimum record length, data not processed') 
                 

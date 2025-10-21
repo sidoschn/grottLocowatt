@@ -53,6 +53,17 @@ def format_multi_line(prefix, string, size=80):
             size -= 1
     return '\n'.join([prefix + line for line in textwrap.wrap(string, size)])
 
+
+def encrypt(byData):
+    byCypher = b'Growatt'
+
+    byPairs = zip(byData, cycle(byCypher))
+    resultByte = b''
+    for tuple in byPairs:
+        resultByte = 0
+
+
+
 #decrypt data. 
 def decrypt(decdata) :   
 
@@ -720,4 +731,10 @@ def procdata(conf,data):
             ##print("\t -", ext_result)
     else: 
             if conf.verbose : print("\t - " + "Grott extension processing disabled ")      
+
+    try: 
+        loggerId = definedkey["datalogserial"]
+        return loggerId
+    except:
+        print("not a datalogger")
 
