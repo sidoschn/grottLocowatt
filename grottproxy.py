@@ -525,18 +525,18 @@ class Proxy:
                 
                 print("Data logger has identified: "+ self.loggerId)
 
-                if not self.bCommandAlreadySent:
-                    self.bCommandAlreadySent = True
-                    print("")
-                    print(">> testing command compilation:")
-                    testCommand = self.compileCommand(conf,"ExportPower", 5)
-                    print(testCommand)
-                    print("")
-                    print(">> testing command injection:")
-                    self.injectCommand(conf, testCommand)
-                    print("")
-                else:
-                    print("command already injected, no action required")
+                # if not self.bCommandAlreadySent:
+                #     self.bCommandAlreadySent = True
+                #     print("")
+                #     print(">> testing command compilation:")
+                #     testCommand = self.compileCommand(conf,"ExportPower", 5)
+                #     print(testCommand)
+                #     print("")
+                #     print(">> testing command injection:")
+                #     self.injectCommand(conf, testCommand)
+                #     print("")
+                # else:
+                #     print("command already injected, no action required")
         else:     
             if conf.verbose: print("\t - " + 'Data less then minimum record length, data not processed') 
                 
