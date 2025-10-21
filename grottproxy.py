@@ -344,7 +344,7 @@ class Proxy:
         print(formData)
         print(">> decrypted data:")
         decryptedData = decrypt(data)
-        byteDecryptedData = bytes.fromhex("".join("{:02x}".format(ord(n)) for n in decryptedData))
+        byteDecryptedData = bytes.fromhex(decryptedData)
         print(decryptedData)
         print(">> re-encrypted data:")
         reencryptedData = decrypt(byteDecryptedData)
