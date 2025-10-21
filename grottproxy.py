@@ -527,7 +527,7 @@ class Proxy:
                 
                 print("")
                 print(">> testing command compilation:")
-                testCommand = self.compileCommand(conf,"ExportPower", 15)
+                testCommand = self.compileCommand(conf,"ExportPower", 0)
                 print(testCommand)
                 print("")
         else:     
