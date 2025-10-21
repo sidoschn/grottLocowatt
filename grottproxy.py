@@ -345,10 +345,10 @@ class Proxy:
         print(">> decrypted data:")
         decryptedData = decrypt(data)
         byteDecryptedData = bytes.fromhex(decryptedData)
-        print(decryptedData)
+        print(byteDecryptedData)
         print(">> re-encrypted data:")
         reencryptedData = decrypt(byteDecryptedData)
-        print(decrypt(reencryptedData))
+        print(reencryptedData)
         #test if record is not corrupted
         vdata = "".join("{:02x}".format(n) for n in data)
         validatecc = validate_record(vdata)
