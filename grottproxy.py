@@ -233,12 +233,12 @@ class Proxy:
         print("injecting command to client")
 
         #self.channel[self.s].send(data)
-        #try:
-        self.currentClientSocket.send(command)
-        bSuccess = True    
-        # except:
-        #     print("could not inject command")
-        #     bSuccess = False
+        try:
+            self.currentClientSocket.send(command)
+            bSuccess = True    
+        except:
+             print("could not inject command")
+             bSuccess = False
         # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # s.settimeout(5)
 
