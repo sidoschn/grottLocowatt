@@ -100,6 +100,7 @@ class Proxy:
     lastServerContactTime = datetime.now()
     forwardToList= []
     remoteServerTimeout = 120
+    bCommandAlreadySent = False
 
     def __init__(self, conf):
         print("\nGrott proxy mode started")
@@ -524,12 +525,18 @@ class Proxy:
                 
                 print("Data logger has identified: "+ self.loggerId)
 
-                
-                print("")
-                print(">> testing command compilation:")
-                testCommand = self.compileCommand(conf,"ExportPower", 0)
-                print(testCommand)
-                print("")
+                if not self.bCommandAlreadySent:
+                    self.bCommandAlreadySent = True
+                    print("")
+                    print(">> testing command compilation:")
+                    testCommand = self.compileCommand(conf,"ExportPower", 0)
+                    print(testCommand)
+                    print("")
+                    print(">> testing command injection:")
+                    self.injectCommand(conf, testCommand)
+                    print("")
+                else:
+                    print("command already injected, no action required")
         else:     
             if conf.verbose: print("\t - " + 'Data less then minimum record length, data not processed') 
                 
