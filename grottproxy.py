@@ -354,25 +354,25 @@ class Proxy:
         # backFormattedData = bytes.fromhex(reencryptedData)
         # print(backFormattedData)
 
-        print(">> raw payload:")
-        rawPayload = data[8:-2]
-        print(rawPayload)
+        # print(">> raw payload:")
+        # rawPayload = data[8:-2]
+        # print(rawPayload)
 
-        print(">> reformatted payload:")
-        rawFormPayload = "".join("{:02x}".format(n) for n in rawPayload)
-        print(rawFormPayload)
+        # print(">> reformatted payload:")
+        # rawFormPayload = "".join("{:02x}".format(n) for n in rawPayload)
+        # print(rawFormPayload)
 
-        decryptedPayload = decryptEncryptPayload(rawPayload)
-        print(">> decrypted payload:")
-        print(decryptedPayload)
+        # decryptedPayload = decryptEncryptPayload(rawPayload)
+        # print(">> decrypted payload:")
+        # print(decryptedPayload)
 
-        print(">> reformatted decrypted payload:")
-        rawFormDecPayload = "".join("{:02x}".format(n) for n in decryptedPayload)
-        print(rawFormDecPayload)
+        # print(">> reformatted decrypted payload:")
+        # rawFormDecPayload = "".join("{:02x}".format(n) for n in decryptedPayload)
+        # print(rawFormDecPayload)
 
-        reEncryptedPayload = decryptEncryptPayload(decryptedPayload)
-        print(">> reencrypted payload:")
-        print(reEncryptedPayload)
+        # reEncryptedPayload = decryptEncryptPayload(decryptedPayload)
+        # print(">> reencrypted payload:")
+        # print(reEncryptedPayload)
         
 
         #test if record is not corrupted
