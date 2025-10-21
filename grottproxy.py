@@ -487,7 +487,7 @@ class Proxy:
                 #self.on_switchRemoteServer(conf)
             elif(self.s.getpeername()[0] == (self.currentClientSocket.getpeername()[0])):
                 print("package from datalogger")
-                print(self.s.getpeername())
+                #print(self.s.getpeername())
             else:
                 print("package unknown peer that somehow ended up on input list!?!?")
                 print(self.s.getpeername())
@@ -497,10 +497,10 @@ class Proxy:
                 print("package from local fallback server")
             elif(self.s.getpeername()[0] == (self.currentClientSocket.getpeername()[0])):
                 print("package from datalogger")
-                print(self.s.getpeername())
+                #print(self.s.getpeername())
             else:
                 print("package unknown peer that somehow ended up on input list!?!?")
-                print(self.s.getpeername())
+                #print(self.s.getpeername())
             
         #print(serverContactTime)
             
