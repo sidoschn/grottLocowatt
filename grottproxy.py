@@ -524,8 +524,10 @@ class Proxy:
         self.channel[self.s].send(data)
         if len(data) > conf.minrecl :
             #process received data
-            self.loggerId = procdata(conf,data)
-            print(self.loggerId)
+            loggerId = procdata(conf,data)
+            if not (loggerId == ""):
+                self.loggerId = loggerId
+                print(self.loggerId)
         else:     
             if conf.verbose: print("\t - " + 'Data less then minimum record length, data not processed') 
                 
