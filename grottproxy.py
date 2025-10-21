@@ -358,9 +358,17 @@ class Proxy:
         rawPayload = data[8:-2]
         print(rawPayload)
 
+        print(">> reformatted payload:")
+        rawFormPayload = "".join("{:02x}".format(n) for n in rawPayload)
+        print(rawFormPayload)
+
         decryptedPayload = decryptEncryptPayload(rawPayload)
         print(">> decrypted payload:")
         print(decryptedPayload)
+
+        print(">> reformatted decrypted payload:")
+        rawFormDecPayload = "".join("{:02x}".format(n) for n in decryptedPayload)
+        print(rawFormDecPayload)
 
         reEncryptedPayload = decryptEncryptPayload(decryptedPayload)
         print(">> reencrypted payload:")
