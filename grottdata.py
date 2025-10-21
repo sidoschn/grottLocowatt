@@ -753,5 +753,5 @@ def procdata(conf,data):
         return loggerId
     except:
         print("not a datalogger")
-        return ""
+        return
 

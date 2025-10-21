@@ -478,12 +478,6 @@ class Proxy:
         if bRemoteAvailable:
             if (self.s.getpeername()[0] == forwardSocketIp):
                 print("package from remote growatt server")
-
-                print("")
-                print(">> testing command compilation:")
-                testCommand = self.compileCommand(conf,"ExportPower", 15)
-                print(testCommand)
-                print("")
                 
             elif(self.s.getpeername()[0] == (self.forward_to_fallback[0])):
                 print("package from local fallback server")
@@ -525,9 +519,17 @@ class Proxy:
         if len(data) > conf.minrecl :
             #process received data
             loggerId = procdata(conf,data)
-            if (len(loggerId) > 4):
+            if not (loggerId == None):
                 self.loggerId = loggerId
-                print(self.loggerId)
+                
+                print("Data logger has identified: "+ self.loggerId)
+
+                
+                print("")
+                print(">> testing command compilation:")
+                testCommand = self.compileCommand(conf,"ExportPower", 15)
+                print(testCommand)
+                print("")
         else:     
             if conf.verbose: print("\t - " + 'Data less then minimum record length, data not processed') 
                 
