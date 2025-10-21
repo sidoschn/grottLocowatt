@@ -17,7 +17,7 @@ if sys.platform != 'win32' :
 
 from datetime import datetime
 
-from grottdata import procdata, decrypt, format_multi_line
+from grottdata import procdata, decrypt, format_multi_line, decryptEncryptPayload
 
 #import mqtt                       
 import paho.mqtt.publish as publish
@@ -333,26 +333,39 @@ class Proxy:
         #print("")
         #print("\t - " + "Growatt packet received:") 
         #print("\t\t ", self.channel[self.s])
-        print(type(data))
-        print(">>header:")
-        header = "".join("{:02x}".format(n) for n in data[0:8])
-        print(header)
-        print(">> raw data:")
-        print(data)
-        print(">> reforamtted data:")
-        formData = "".join("{:02x}".format(n) for n in data)
-        print(formData)
-        #print(">> decrypted data:")
-        decryptedData = decrypt(data)
-        byteDecryptedData = bytes.fromhex(decryptedData)
-        #print(byteDecryptedData)
-        print(">> re-encrypted data:")
-        reencryptedData = decrypt(byteDecryptedData)
-        print(reencryptedData)
+        # print(type(data))
+        # print(">>header:")
+        # header = "".join("{:02x}".format(n) for n in data[0:8])
+        # print(header)
+        # print(">> raw data:")
+        # print(data)
+        # print(">> reforamtted data:")
+        # formData = "".join("{:02x}".format(n) for n in data)
+        # print(formData)
+        # #print(">> decrypted data:")
+        # decryptedData = decrypt(data)
+        # byteDecryptedData = bytes.fromhex(decryptedData)
+        # #print(byteDecryptedData)
+        # print(">> re-encrypted data:")
+        # reencryptedData = decrypt(byteDecryptedData)
+        # print(reencryptedData)
 
-        print(">> backformatted data")
-        backFormattedData = bytes.fromhex(reencryptedData)
-        print(backFormattedData)
+        # print(">> backformatted data")
+        # backFormattedData = bytes.fromhex(reencryptedData)
+        # print(backFormattedData)
+
+        print(">> raw payload:")
+        rawPayload = data[8:-2]
+        print(rawPayload)
+
+        decryptedPayload = decryptEncryptPayload(rawPayload)
+        print(">> decrypted payload:")
+        print(decryptedPayload)
+
+        reEncryptedPayload = decryptEncryptPayload(bytes.fromhex(decryptedPayload))
+        print(">> reencrypted payload:")
+        print(reEncryptedPayload)
+        print(bytes.fromhex(reEncryptedPayload))
 
         #test if record is not corrupted
         vdata = "".join("{:02x}".format(n) for n in data)
