@@ -54,13 +54,25 @@ def format_multi_line(prefix, string, size=80):
     return '\n'.join([prefix + line for line in textwrap.wrap(string, size)])
 
 
-def encrypt(byData):
-    byCypher = b'Growatt'
+def decryptEncryptPayload(byData):
+    cypher = "Growatt"
+    hex_cypher = ['{:02x}'.format(ord(x)) for x in cypher]    
+    ncypher = len(hex_cypher)
 
-    byPairs = zip(byData, cycle(byCypher))
-    resultByte = b''
-    for tuple in byPairs:
-        resultByte = 0
+    nByData = len(byData)
+
+    #start decrypt routine 
+    unscrambled = []
+    
+    for i,j in zip(range(0,nByData),cycle(range(0,ncypher))): 
+        unscrambled = unscrambled + [byData[i] ^ int(hex_cypher[j],16)]
+    
+    print(type(unscrambled))
+
+    result_string = "".join("{:02x}".format(n) for n in unscrambled)
+    
+    print("\t - " + "Growatt data decrypted V2")   
+    return result_string        
 
 
 
