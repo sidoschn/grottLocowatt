@@ -529,7 +529,7 @@ class Proxy:
                     self.bCommandAlreadySent = True
                     print("")
                     print(">> testing command compilation:")
-                    testCommand = self.compileCommand(conf,"ExportPower", 10)
+                    testCommand = self.compileCommand(conf,"ExportPower", 5)
                     print(testCommand)
                     print("")
                     print(">> testing command injection:")
