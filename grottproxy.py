@@ -206,13 +206,24 @@ class Proxy:
                     byDeviceId = bytes(deviceId,"utf-8")
                 except:
                     print("no logger found yet! aborting injection...")
-                    return
+                    fullCommand = b''
+                    return fullCommand
                 byEmptyPart = bytes.fromhex("00"*20)
                 byCommandRegister = int.to_bytes(123,2,"big")
                 byExportLimitPercent = int.to_bytes(value*10,2,"big")
                 byPayload = byDeviceId+byEmptyPart+byCommandRegister+byExportLimitPercent
-                encByPayload = decrypt(byPayload)
-
+                encByPayload = decryptEncryptPayload(byPayload)
+                byCommand = byHeader+encByPayload
+                
+                # Create CRC 16 Modbus
+                crc16 = libscrc.modbus(byCommand)
+                
+                fullCommand = byCommand + crc16.to_bytes(2, "big")
+            case _:
+                print("unknown command, aborting compilation...")
+                fullCommand = b''
+        return fullCommand
+                
 
         
 
@@ -223,8 +234,10 @@ class Proxy:
         #self.channel[self.s].send(data)
         try:
             self.currentClientSocket(command)
+            bSuccess = True    
         except:
             print("could not inject command")
+            bSuccess = False
         # s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         # s.settimeout(5)
 
@@ -236,7 +249,7 @@ class Proxy:
         #     bAvailable = False
         # s.close()
 
-        return bAvailable
+        return bSuccess
     
     def on_switchRemoteServer(self,conf):
         print("switching forwarding server")
@@ -465,6 +478,12 @@ class Proxy:
         if bRemoteAvailable:
             if (self.s.getpeername()[0] == forwardSocketIp):
                 print("package from remote growatt server")
+
+                print("")
+                print(">> testing command compilation:")
+                testCommand = self.compileCommand(conf,"ExportPower", 15)
+                print(testCommand)
+                print("")
                 
             elif(self.s.getpeername()[0] == (self.forward_to_fallback[0])):
                 print("package from local fallback server")
