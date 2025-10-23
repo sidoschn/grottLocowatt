@@ -13,7 +13,7 @@ class grottPRRCgpio:
         print("initiating PRRC control throug GPIO..")
         self.currentProxy = proxy
 
-        self.currentProxy.testprint()
+        self.currentProxy.testPrint()
 
         for pin in self.pins:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
