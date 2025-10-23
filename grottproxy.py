@@ -19,7 +19,7 @@ from datetime import datetime
 
 from grottdata import procdata, decrypt, format_multi_line, decryptEncryptPayload
 
-from grottPRRCcontrol import grottPRRCgpio
+from grottRRCRcontrol import grottRRCRgpio
 
 #import mqtt                       
 import paho.mqtt.publish as publish
@@ -152,7 +152,7 @@ class Proxy:
 
 
             print("Launching PRRCcontroller...")
-            PRRCcontroller = grottPRRCgpio(self)
+            PRRCcontroller = grottRRCRgpio(self)
 
 
 
