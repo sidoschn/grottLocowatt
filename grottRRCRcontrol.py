@@ -46,7 +46,7 @@ class grottRRCRgpio:
                 print("set export power to 60% (of max inverter power)")
             case [True, True, True, False]:
                 print("set export power to 100% (of max inverter power)")
-            case [True, True, True, False]:
+            case [True, True, True, True]:
                 print("RRCR is not connected, safety power down of export (to "+str(self.safetyPowerDownPercent)+"%)")
             case _:
                 print("undefined RRCR state, safety power down of export (to "+str(self.safetyPowerDownPercent)+"%)")
