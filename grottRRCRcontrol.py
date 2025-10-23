@@ -21,7 +21,7 @@ class grottRRCRgpio:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
         self.getGPIOstates()
-        #self.interpretGPIOstates()
+        self.interpretGPIOstates()
 
 
     def getGPIOstates(self):
