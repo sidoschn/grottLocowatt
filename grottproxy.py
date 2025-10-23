@@ -19,6 +19,8 @@ from datetime import datetime
 
 from grottdata import procdata, decrypt, format_multi_line, decryptEncryptPayload
 
+from grottPRRCcontrol import grottPRRCgpio
+
 #import mqtt                       
 import paho.mqtt.publish as publish
 
@@ -146,6 +148,16 @@ class Proxy:
         self.input_list.append(self.server)
         while 1:
             time.sleep(delay)
+
+
+
+            print("Launching PRRCcontroller...")
+            PRRCcontroller = grottPRRCgpio(self)
+
+
+
+
+
             ss = select.select
             
             #this is obsolete now
@@ -182,6 +194,8 @@ class Proxy:
                 else:
                     self.on_recv(conf)
 
+    def testPrint(self):
+        print("printed from Proxy class")
 
     def checkServerAvailability(self):
         bAvailable = False
