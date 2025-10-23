@@ -57,7 +57,7 @@ class grottRRCRgpio:
         
         if not (newExportLimit == self.currentExportLimit):
             
-            if self.currentProxy.loggerId is None:
+            if not hasattr(self.currentProxy, "loggerId"):
                 print("no logger has identified yet, waiting for logger...")
             else:
                 print("setting export limit to new limit...")
