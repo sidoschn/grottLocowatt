@@ -152,7 +152,7 @@ class Proxy:
 
 
             print("Launching PRRCcontroller...")
-            PRRCcontroller = grottRRCRgpio(self)
+            PRRCcontroller = grottRRCRgpio(self, conf)
 
 
 
