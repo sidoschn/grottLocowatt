@@ -55,6 +55,9 @@ class grottRRCRgpio:
                 print("undefined RRCR state, safety power down of export (to "+str(self.safetyPowerDownPercent)+"%)")
                 newExportLimit = self.safetyPowerDownPercent
         
+        print(newExportLimit)
+        print(self.currentExportLimit)
+
         if not (newExportLimit == self.currentExportLimit):
             
             if not hasattr(self.currentProxy, "loggerId"):
