@@ -38,15 +38,15 @@ class grottRRCRgpio:
     def interpretGPIOstates(self):
         print("interpreting GPIO states ...")
         match self.currentGPIOstates:
-            case [False, True, True, True]:
+            case [0, 1, 1, 1]:
                 print("set export power to 0% (of max inverter power)")
-            case [True, False, True, True]:
+            case [1, 0, 1, 1]:
                 print("set export power to 30% (of max inverter power)")
-            case [True, True, False, True]:
+            case [1, 1, 0, 1]:
                 print("set export power to 60% (of max inverter power)")
-            case [True, True, True, False]:
+            case [1, 1, 1, 0]:
                 print("set export power to 100% (of max inverter power)")
-            case [True, True, True, True]:
+            case [1, 1, 1, 1]:
                 print("RRCR is not connected, safety power down of export (to "+str(self.safetyPowerDownPercent)+"%)")
             case _:
                 print("undefined RRCR state, safety power down of export (to "+str(self.safetyPowerDownPercent)+"%)")
