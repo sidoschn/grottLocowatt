@@ -103,6 +103,7 @@ class Proxy:
     forwardToList= []
     remoteServerTimeout = 120
     bCommandAlreadySent = False
+    rrcrControlers = []
 
     def __init__(self, conf):
         print("\nGrott proxy mode started")
@@ -150,13 +151,10 @@ class Proxy:
             time.sleep(delay)
 
 
-
-            print("Launching PRRCcontroller...")
-            PRRCcontroller = grottRRCRgpio(self, conf)
-
-
-
-
+            for controller in self.rrcrControlers:
+                controller.getGPIOstates()
+                controller.interpretGPIOstates()
+            
 
             ss = select.select
             
@@ -538,7 +536,19 @@ class Proxy:
                 self.loggerId = loggerId
                 
                 print("Data logger has identified: "+ self.loggerId)
-
+                
+                if any(self.rrcrControlers.attachedToLogger == self.loggerId):
+                        print("data logger has no RRCR controller associated with it yet")
+                        print("Launching PRRCcontroller...")
+                        RRCRcontroller = grottRRCRgpio(self, conf)
+                        if not RRCRcontroller == None:
+                            print("controller launced, appending it to controller list")
+                            self.rrcrControlers.append(RRCRcontroller)
+                        else:
+                            print("controller could not be launched")
+                
+                        
+                
                 # if not self.bCommandAlreadySent:
                 #     self.bCommandAlreadySent = True
                 #     print("")

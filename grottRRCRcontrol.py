@@ -9,6 +9,7 @@ class grottRRCRgpio:
     currentGPIOstates = [None]*4
     safetyPowerDownPercent = 5
     currentExportLimit = None
+    attachedToLogger = None
     
 
     def __init__(self, proxy, conf):
@@ -17,11 +18,16 @@ class grottRRCRgpio:
         self.currentConfig = conf
         self.currentProxy.testPrint()
 
+        if not hasattr(self.currentProxy, "loggerId"):
+                print("no logger has identified yet, initialization failed...")
+                return
+
         for pin in self.pins:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
         self.getGPIOstates()
         self.interpretGPIOstates()
+        return self
 
 
     def getGPIOstates(self):
