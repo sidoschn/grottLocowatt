@@ -17,7 +17,7 @@ class grottRRCRgpio:
         self.currentProxy = proxy
         self.currentConfig = conf
         #self.currentProxy.testPrint()
-
+        self.attachedToLogger = proxy.loggerId
         for pin in self.pins:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
