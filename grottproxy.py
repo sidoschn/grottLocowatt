@@ -544,8 +544,8 @@ class Proxy:
                 
                 bRRCRattached = False
                 for controller in self.rrcrControlers:
-                    print(loggerId)
-                    print(controller.attachedToLogger)
+                    #print(loggerId)
+                    #print(controller.attachedToLogger)
                     if controller.attachedToLogger == loggerId:
                         print("attached RRCR controller found")
                         bRRCRattached = True
