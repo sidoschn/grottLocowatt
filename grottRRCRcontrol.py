@@ -10,6 +10,7 @@ class grottRRCRgpio:
     safetyPowerDownPercent = 5
     currentExportLimit = None
     attachedToLogger = None
+    bRRCRwasEverConnected = False
     
 
     def __init__(self, proxy, conf):
@@ -40,19 +41,27 @@ class grottRRCRgpio:
         match self.currentGPIOstates:
             case [0, 1, 1, 1]:
                 #print("set export power to 0% (of max inverter power)")
+                self.bRRCRwasEverConnected = True
                 newExportLimit = 0
             case [1, 0, 1, 1]:
                 #print("set export power to 30% (of max inverter power)")
+                self.bRRCRwasEverConnected = True
                 newExportLimit = 30
             case [1, 1, 0, 1]:
                 #print("set export power to 60% (of max inverter power)")
+                self.bRRCRwasEverConnected = True
                 newExportLimit = 60
             case [1, 1, 1, 0]:
                 #print("set export power to 100% (of max inverter power)")
+                self.bRRCRwasEverConnected = True
                 newExportLimit = 100
             case [1, 1, 1, 1]:
-                print("no RRCR is connected")
-                newExportLimit = self.currentExportLimit 
+                if self.bRRCRwasEverConnected:
+                    print("RRCR has disconnected! Maintaining last set export limit: "+ str(self.currentExportLimit)+"% (of max inverter power)")
+                    newExportLimit = self.currentExportLimit 
+                else:
+                    print("no RRCR is connected")
+                    newExportLimit = self.currentExportLimit 
             case _:
                 #print("undefined RRCR state, safety power down of export (to "+str(self.safetyPowerDownPercent)+"%)")
                 newExportLimit = self.safetyPowerDownPercent

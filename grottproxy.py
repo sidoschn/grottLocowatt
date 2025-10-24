@@ -232,6 +232,11 @@ class Proxy:
                 crc16 = libscrc.modbus(byCommand)
                 
                 fullCommand = byCommand + crc16.to_bytes(2, "big")
+            case "EnableExportLimit":
+                print("this needs implementing!")
+                # this still needs implementing! 
+                # this should be able to enable/disable export limiting
+
             case _:
                 print("unknown command, aborting compilation...")
                 fullCommand = b''
