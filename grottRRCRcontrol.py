@@ -16,7 +16,7 @@ class grottRRCRgpio:
         print("initiating PRRC control through GPIO..")
         self.currentProxy = proxy
         self.currentConfig = conf
-        self.currentProxy.testPrint()
+        #self.currentProxy.testPrint()
 
         for pin in self.pins:
             GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
@@ -27,7 +27,7 @@ class grottRRCRgpio:
 
 
     def getGPIOstates(self):
-        print("getting GPIO states ...")
+       # print("getting GPIO states ...")
         
         for i in range(len(self.pins)):
             self.currentGPIOstates[i] = GPIO.input(self.pins[i])
@@ -36,7 +36,7 @@ class grottRRCRgpio:
         
 
     def interpretGPIOstates(self):
-        print("interpreting GPIO states ...")
+        #print("interpreting GPIO states ...")
         match self.currentGPIOstates:
             case [0, 1, 1, 1]:
                 #print("set export power to 0% (of max inverter power)")
