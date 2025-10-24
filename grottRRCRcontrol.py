@@ -32,7 +32,7 @@ class grottRRCRgpio:
         for i in range(len(self.pins)):
             self.currentGPIOstates[i] = GPIO.input(self.pins[i])
         
-        print(self.currentGPIOstates)
+        #print(self.currentGPIOstates)
         
 
     def interpretGPIOstates(self):
@@ -57,8 +57,8 @@ class grottRRCRgpio:
                 print("undefined RRCR state, safety power down of export (to "+str(self.safetyPowerDownPercent)+"%)")
                 newExportLimit = self.safetyPowerDownPercent
         
-        print(newExportLimit)
-        print(self.currentExportLimit)
+        #print(newExportLimit)
+        #print(self.currentExportLimit)
 
         if not (newExportLimit == self.currentExportLimit):
             
