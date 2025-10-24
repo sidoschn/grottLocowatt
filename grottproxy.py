@@ -537,7 +537,7 @@ class Proxy:
                 
                 print("Data logger has identified: "+ self.loggerId)
                 
-                if any(controller for controller in self.rrcrControlers if controller.attachedToLogger == self.loggerId):
+                if not any(controller for controller in self.rrcrControlers if controller.attachedToLogger == self.loggerId):
                         print("data logger has no RRCR controller associated with it yet")
                         print("Launching PRRCcontroller...")
                         RRCRcontroller = grottRRCRgpio(self, conf)
