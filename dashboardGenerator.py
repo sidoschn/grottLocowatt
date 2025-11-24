@@ -21,7 +21,7 @@ def generateMinimalDashboard(definedkey, deviceid, jsondate):
         yaml.dump(minimalDashboard, outfile)
 
 
-def generateDashboard(definedkey, deviceid, jsondate, recordlayout):
+def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontrollers):
     bFirstrun = False
     if not os.path.isfile(locoWattYamlDashboardLocation):
         print("first run conditions detected!")
