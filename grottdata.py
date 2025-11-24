@@ -518,8 +518,14 @@ def procdata(conf,data, rRCRcontrollers):
             #jsonobj["data"][key] = definedkey[key]
 
         for controller in rRCRcontrollers:
-            jsonobj["data"][controller.attachedToLogger]["bIsConnected"] = controller.bRRCRisConnected
-            jsonobj["data"][controller.attachedToLogger]["controllerValue"] = controller.currentExportLimit
+            
+            #jsonobj["data"].update({controller.attachedToLogger: {"bIsConnected": controller.bRRCRisConnected, "controllerValue":controller.currentExportLimit}})
+            #jsonobj["data"][controller.attachedToLogger]["bIsConnected"] = controller.bRRCRisConnected
+            #jsonobj["data"][controller.attachedToLogger]["controllerValue"] = controller.currentExportLimit
+
+            jsonobj["data"].update({"RRCRat"+controller.attachedToLogger+"Connected": controller.bRRCRisConnected})
+            jsonobj["data"].update({"RRCRat"+controller.attachedToLogger+"Limit": controller.currentExportLimit})
+
 
         jsonmsg = json.dumps(jsonobj) 
         
