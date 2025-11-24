@@ -523,7 +523,11 @@ def procdata(conf,data, rRCRcontrollers):
             #jsonobj["data"][controller.attachedToLogger]["bIsConnected"] = controller.bRRCRisConnected
             #jsonobj["data"][controller.attachedToLogger]["controllerValue"] = controller.currentExportLimit
 
-            jsonobj["data"].update({"RRCRat"+controller.attachedToLogger+"Connected": controller.bRRCRisConnected})
+            if controller.bRRCRisConnected:
+                jsonobj["data"].update({"RRCRat"+controller.attachedToLogger+"Connected": "ON"})
+            else:
+                jsonobj["data"].update({"RRCRat"+controller.attachedToLogger+"Connected": "OFF"})
+                
             jsonobj["data"].update({"RRCRat"+controller.attachedToLogger+"Limit": controller.currentExportLimit})
 
 
