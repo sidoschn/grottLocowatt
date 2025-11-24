@@ -14,7 +14,7 @@ class Conf :
         self.verrel = vrm
 
         #Set default variables 
-        self.verbose = False
+        self.verbose = True
         self.trace = False
         self.cfgfile = "grott.ini"
         self.minrecl = 100
