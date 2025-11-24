@@ -25,7 +25,7 @@ def keyPrinter(dictionary):
 #     return sensorList
 
 #make a new sensor list from a config dictionary
-def sensorListMaker(configDictionary, pvSerial, jsondate):
+def sensorListMaker(configDictionary, pvSerial, jsondate, rRCRcontrollers):
     sensorList = []
     #print(configDictionary)
 
@@ -98,6 +98,19 @@ def sensorListMaker(configDictionary, pvSerial, jsondate):
     
     # add custom and composit sensors here:
 
+    # add sensors for RRCR controllers here:
+    for controller in rRCRcontrollers:
+        sensorUnit = "%"
+        sensorType = "battery"
+        stateClass = "measurement"
+        newSensor = {'sensor':{'name':"exportLimitPercent",'device_class': sensorType, 'unit_of_measurement':sensorUnit, 'unique_id':pvSerial+"exportLimitPercent",'state_class':stateClass, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ float(value_json.data.'+ controller.attachedToLogger +'.controllerValue) }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+        sensorList.append(newSensor)
+
+        sensorType = "power"
+        newSensor = {'sensor':{'name':"isRRCRactive",'device_class': sensorType, 'unique_id':pvSerial+"isRRCRactive", 'state_class':stateClass, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ (value_json.data.'+ controller.attachedToLogger +'.bIsConnected) }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+        sensorList.append(newSensor)
+
+
     # add power import-export sensor with + for export and - for import
     if ("ptogridtotal" in configDictionary and "ptousertotal" in configDictionary):
         #print(configDictionary["ptogridtotal"])
@@ -130,7 +143,7 @@ def writeSensorsToFile(sensorList, filePath):
         yaml.dump(sensorList,outfile)
         print("sensor update written sensors to "+ filePath)
 
-def updateSensors(configDictionary, pvSerial, deviceid, jsondate):
+def updateSensors(configDictionary, pvSerial, deviceid, jsondate, rRCRcontrollers):
     print("checking if sensors need updating")
     
     if deviceid==pvSerial:
@@ -141,7 +154,7 @@ def updateSensors(configDictionary, pvSerial, deviceid, jsondate):
     if bSensorsNeedUpdating:
         print("updating sensors")
         print("for device: "+deviceid)
-        newSensorList = sensorListMaker(configDictionary, deviceid, jsondate)
+        newSensorList = sensorListMaker(configDictionary, deviceid, jsondate, rRCRcontrollers)
         writeSensorsToFile(newSensorList, locoWattYamlSensorsLocation)
 
 

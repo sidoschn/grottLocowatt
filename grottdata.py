@@ -107,7 +107,7 @@ def str2bool(defstr):
         return(defret)
     else : return()
 
-def procdata(conf,data):    
+def procdata(conf,data, rRCRcontrollers):    
     if conf.verbose: 
         print("\t - " + "Growatt original Data:") 
         print(format_multi_line("\t\t ", data))
@@ -301,6 +301,8 @@ def procdata(conf,data):
                             if float(logdict[conf.recorddict[layout][keyword]["pos"]-1]) < 0 : 
                                 definedkey[keyword] = logdict[conf.recorddict[layout][keyword]["pos"]-1]    
                             else : definedkey[keyword] = 0
+                        if keytype == "self":
+                            definedkey[keyword] = conf.recorddict[layout][keyword]["value"]
                 except: 
                     if conf.verbose : print("\t - grottdata - error in keyword processing : ", keyword + " ,data processing stopped") 
                     return(8) 
@@ -514,7 +516,11 @@ def procdata(conf,data):
             jsonobj["data"][key] = definedkey[key]
 
             #jsonobj["data"][key] = definedkey[key]
-                     
+
+        for controller in rRCRcontrollers:
+            jsonobj["data"][controller.attachedToLogger]["bIsConnected"] = controller.bRRCRisConnected
+            jsonobj["data"][controller.attachedToLogger]["controllerValue"] = controller.currentExportLimit
+
         jsonmsg = json.dumps(jsonobj) 
         
         if conf.verbose:
@@ -557,9 +563,9 @@ def procdata(conf,data):
         # device generation is performed here
         
 
-        sensorGenerator.updateSensors(conf.recorddict[layout], definedkey["pvserial"], deviceid, jsondate)
+        sensorGenerator.updateSensors(conf.recorddict[layout], definedkey["pvserial"], deviceid, jsondate, rRCRcontrollers)
 
-        dashboardGenerator.generateDashboard(definedkey, deviceid, jsondate, conf.recorddict[layout])
+        dashboardGenerator.generateDashboard(definedkey, deviceid, jsondate, conf.recorddict[layout], rRCRcontrollers)
 
         # process pvoutput if enabled
         if conf.pvoutput :      

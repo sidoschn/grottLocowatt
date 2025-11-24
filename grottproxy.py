@@ -536,7 +536,7 @@ class Proxy:
         self.channel[self.s].send(data)
         if len(data) > conf.minrecl :
             #process received data
-            loggerId = procdata(conf,data)
+            loggerId = procdata(conf,data,self.rrcrControlers)
             if not (loggerId == None):
                 self.loggerId = loggerId
                 

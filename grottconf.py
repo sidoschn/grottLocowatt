@@ -89,6 +89,13 @@ class Conf :
         
         print("Grott Growatt logging monitor : " + self.verrel)    
 
+        #-- this should not be located here, only static stuff should be in the config
+        #RRCR controls 
+        #self.safetyPowerDownPercent = []
+        #self.bRRCRisConnected = []
+        #self.currentExportLimit = []
+        #self.RRCRcontrollers = []
+
         #Set parm's 
         #prio: 1.Command line parms, 2.env. variables, 3.config file 4.program default
         #process command settings that set processing values (verbose, trace, output, config, nomqtt)
