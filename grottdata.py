@@ -183,7 +183,7 @@ def procdata(conf,data):
         print("\t - " + 'Growatt plain data:')
         print(format_multi_line("\t\t ", result_string))
         #debug only: print(result_string)
-
+    print(format_multi_line("\t\t ", result_string))
     # test position : 
     # print(result_string.find('0074' ))
 
