@@ -185,7 +185,7 @@ def procdata(conf,data):
         #debug only: print(result_string)
     
     with open("debugOutDecryptedDataString.txt", "w") as debugOutFile:
-        debugOutFile.writ(result_string)
+        debugOutFile.write(result_string)
     
     print(format_multi_line("\t\t ", result_string))
     # test position : 
