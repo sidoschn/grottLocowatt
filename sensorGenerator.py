@@ -108,7 +108,7 @@ def sensorListMaker(configDictionary, pvSerial, jsondate, rRCRcontrollers):
 
         #sensorType = "power"
         #newSensor = {'sensor':{'name':"isRRCRactive",'device_class': sensorType, 'unique_id':pvSerial+"isRRCRactive", 'state_class':stateClass, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ (value_json.data.RRCRat'+controller.attachedToLogger+'Connected) }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
-        newSensor = {'binary_sensor':{'name':"isRRCRactive", 'device_class': 'running', 'payload_off': 'OFF', 'payload_on':'ON','unique_id':pvSerial+"isRRCRactive", 'state_class':stateClass, 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ (value_json.data.RRCRat'+controller.attachedToLogger+'Connected) }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
+        newSensor = {'binary_sensor':{'name':"isRRCRactive", 'device_class': 'running', 'payload_off': 'OFF', 'payload_on':'ON','unique_id':pvSerial+"isRRCRactive", 'state_topic':'energy/growatt/'+pvSerial, 'value_template':'{{ (value_json.data.RRCRat'+controller.attachedToLogger+'Connected) }}', 'device': {'identifiers': pvSerial, 'name': 'Growatt '+pvSerial}}}
         sensorList.append(newSensor)
 
 
