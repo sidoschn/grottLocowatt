@@ -82,11 +82,11 @@ class grottRRCRgpio:
             else:
                 print("setting export limit to "+str(newExportLimit)+"% (of max inverter power)")
                 self.currentExportLimit = newExportLimit
-                #command = self.currentProxy.compileCommand(self.currentProxy,self.currentConfig ,"ExportPower", newExportLimit) #still disabled for testing
-                #command = self.currentProxy.compileCommand(self.currentConfig ,"ExportPower", newExportLimit) #still disabled for testing
-                #print(command)
+                command = self.currentProxy.compileCommand(self.currentProxy,self.currentConfig ,"ExportPower", newExportLimit) #was disabled for testing
+                ##command = self.currentProxy.compileCommand(self.currentConfig ,"ExportPower", newExportLimit) #still disabled for testing
+                print(command)
                 
-                #self.currentProxy.injectCommand(self.currentConfig, command) #still disabled for testing
+                self.currentProxy.injectCommand(self.currentConfig, command) #was disabled for testing
         else:
             print("no change to export limit required")
             
