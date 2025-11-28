@@ -169,7 +169,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
         dashboardConfig["views"][0]["sections"][0]= newSection
 
         # add new badges to dashboard
-        dashboardConfig["views"][0]["badges"][0]= newBadges #badges seem to be not functional!? 
+        #dashboardConfig["views"][0]["badges"][0]= newBadges #badges seem to be not functional!? 
         
         with open(locoWattYamlDashboardLocation, 'w') as outfile:
             yaml.dump(dashboardConfig, outfile)
