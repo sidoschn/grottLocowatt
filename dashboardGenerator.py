@@ -51,7 +51,14 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerin", "name":"PV Eingangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":maximumSystemPower}) #total input of PV panels
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerout", "name":"Inverter Ausgangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":maximumSystemPower}) #total output of inverter
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptoloadtotal", "name":"Eigenverbrauch", "grid_options":{"columns":6,"rows":"auto"}, "max":maximumSystemPower}) #total self conumed power
-        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pgridimportexport", "name":"Netz Exportleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-maximumSystemPower,"red":(-maximumSystemPower-10)}, "max":maximumSystemPower, "min":-maximumSystemPower, "needle":"true"}) #power exported to grid
+        
+        currentExportLimitPercent = 100
+        for controller in rRCRcontrollers:
+            if controller.currentExportLimit is not None:
+                currentExportLimitPercent = controller.currentExportLimit
+        
+
+        newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pgridimportexport", "name":"Netz Exportleistung", "grid_options":{"columns":6,"rows":"auto"}, "severity":{"green":0,"yellow":-maximumSystemPower,"red":(maximumSystemPower*(currentExportLimitPercent/100))}, "max":maximumSystemPower, "min":-maximumSystemPower, "needle":"true"}) #power exported to grid
         
         # battery related cards:
         # checking for battery states before displaying the battery cards
@@ -123,6 +130,8 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
 
         newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Stromstärken", "entities":entitiesToAdd, "name":"PV Tracker Stromstärken", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
 
+        # -- pv RRCR controller stuff
+
         entitiesToAdd =[]
         for controller in rRCRcontrollers:
             i = 1
@@ -131,11 +140,24 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
             except:
                 asdf = 1
             i = i + 1
-
         
         newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entities": entitiesToAdd, "name":"Rundsteuerempfänger Status", "hours_to_show" : 48})
-            #newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Stromstärken", "entities":entitiesToAdd, "name":"PV Tracker Stromstärken", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
+            
+
+        entitiesToAdd =[]
+        for controller in rRCRcontrollers:
+            i = 1
+            try:
+                entitiesToAdd.append({"entity":binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "name":"Export limit " + str(i)})
+            except:
+                asdf = 1
+            i = i + 1
         
+        newSection["cards"].append({"type":"history-graph", "title":"Export Limit", "entities": entitiesToAdd, "name":"Export Limit", "hours_to_show" : 48})
+            
+
+
+
         for controller in rRCRcontrollers:
             newBadges.append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
             newBadges.append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
@@ -147,7 +169,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
         dashboardConfig["views"][0]["sections"][0]= newSection
 
         # add new badges to dashboard
-        dashboardConfig["views"][0]["badges"][0]= newBadges
+        dashboardConfig["views"][0]["badges"][0]= newBadges #badges seem to be not functional!? 
         
         with open(locoWattYamlDashboardLocation, 'w') as outfile:
             yaml.dump(dashboardConfig, outfile)
