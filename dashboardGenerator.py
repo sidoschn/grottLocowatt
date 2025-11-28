@@ -123,14 +123,16 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
         newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Stromstärken", "entities":entitiesToAdd, "name":"PV Tracker Stromstärken", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
 
         entitiesToAdd =[]
-        for i in range(10):
+        for controller in rRCRcontrollers:
+            i = 1
             try:
-                entitiesToAdd.append({"entity":sensorNameTag+"pv"+str(i)+"current", "name":"Tracker " + str(i)})
+                entitiesToAdd.append({"entity":binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "name":"RRCR Controller " + str(i)})
             except:
                 asdf = 1
+            i = i + 1
 
-        for controller in rRCRcontrollers:
-            newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "name":"RRCR Status", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":2}})
+        
+        newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entities": entitiesToAdd, "name":"Rundsteuerempfänger Status", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":2}})
             #newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Stromstärken", "entities":entitiesToAdd, "name":"PV Tracker Stromstärken", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
         
         
