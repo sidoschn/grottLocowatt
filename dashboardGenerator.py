@@ -37,7 +37,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
         binSensorNameTag = "binary_sensor.growatt_"+deviceid.lower()+"_"
 
         # initialize new section
-        newSection = {"type":"grid", "cards":[], "badges":[]}
+        newSection = {"type":"grid", "cards":[]}
         
         #additional sensors needed:
         #grid import export sensor (with +-)
@@ -132,7 +132,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
             i = i + 1
 
         
-        newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entities": entitiesToAdd, "name":"Rundsteuerempfänger Status", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":2}})
+        newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entities": entitiesToAdd, "name":"Rundsteuerempfänger Status", "hours_to_show" : 48})
             #newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Stromstärken", "entities":entitiesToAdd, "name":"PV Tracker Stromstärken", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
         
         for controller in rRCRcontrollers:
