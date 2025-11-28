@@ -133,35 +133,35 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
 
         # -- pv RRCR controller stuff
 
-        entitiesToAdd =[]
-        for controller in rRCRcontrollers:
-            i = 1
-            try:
-                entitiesToAdd.append({"entity":binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "name":"RRCR Controller " + str(i)})
-            except:
-                asdf = 1
-            i = i + 1
+        # entitiesToAdd =[]
+        # for controller in rRCRcontrollers:
+        #     i = 1
+        #     try:
+        #         entitiesToAdd.append({"entity":binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "name":"RRCR Controller " + str(i)})
+        #     except:
+        #         asdf = 1
+        #     i = i + 1
         
-        if not len(entitiesToAdd)==0:
-            newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entities": entitiesToAdd, "name":"Rundsteuerempfänger Status", "hours_to_show" : 48})
+        # if not len(entitiesToAdd)==0:
+        #     newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entities": entitiesToAdd, "name":"Rundsteuerempfänger Status", "hours_to_show" : 48})
             
 
-        entitiesToAdd =[]
-        for controller in rRCRcontrollers:
-            i = 1
-            try:
-                entitiesToAdd.append({"entity":sensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "name":"Export limit " + str(i)})
-            except:
-                asdf = 1
-            i = i + 1
-        if not len(entitiesToAdd)==0:
-            newSection["cards"].append({"type":"history-graph", "title":"Export Limit", "entities": entitiesToAdd, "name":"Export Limit", "min_y_axis": "0", "max_y_axis":"100" , "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
+        # entitiesToAdd =[]
+        # for controller in rRCRcontrollers:
+        #     i = 1
+        #     try:
+        #         entitiesToAdd.append({"entity":sensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "name":"Export limit " + str(i)})
+        #     except:
+        #         asdf = 1
+        #     i = i + 1
+        # if not len(entitiesToAdd)==0:
+        #     newSection["cards"].append({"type":"history-graph", "title":"Export Limit", "entities": entitiesToAdd, "name":"Export Limit", "min_y_axis": "0", "max_y_axis":"100" , "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
             
 
 
 
         for controller in rRCRcontrollers:
-            dashboardConfig["views"][0]["badges"].append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
+            dashboardConfig["views"][0]["badges"].append({"type":"entity", "name": "Rundsteuerempfänger", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
             dashboardConfig["views"][0]["badges"].append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": sensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
             #newSection["badges"].append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
             #newSection["badges"].append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
