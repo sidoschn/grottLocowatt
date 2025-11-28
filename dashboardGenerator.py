@@ -130,7 +130,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
                 asdf = 1
 
         for controller in rRCRcontrollers:
-            newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entity": binSensorNameTag+controller.attachedToLogger+"isrrcractive", "name":"RRCR Status", "hours_to_show" : 48, "grid_options":{"columns":12,"rows":2}})
+            newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "name":"RRCR Status", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":2}})
             #newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Stromstärken", "entities":entitiesToAdd, "name":"PV Tracker Stromstärken", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
         
         
