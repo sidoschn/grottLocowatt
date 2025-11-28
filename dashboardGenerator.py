@@ -31,7 +31,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
     try:
         #minimalDashboard = {"views":[{"title":"Grott Generated Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
         
-        dashboardConfig = {"views":[{"title":"Solar Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
+        dashboardConfig = {"views":[{"title":"Solar Dashboard","badges":[], "sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
 
         sensorNameTag = "sensor.growatt_"+deviceid.lower()+"_"
         binSensorNameTag = "binary_sensor.growatt_"+deviceid.lower()+"_"
@@ -52,6 +52,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"pvpowerout", "name":"Inverter Ausgangsleistung", "grid_options":{"columns":6,"rows":"auto"}, "max":maximumSystemPower}) #total output of inverter
         newSection["cards"].append({"type":"gauge", "entity":sensorNameTag+"ptoloadtotal", "name":"Eigenverbrauch", "grid_options":{"columns":6,"rows":"auto"}, "max":maximumSystemPower}) #total self conumed power
         
+        # visualize the export limit in the coloring of the export/import gauge
         currentExportLimitPercent = 100
         for controller in rRCRcontrollers:
             if controller.currentExportLimit is not None:
@@ -159,18 +160,18 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
 
 
 
-        # for controller in rRCRcontrollers:
-        #     newBadges.append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
-        #     newBadges.append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
-        #     #newSection["badges"].append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
-        #     #newSection["badges"].append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
+        for controller in rRCRcontrollers:
+            newBadges.append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
+            newBadges.append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
+            #newSection["badges"].append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
+            #newSection["badges"].append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
         
         
         # add new section to dashboard
         dashboardConfig["views"][0]["sections"][0]= newSection
 
         # add new badges to dashboard
-        #dashboardConfig["views"][0]["badges"][0]= newBadges #badges seem to be not functional!? 
+        dashboardConfig["views"][0]["badges"][0]= newBadges #badges seem to be not functional!? 
         
         with open(locoWattYamlDashboardLocation, 'w') as outfile:
             yaml.dump(dashboardConfig, outfile)
