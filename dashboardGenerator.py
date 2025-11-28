@@ -141,7 +141,8 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
                 asdf = 1
             i = i + 1
         
-        newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entities": entitiesToAdd, "name":"Rundsteuerempfänger Status", "hours_to_show" : 48})
+        if not len(entitiesToAdd)==0:
+            newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entities": entitiesToAdd, "name":"Rundsteuerempfänger Status", "hours_to_show" : 48})
             
 
         entitiesToAdd =[]
@@ -152,8 +153,8 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
             except:
                 asdf = 1
             i = i + 1
-        
-        newSection["cards"].append({"type":"history-graph", "title":"Export Limit", "entities": entitiesToAdd, "name":"Export Limit", "hours_to_show" : 48})
+        if not len(entitiesToAdd)==0:
+            newSection["cards"].append({"type":"history-graph", "title":"Export Limit", "entities": entitiesToAdd, "name":"Export Limit", "hours_to_show" : 48})
             
 
 
