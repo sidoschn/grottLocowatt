@@ -38,7 +38,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
 
     # initialize new section
     newSection = {"type":"grid", "cards":[]}
-    newBadges = []
+    #newBadges = []
 
     #additional sensors needed:
     #grid import export sensor (with +-)
@@ -161,17 +161,18 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
 
 
     for controller in rRCRcontrollers:
-        newBadges.append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
-        newBadges.append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
+        dashboardConfig["views"][0]["badges"].append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
+        dashboardConfig["views"][0]["badges"].append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
         #newSection["badges"].append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
         #newSection["badges"].append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
     
     
+
     # add new section to dashboard
     dashboardConfig["views"][0]["sections"][0]= newSection
 
     # add new badges to dashboard
-    dashboardConfig["views"][0]["badges"][0]= newBadges #badges seem to be not functional!? 
+    #dashboardConfig["views"][0]["badges"][0]= newBadges #badges seem to be not functional!? 
     
     with open(locoWattYamlDashboardLocation, 'w') as outfile:
         yaml.dump(dashboardConfig, outfile)
