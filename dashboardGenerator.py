@@ -155,7 +155,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
                 asdf = 1
             i = i + 1
         if not len(entitiesToAdd)==0:
-            newSection["cards"].append({"type":"history-graph", "title":"Export Limit", "entities": entitiesToAdd, "name":"Export Limit", "hours_to_show" : 48})
+            newSection["cards"].append({"type":"history-graph", "title":"Export Limit", "entities": entitiesToAdd, "name":"Export Limit", "min_y_axis": "0", "max_y_axis":"100" , "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
             
 
 
