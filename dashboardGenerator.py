@@ -34,9 +34,10 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
         dashboardConfig = {"views":[{"title":"Solar Dashboard","sections":[{"type":"grid", "cards":[{"type":"heading", "heading":"No Inverters detected yet"}]}]}]}
 
         sensorNameTag = "sensor.growatt_"+deviceid.lower()+"_"
+        binSensorNameTag = "binary_sensor.growatt_"+deviceid.lower()+"_"
 
         # initialize new section
-        newSection = {"type":"grid", "cards":[]}
+        newSection = {"type":"grid", "cards":[], "badges":[]}
         
         #additional sensors needed:
         #grid import export sensor (with +-)
@@ -120,6 +121,17 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
                 asdf = 1
 
         newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Stromstärken", "entities":entitiesToAdd, "name":"PV Tracker Stromstärken", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
+
+        entitiesToAdd =[]
+        for i in range(10):
+            try:
+                entitiesToAdd.append({"entity":sensorNameTag+"pv"+str(i)+"current", "name":"Tracker " + str(i)})
+            except:
+                asdf = 1
+
+        for controller in rRCRcontrollers:
+            newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entity": binSensorNameTag+controller.attachedToLogger+"isrrcractive", "name":"RRCR Status", "hours_to_show" : 48, "grid_options":{"columns":12,"rows":2}})
+            #newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Stromstärken", "entities":entitiesToAdd, "name":"PV Tracker Stromstärken", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
         
         
         
