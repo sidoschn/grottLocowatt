@@ -150,7 +150,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
         for controller in rRCRcontrollers:
             i = 1
             try:
-                entitiesToAdd.append({"entity":binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "name":"Export limit " + str(i)})
+                entitiesToAdd.append({"entity":sensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "name":"Export limit " + str(i)})
             except:
                 asdf = 1
             i = i + 1
@@ -162,7 +162,7 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
 
         for controller in rRCRcontrollers:
             dashboardConfig["views"][0]["badges"].append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
-            dashboardConfig["views"][0]["badges"].append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
+            dashboardConfig["views"][0]["badges"].append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": sensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
             #newSection["badges"].append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
             #newSection["badges"].append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
         
