@@ -135,6 +135,9 @@ def generateDashboard(definedkey, deviceid, jsondate, recordlayout, rRCRcontroll
         newSection["cards"].append({"type":"history-graph", "title":"Rundsteuerempfänger Status", "entities": entitiesToAdd, "name":"Rundsteuerempfänger Status", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":2}})
             #newSection["cards"].append({"type":"history-graph", "title":"PV Tracker Stromstärken", "entities":entitiesToAdd, "name":"PV Tracker Stromstärken", "hours_to_show" : 48, "grid_options":{"columns":13,"rows":4}})
         
+        for controller in rRCRcontrollers:
+            newSection["badges"].append({"type":"entity", "name": "Export Limiter", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"isrrcractive", "icon": "mdi:transmission-tower-export"})
+            newSection["badges"].append({"type":"entity", "name": "Export Limit", "show_name": "true", "show_icon": "true", "entity": binSensorNameTag+controller.attachedToLogger.lower()+"exportlimitpercent", "icon": "mdi:transmission-tower-export"})
         
         
         # add new section to dashboard
