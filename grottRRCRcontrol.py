@@ -88,5 +88,5 @@ class grottRRCRgpio:
                 
                 self.currentProxy.injectCommand(self.currentConfig, command) #was disabled for testing
         else:
-            print("no change to export limit required")
+            print("no change to export limit required, current limit is ", self.currentExportLimit ,"%")
             
