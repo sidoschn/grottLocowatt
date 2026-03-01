@@ -1,7 +1,8 @@
 import yaml
 import os
 
-locoWattYamlSensorsLocation = "/home/admin/HA/config/mqttSensors.yaml"
+locoWattYamlSensorsLocation = "/home/admin/HA/config/mqttSensors/mqttSensors.yaml"
+locoWattYamlSensorsLocationFolder = "/home/admin/HA/config/mqttSensors/"
 
 
 def keyPrinter(dictionary):
@@ -140,6 +141,9 @@ def sensorListMaker(configDictionary, pvSerial, jsondate, rRCRcontrollers):
 
 
 def writeSensorsToFile(sensorList, filePath):
+    if not os.path.exists(locoWattYamlSensorsLocationFolder):
+        os.mkdir(locoWattYamlSensorsLocationFolder)
+
     with open(filePath,'w') as outfile:
         yaml.dump(sensorList,outfile)
         print("sensor update written sensors to "+ filePath)
