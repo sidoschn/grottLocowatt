@@ -368,6 +368,7 @@ class Proxy:
         print(">>header:")
         header = "".join("{:02x}".format(n) for n in data[0:8])
         print(header)
+        print(bytes.fromhex(data[0:16]))
         # print(">> raw data:")
         # print(data)
         # print(">> reforamtted data:")
