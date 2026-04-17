@@ -20,6 +20,7 @@ from datetime import datetime
 from grottdata import procdata, decrypt, format_multi_line, decryptEncryptPayload
 
 from grottRRCRcontrol import grottRRCRgpio
+from grottNAcontrol import grottNAgpio
 
 #import mqtt                       
 import paho.mqtt.publish as publish
@@ -104,6 +105,7 @@ class Proxy:
     remoteServerTimeout = 120
     bCommandAlreadySent = False
     rrcrControlers = []
+    naController = grottNAgpio()
 
     def __init__(self, conf):
         print("\nGrott proxy mode started")
@@ -613,7 +615,9 @@ class Proxy:
                         else:
                             print("controller could not be launched")
                 
-                        
+                if not(self.naController.attachedToLogger == loggerId):
+                    self.naController.setProxy(self)
+                    self.naController.setConfig(conf)
                 
                 # if not self.bCommandAlreadySent:
                 #     self.bCommandAlreadySent = True
