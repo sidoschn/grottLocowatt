@@ -46,7 +46,7 @@ class grottNAgpio:
     def getGPIOstate(self):
         
         self.currentGPIOstate = GPIO.input(self.pin)
-        print(self.currentGPIOstate)
+        #print(self.currentGPIOstate)
         
         
 
