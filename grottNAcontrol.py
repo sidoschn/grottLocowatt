@@ -23,11 +23,11 @@ class grottNAgpio:
         
         GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        GPIO.add_event_detect(self.pin, GPIO.BOTH, callback=self.pinEdge,bouncetime=100)
+        #GPIO.add_event_detect(self.pin, GPIO.BOTH, callback=self.pinEdge,bouncetime=100)
         # GPIO.add_event_detect(self.pin, GPIO.RISING, callback=self.pinRising,bouncetime=100)
         # --switched from looped daemon thread to GPIO event handler
-        # naObserverThread = threading.Thread(target=self.nAobserver, daemon=True)
-        # naObserverThread.start()
+        naObserverThread = threading.Thread(target=self.nAobserver, daemon=True)
+        naObserverThread.start()
 
     def nAobserver (self): #legacy
         print("NA observer is started")
