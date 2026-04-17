@@ -232,6 +232,52 @@ class Proxy:
                 crc16 = libscrc.modbus(byCommand)
                 
                 fullCommand = byCommand + crc16.to_bytes(2, "big")
+            case "TurnOff":
+                print("compiling command setting "+ commandType+ " to " + str(value)+"%")
+                byHeader = bytes.fromhex("0001000600240106")
+
+                if value:
+                    numericalValue = 0
+                else:
+                    numericalValue = 1
+
+                try:
+                    deviceId = self.loggerId #still need to actually find this
+                    byDeviceId = bytes(deviceId,"utf-8")
+                except:
+                    print("no logger found yet! aborting injection...")
+                    fullCommand = b''
+                    return fullCommand
+                byEmptyPart = bytes.fromhex("00"*20)
+                byCommandRegister = int.to_bytes(0,2,"big")
+                byExportLimitPercent = int.to_bytes(numericalValue,2,"big")
+                byPayload = byDeviceId+byEmptyPart+byCommandRegister+byExportLimitPercent
+                encByPayload = decryptEncryptPayload(byPayload)
+                byCommand = byHeader+encByPayload
+                # Create CRC 16 Modbus
+                crc16 = libscrc.modbus(byCommand)
+                
+                fullCommand = byCommand + crc16.to_bytes(2, "big")
+            case "TurnOn":
+                print("compiling command setting "+ commandType+ " to " + str(value)+"%")
+                byHeader = bytes.fromhex("0001000600240106")
+                try:
+                    deviceId = self.loggerId #still need to actually find this
+                    byDeviceId = bytes(deviceId,"utf-8")
+                except:
+                    print("no logger found yet! aborting injection...")
+                    fullCommand = b''
+                    return fullCommand
+                byEmptyPart = bytes.fromhex("00"*20)
+                byCommandRegister = int.to_bytes(0,2,"big")
+                byExportLimitPercent = int.to_bytes(1,2,"big")
+                byPayload = byDeviceId+byEmptyPart+byCommandRegister+byExportLimitPercent
+                encByPayload = decryptEncryptPayload(byPayload)
+                byCommand = byHeader+encByPayload
+                # Create CRC 16 Modbus
+                crc16 = libscrc.modbus(byCommand)
+                
+                fullCommand = byCommand + crc16.to_bytes(2, "big")
             case "EnableExportLimit":
                 print("this needs implementing!")
                 # this still needs implementing! 
