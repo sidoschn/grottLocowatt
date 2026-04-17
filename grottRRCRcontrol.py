@@ -12,7 +12,7 @@ class grottRRCRgpio:
     attachedToLogger = None
     bRRCRwasEverConnected = False
     bRRCRisConnected = False
-    bTurnOff = False
+    bTurnOff = None
     
 
     def __init__(self, proxy, conf):
@@ -42,14 +42,14 @@ class grottRRCRgpio:
         #print("interpreting GPIO states ...")
         #!! the RRCR CONTROLLER HAS BEEN REPURPOSED TO SHUT DOWN/TURN ON THE SYSTEM!!! (NA schutz kontakt)
         match self.currentGPIOstates:
-            case [1, 1, 1, 1]:
+            case [0, 1, 1, 1]:
                 
                 print("Shuting down System")
                 #print("set export power to 0% (of max inverter power)")
                 self.bRRCRwasEverConnected = True
                 self.bRRCRisConnected = True
                 newExportLimit = 0
-                bTurnOff = True
+                bTurnOff = False
             # case [1, 0, 1, 1]:
             #     #print("set export power to 30% (of max inverter power)")
             #     self.bRRCRwasEverConnected = True
@@ -65,13 +65,13 @@ class grottRRCRgpio:
             #     self.bRRCRwasEverConnected = True
             #     self.bRRCRisConnected = True
             #     newExportLimit = 100
-            case [0, 1, 1, 1]:
+            case [1, 1, 1, 1]:
                 self.bRRCRisConnected = False
                 if self.bRRCRwasEverConnected:
                     #print("RRCR has disconnected! Maintaining last set export limit: "+ str(self.currentExportLimit)+"% (of max inverter power)")
                     print("Turning on System")
                     newExportLimit = self.currentExportLimit 
-                    bTurnOff = False
+                    bTurnOff = True
                 else:
                     print("no NA protection connected")
                     newExportLimit = self.currentExportLimit 
