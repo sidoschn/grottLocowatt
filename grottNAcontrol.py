@@ -23,8 +23,8 @@ class grottNAgpio:
         
         GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
-        GPIO.add_event_detect(self.pin, GPIO.FALLING, callback=self.pinFalling,bouncetime=100)
-        GPIO.add_event_detect(self.pin, GPIO.RISING, callback=self.pinRising,bouncetime=100)
+        GPIO.add_event_detect(self.pin, GPIO.BOTH, callback=self.pinEdge,bouncetime=100)
+        # GPIO.add_event_detect(self.pin, GPIO.RISING, callback=self.pinRising,bouncetime=100)
         # --switched from looped daemon thread to GPIO event handler
         # naObserverThread = threading.Thread(target=self.nAobserver, daemon=True)
         # naObserverThread.start()
@@ -52,15 +52,26 @@ class grottNAgpio:
         self.currentGPIOstate = GPIO.input(self.pin)
         #print(self.currentGPIOstate)
         
-    def pinFalling(self):
+    def pinFalling(self): #legacy
         if hasattr(self.currentProxy, "loggerId"):
             print("falling pin voltage")
             self.switchSystem(self, False)
-        
-    def pinRising(self):
+
+    def pinEdge(self):
+        if hasattr(self.currentProxy, "loggerId"):
+            if not (GPIO.input(self.pin)):
+                print("falling pin voltage, switching on")
+                self.switchSystem(self, False)
+            else:
+                print("rising pin voltage, shutting down")
+                self.switchSystem(self, True)
+
+            
+
+    def pinRising(self): #legacy
         if hasattr(self.currentProxy, "loggerId"):
             print("rising pin voltage")
-            self.switchSystem(self, True)
+            
         
     def switchSystem(self, state):
         bTurnOff = state
