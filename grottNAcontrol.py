@@ -46,6 +46,7 @@ class grottNAgpio:
     def getGPIOstate(self):
         
         self.currentGPIOstate = GPIO.input(self.pin)
+        print(self.currentGPIOstate)
         
         
 
@@ -65,7 +66,7 @@ class grottNAgpio:
 
         if not (bTurnOn == self.bTurnOn):
             print("Setting system state to "+ str(bTurnOn))
-            self.bTurnOff = bTurnOn
+            self.bTurnOn = bTurnOn
             command = self.currentProxy.compileCommand(self.currentConfig ,"TurnOff", bTurnOn)
             print(command)
             # self.currentProxy.injectCommand(self.currentConfig, command) # command injection disabled for testing
