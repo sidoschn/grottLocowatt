@@ -32,7 +32,7 @@ class grottNAgpio:
             if hasattr(self.currentProxy, "loggerId"):
                 self.getGPIOstate()
                 self.interpretGPIOstate()
-                time.sleep(0.1)        
+            time.sleep(0.05)        
         
     def setProxy(self, proxy):
         self.currentProxy = proxy
