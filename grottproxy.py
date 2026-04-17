@@ -616,8 +616,8 @@ class Proxy:
                             print("controller could not be launched")
                 
                 if not(self.naController.attachedToLogger == loggerId):
-                    self.naController.setProxy(self)
                     self.naController.setConfig(conf)
+                    self.naController.setProxy(self)
                 
                 # if not self.bCommandAlreadySent:
                 #     self.bCommandAlreadySent = True
