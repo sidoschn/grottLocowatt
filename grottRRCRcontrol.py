@@ -42,7 +42,7 @@ class grottRRCRgpio:
         #print("interpreting GPIO states ...")
         #!! the RRCR CONTROLLER HAS BEEN REPURPOSED TO SHUT DOWN/TURN ON THE SYSTEM!!! (NA schutz kontakt)
         match self.currentGPIOstates:
-            case [0, 1, 1, 1]: #!!! this needs to be just the first state!
+            case [1, 1, 1, 1]: #!!! this needs to be just the first state!
                 
                 print("Shuting down System")
                 #print("set export power to 0% (of max inverter power)")
@@ -65,7 +65,7 @@ class grottRRCRgpio:
             #     self.bRRCRwasEverConnected = True
             #     self.bRRCRisConnected = True
             #     newExportLimit = 100
-            case [1, 1, 1, 1]:
+            case [0, 1, 1, 1]:
                 self.bRRCRisConnected = False
                 if self.bRRCRwasEverConnected:
                     #print("RRCR has disconnected! Maintaining last set export limit: "+ str(self.currentExportLimit)+"% (of max inverter power)")
