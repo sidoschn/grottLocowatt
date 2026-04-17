@@ -15,7 +15,7 @@ class grottNAgpio:
     attachedToLogger = None
     bWasEverConnected = False
     bIsConnected = False
-    bTurnOn = None
+    bTurnOff = None
     
 
     def __init__(self):
@@ -54,22 +54,23 @@ class grottNAgpio:
        
         match self.currentGPIOstate:
             case 0:
-                print("Turning on System")
+                #print("Turning on System")
                 self.bWasEverConnected = True
-                bTurnOn = False
+                bTurnOff = False
             case 1:
-                print("Shuting down System")
-                bTurnOn = True
+                #print("Shuting down System")
+                bTurnOff = True
             case _:
-                print("Safety shutdown, conflicting info")
-                bTurnOn = True
+                #print("Safety shutdown, conflicting info")
+                bTurnOff = True
 
-        if not (bTurnOn == self.bTurnOn):
-            print("Setting system state to "+ str(bTurnOn))
-            self.bTurnOn = bTurnOn
-            command = self.currentProxy.compileCommand(self.currentConfig ,"TurnOff", bTurnOn)
+        if not (bTurnOff == self.bTurnOff):
+            print("Setting system turn off state to "+ str(bTurnOff))
+            self.bTurnOn = bTurnOff
+            command = self.currentProxy.compileCommand(self.currentConfig ,"TurnOff", bTurnOff)
             print(command)
             # self.currentProxy.injectCommand(self.currentConfig, command) # command injection disabled for testing
         else:
+            # print("no action required")
             ...
             #print("no change to system state required system on is: " + str(bTurnOn) )
