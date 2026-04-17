@@ -66,7 +66,7 @@ class grottNAgpio:
 
         if not (bTurnOff == self.bTurnOff):
             print("Setting system turn off state to "+ str(bTurnOff))
-            self.bTurnOn = bTurnOff
+            self.bTurnOff = bTurnOff
             command = self.currentProxy.compileCommand(self.currentConfig ,"TurnOff", bTurnOff)
             print(command)
             # self.currentProxy.injectCommand(self.currentConfig, command) # command injection disabled for testing
