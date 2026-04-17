@@ -7,7 +7,7 @@ import time
 
 class grottNAgpio:
     currentProxy = None
-    pins = 4
+    pin = 4
     GPIO.setmode(GPIO.BCM)
     currentGPIOstate = None
     currentConfig = None
@@ -21,8 +21,7 @@ class grottNAgpio:
     def __init__(self):
         print("initiating NA control through GPIO..")
         
-        for pin in self.pins:
-            GPIO.setup(pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
+        GPIO.setup(self.pin, GPIO.IN, pull_up_down=GPIO.PUD_UP)
 
         naObserverThread = threading.Thread(target=self.nAobserver, daemon=True)
         naObserverThread.start()
