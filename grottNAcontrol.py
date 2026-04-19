@@ -71,8 +71,8 @@ class grottNAgpio:
             partialGPIOstate = partialGPIOstate + GPIO.input(self.pin)
             time.sleep(self.oversamplingTime)
         oversampledGPIOstate = partialGPIOstate/(self.oversamplingCount)
-        self.logger.info(partialGPIOstate)
-        self.logger.info(oversampledGPIOstate)
+        #self.logger.info(partialGPIOstate)
+        #self.logger.info(oversampledGPIOstate)
         gpioState = round(oversampledGPIOstate)
         self.currentGPIOstate = gpioState
         return gpioState
@@ -99,6 +99,7 @@ class grottNAgpio:
         
     def switchSystem(self, state):
         bTurnOff = state
+        self.logger.info("Setting system turn off state to "+ str(bTurnOff))
         print("Setting system turn off state to "+ str(bTurnOff))
         self.bTurnOff = bTurnOff
         command = self.currentProxy.compileCommand(self.currentConfig ,"TurnOff", bTurnOff)
