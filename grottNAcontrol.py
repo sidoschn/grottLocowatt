@@ -3,6 +3,7 @@
 import RPi.GPIO as GPIO
 import threading
 import time
+import logging
 
 
 class grottNAgpio:
@@ -16,7 +17,11 @@ class grottNAgpio:
     bWasEverConnected = False
     bIsConnected = False
     bTurnOff = None
-    
+    logger = logging.getLogger()
+    logging.basicConfig(filename="naControl.log",
+                    format='%(asctime)s: %(levelname)s: %(message)s',
+                    level=logging.INFO)
+
 
     def __init__(self):
         print("initiating NA control through GPIO..")
@@ -33,44 +38,46 @@ class grottNAgpio:
         print("NA observer is started")
         while True:
             if hasattr(self.currentProxy, "loggerId"):
-                self.getGPIOstate()
-                self.interpretGPIOstate()
+                gpioState = self.getGPIOstate()
+                self.logger.info(gpioState)
+                self.interpretGPIOstate(gpioState)
+                
             time.sleep(0.05)        
         
     def setProxy(self, proxy):
         self.currentProxy = proxy
         self.attachedToLogger = proxy.loggerId
         print("proxy set")
-        self.getGPIOstate()
-        self.interpretGPIOstate()
+        # self.getGPIOstate()
+        # self.interpretGPIOstate()
 
     def setConfig(self, config):
         self.currentConfig = config
         print("config set")
 
     def getGPIOstate(self):
-        self.currentGPIOstate = GPIO.input(self.pin)
+        gpioState = GPIO.input(self.pin)
+        self.currentGPIOstate = gpioState
+        return gpioState
         #print(self.currentGPIOstate)
         
-    def pinFalling(self): #legacy
-        if hasattr(self.currentProxy, "loggerId"):
-            print("falling pin voltage")
-            self.switchSystem(self, False)
+    # def pinFalling(self): #legacy
+    #     if hasattr(self.currentProxy, "loggerId"):
+    #         print("falling pin voltage")
+    #         self.switchSystem(self, False)
 
-    def pinEdge(self):
-        if hasattr(self.currentProxy, "loggerId"):
-            if not (GPIO.input(self.pin)):
-                print("falling pin voltage, switching on")
-                self.switchSystem(self, False)
-            else:
-                print("rising pin voltage, shutting down")
-                self.switchSystem(self, True)
+    # def pinEdge(self): #legacy
+    #     if hasattr(self.currentProxy, "loggerId"):
+    #         if not (GPIO.input(self.pin)):
+    #             print("falling pin voltage, switching on")
+    #             self.switchSystem(self, False)
+    #         else:
+    #             print("rising pin voltage, shutting down")
+    #             self.switchSystem(self, True)
 
-            
-
-    def pinRising(self): #legacy
-        if hasattr(self.currentProxy, "loggerId"):
-            print("rising pin voltage")
+    # def pinRising(self): #legacy
+    #     if hasattr(self.currentProxy, "loggerId"):
+    #         print("rising pin voltage")
             
         
     def switchSystem(self, state):
@@ -80,8 +87,9 @@ class grottNAgpio:
         command = self.currentProxy.compileCommand(self.currentConfig ,"TurnOff", bTurnOff)
         self.currentProxy.injectCommand(self.currentConfig, command)
 
-    def interpretGPIOstate(self):
-        match self.currentGPIOstate:
+    def interpretGPIOstate(self, gpioState):
+        match gpioState:
+        #match self.currentGPIOstate:
             case 0:
                 #print("Turning on System")
                 self.bWasEverConnected = True
