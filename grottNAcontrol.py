@@ -17,6 +17,9 @@ class grottNAgpio:
     bWasEverConnected = False
     bIsConnected = False
     bTurnOff = None
+    samplingTime = 0.05
+    oversamplingTime = 0.01
+    oversamplingCount = 5
     logger = logging.getLogger()
     logging.basicConfig(filename="naControl.log",
                     format='%(asctime)s: %(levelname)s: %(message)s',
@@ -42,7 +45,7 @@ class grottNAgpio:
                 #self.logger.info(gpioState)
                 self.interpretGPIOstate(gpioState)
                 
-            time.sleep(0.05)        
+            time.sleep(self.samplingTime)        
         
     def setProxy(self, proxy):
         self.currentProxy = proxy
@@ -62,10 +65,10 @@ class grottNAgpio:
     #     #print(self.currentGPIOstate)
     
     def getGPIOstate(self):
-        for i in range(5):
+        for i in range(self.oversamplingCount):
             partialGPIOstate =+ GPIO.input(self.pin)
-            time.sleep(0.01)
-        oversampledGPIOstate = partialGPIOstate/5.0
+            time.sleep(self.oversamplingTime)
+        oversampledGPIOstate = partialGPIOstate/(self.oversamplingCount)
         self.logger.info(oversampledGPIOstate)
         gpioState = round(oversampledGPIOstate)
         self.currentGPIOstate = gpioState
