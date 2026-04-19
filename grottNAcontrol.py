@@ -58,22 +58,24 @@ class grottNAgpio:
         self.currentConfig = config
         print("config set")
 
-    def getGPIOstate(self):
-        gpioState = GPIO.input(self.pin)
-        self.currentGPIOstate = gpioState
-        self.logger.info(gpioState)
-        return gpioState
-        #print(self.currentGPIOstate)
-    
     # def getGPIOstate(self):
-    #     for i in range(self.oversamplingCount):
-    #         partialGPIOstate =+ GPIO.input(self.pin)
-    #         time.sleep(self.oversamplingTime)
-    #     oversampledGPIOstate = partialGPIOstate/(self.oversamplingCount)
-    #     self.logger.info(oversampledGPIOstate)
-    #     gpioState = round(oversampledGPIOstate)
+    #     gpioState = GPIO.input(self.pin)
     #     self.currentGPIOstate = gpioState
+    #     self.logger.info(gpioState)
     #     return gpioState
+    #     #print(self.currentGPIOstate)
+    
+    def getGPIOstate(self):
+        partialGPIOstate = 0
+        for i in range(self.oversamplingCount):
+            partialGPIOstate = partialGPIOstate + GPIO.input(self.pin)
+            time.sleep(self.oversamplingTime)
+        oversampledGPIOstate = partialGPIOstate/(self.oversamplingCount)
+        self.logger.info(partialGPIOstate)
+        self.logger.info(oversampledGPIOstate)
+        gpioState = round(oversampledGPIOstate)
+        self.currentGPIOstate = gpioState
+        return gpioState
     
 
     # def pinFalling(self): #legacy
