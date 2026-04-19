@@ -39,7 +39,7 @@ class grottNAgpio:
         while True:
             if hasattr(self.currentProxy, "loggerId"):
                 gpioState = self.getGPIOstate()
-                self.logger.info(gpioState)
+                #self.logger.info(gpioState)
                 self.interpretGPIOstate(gpioState)
                 
             time.sleep(0.05)        
@@ -55,12 +55,21 @@ class grottNAgpio:
         self.currentConfig = config
         print("config set")
 
+    # def getGPIOstate(self):
+    #     gpioState = GPIO.input(self.pin)
+    #     self.currentGPIOstate = gpioState
+    #     return gpioState
+    #     #print(self.currentGPIOstate)
+    
     def getGPIOstate(self):
-        gpioState = GPIO.input(self.pin)
+        for i in range(5):
+            partialGPIOstate =+ GPIO.input(self.pin)
+            time.sleep(0.01)
+        oversampledGPIOstate = partialGPIOstate/5.0
+        self.logger.info(oversampledGPIOstate)
+        gpioState = round(oversampledGPIOstate)
         self.currentGPIOstate = gpioState
         return gpioState
-        #print(self.currentGPIOstate)
-        
     # def pinFalling(self): #legacy
     #     if hasattr(self.currentProxy, "loggerId"):
     #         print("falling pin voltage")
