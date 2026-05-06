@@ -37,12 +37,12 @@ class Conf :
 
         #Growatt server default 
         #self.growattip = "47.91.67.66"
-        #self.growattip = "server.growatt.com"
+        self.growattip = "server.growatt.com"
         #self.growattip = "disable.remote"
-        #self.growattport = 5279
-        # for ShineWiLanX2
-        self.growattip = "mqtt.growatt.com"
-        self.growattport = 7006
+        self.growattport = 5279
+        # for ShineWiLanX2 (it is not working, the logger uses other (proper) encryption)
+        # self.growattip = "mqtt.growatt.com"
+        # self.growattport = 7006
 
         #MQTT default
         self.mqttip = "localhost"
