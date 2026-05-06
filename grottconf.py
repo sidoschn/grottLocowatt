@@ -42,7 +42,7 @@ class Conf :
         #self.growattport = 5279
         # for ShineWiLanX2
         self.growattip = "mqtt.growatt.com"
-        self.grottport = 7006
+        self.growattport = 7006
 
         #MQTT default
         self.mqttip = "localhost"
