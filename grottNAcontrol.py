@@ -4,6 +4,7 @@ import RPi.GPIO as GPIO
 import threading
 import time
 import logging
+import quickNAcontrol
 
 
 class grottNAgpio:
@@ -24,6 +25,10 @@ class grottNAgpio:
     logging.basicConfig(filename="naControl.log",
                     format='%(asctime)s: %(levelname)s: %(message)s',
                     level=logging.INFO)
+    
+    bHasFastController = False
+    fastController = None
+
 
 
     def __init__(self):
@@ -34,6 +39,17 @@ class grottNAgpio:
         #GPIO.add_event_detect(self.pin, GPIO.BOTH, callback=self.pinEdge,bouncetime=100)
         # GPIO.add_event_detect(self.pin, GPIO.RISING, callback=self.pinRising,bouncetime=100)
         # --switched from looped daemon thread to GPIO event handler
+
+        try:
+            print("initializing fast controller...")
+            self.fastController = quickNAcontrol.modbusRTUnaController()
+            print("found fast controller usb device")
+            self.bHasFastController = True
+        except:
+            print("no fast controller usb device found, using data logger as backup!")
+            self.bHasFastController = False
+
+
         naObserverThread = threading.Thread(target=self.nAobserver, daemon=True)
         naObserverThread.start()
 
@@ -101,9 +117,19 @@ class grottNAgpio:
         bTurnOff = state
         self.logger.info("Setting system turn off state to "+ str(bTurnOff))
         print("Setting system turn off state to "+ str(bTurnOff))
-        self.bTurnOff = bTurnOff
-        command = self.currentProxy.compileCommand(self.currentConfig ,"TurnOff", bTurnOff)
-        self.currentProxy.injectCommand(self.currentConfig, command)
+        
+        try:
+            self.logger.info("Setting system turn off state to "+ str(bTurnOff) + " using fast controller")
+            print("Setting system turn off state to "+ str(bTurnOff)+ " using fast controller")
+            self.fastController.switchInverterState(bTurnOff)
+            self.bTurnOff = bTurnOff
+        except:
+            print("fast controller failed, trying datalogger as Fallback")
+            self.logger.info("fast controller failed, trying datalogger as Fallback")
+            if hasattr(self.currentProxy, "loggerId"):
+                command = self.currentProxy.compileCommand(self.currentConfig ,"TurnOff", bTurnOff)
+                self.currentProxy.injectCommand(self.currentConfig, command)
+                self.bTurnOff = bTurnOff
 
     def interpretGPIOstate(self, gpioState):
         match gpioState:
