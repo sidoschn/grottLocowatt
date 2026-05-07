@@ -5,12 +5,11 @@ import time
 
 startTime = time.time()
 #instrument = minimalmodbus.Instrument('/dev/ttyUSB1', 1)  # port name, slave address (in decimal)
-inverter = minimalmodbus.Instrument('/dev/ttyUSB0',1)
-
+inverter = minimalmodbus.Instrument('/dev/ttyUSB1',1)
 inverter.serial.baudrate = 9600
 inverter.close_port_after_each_call = True
 
-systemState = inverter.read_register(0,0)
+systemState = inverter.read_register(0,0) # takes aprox 37 ms to complete
 #time.sleep(1)
 #activePower = inverter.read_register(3,0)
 
