@@ -5,11 +5,11 @@ import time
 
 startTime = time.time()
 #instrument = minimalmodbus.Instrument('/dev/ttyUSB1', 1)  # port name, slave address (in decimal)
-inverter = minimalmodbus.Instrument('/dev/ttyUSB0',25) # throws error here if USB device not found
+inverter = minimalmodbus.Instrument('/dev/ttyUSB0',2) # throws error here if USB device not found, if the slave is not found it throws an error on access
 inverter.serial.baudrate = 9600
 inverter.close_port_after_each_call = True
 
-systemState = inverter.read_register(0,0) # takes aprox 37 ms to complete
+systemState = inverter.read_register(0,0) # takes aprox 37 ms to complete, throws error if slave id is not existing
 #time.sleep(1)
 #activePower = inverter.read_register(3,0)
 
