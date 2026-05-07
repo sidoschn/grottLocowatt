@@ -121,8 +121,12 @@ class grottNAgpio:
         try:
             self.logger.info("Setting system turn off state to "+ str(bTurnOff) + " using fast controller")
             print("Setting system turn off state to "+ str(bTurnOff)+ " using fast controller")
+            startTime = time.time()
             self.fastController.switchInverterState(bTurnOff)
+            endTime = time.time()
             self.bTurnOff = bTurnOff
+            deltaTime = endTime-startTime
+            self.logger.info("Fast controller runtime was "+ str(deltaTime))
         except:
             print("fast controller failed, trying datalogger as Fallback")
             self.logger.info("fast controller failed, trying datalogger as Fallback")
