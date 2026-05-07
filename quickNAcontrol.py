@@ -12,7 +12,7 @@ inverter.close_port_after_each_call = True
 
 systemState = inverter.read_register(0,0)
 #time.sleep(1)
-activePower = inverter.read_register(3,0)
+#activePower = inverter.read_register(3,0)
 
 ## Read temperature (PV = ProcessValue) ##
 #temperature = instrument.read_register(289, 1)  # Registernumber, number of decimals
@@ -27,5 +27,5 @@ endTime = time.time()
 deltaTime = endTime-startTime
 
 print(systemState)
-print(activePower)
+#print(activePower)
 print(deltaTime)
