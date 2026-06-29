@@ -18,13 +18,17 @@ class modbusRTUnaController:
     
     def switchInverterState(self, bTurnOff): # this is called from grottNAcontrol
         if bTurnOff:
-            newSystemState = 0
+            #newSystemState = 0 #this is for inverter switching
+            newSystemState = 1 #this is for backup switching
         else:
-            newSystemState = 1
+            #newSystemState = 1 #this is for inverter switching
+            newSystemState = 0 #this is for backup switching
 
         print("connecting to Slave "+str(self.slaveAddress))
         startTime = time.time()
-        #self.inverter.write_register(0,newSystemState,0) # takes aprox 37 ms to complete, throws error if slave id is not existing
+        registerToSwitch = 0 #this is the on-off register of the inverter
+        registerToSwitch = 3082 #to switch backup box state
+        self.inverter.write_register(registerToSwitch,newSystemState,0) # takes aprox 37 ms to complete, throws error if slave id is not existing
         endTime = time.time()
 
         deltaTime = endTime-startTime
