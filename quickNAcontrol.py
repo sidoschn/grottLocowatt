@@ -11,12 +11,12 @@ class modbusRTUnaController:
     stateDictionary = {0:"Inverter Off", 1:"Inverter On", 2:"Battery On", 4:"Battery Off"}
 
     def __init__(self):
-        self.inverter = inverter = minimalmodbus.Instrument(self.device,self.slaveAddress) # throws error here if USB device not found, if the slave is not found it throws an error on access
+        self.inverter = minimalmodbus.Instrument(self.device,self.slaveAddress) # throws error here if USB device not found, if the slave is not found it throws an error on access
         self.inverter.serial.baudrate = 9600
         self.inverter.close_port_after_each_call = True
         print("RTU controller initialized for "+ self.device)
     
-    def switchInverterState(self, bTurnOff):
+    def switchInverterState(self, bTurnOff): # this is called from grottNAcontrol
         if bTurnOff:
             newSystemState = 0
         else:
@@ -24,7 +24,7 @@ class modbusRTUnaController:
 
         print("connecting to Slave "+str(self.slaveAddress))
         startTime = time.time()
-        self.inverter.write_register(0,newSystemState,0) # takes aprox 37 ms to complete, throws error if slave id is not existing
+        #self.inverter.write_register(0,newSystemState,0) # takes aprox 37 ms to complete, throws error if slave id is not existing
         endTime = time.time()
 
         deltaTime = endTime-startTime
