@@ -2,13 +2,17 @@
 
 import minimalmodbus
 import time
-
+import logging
 
 class modbusRTUnaController:
     inverter = None
     device = '/dev/ttyUSB0'
     slaveAddress = 1
     stateDictionary = {0:"Inverter Off", 1:"Inverter On", 2:"Battery On", 4:"Battery Off"}
+    logger = logging.getLogger()
+    logging.basicConfig(filename="naControl.log",
+                    format='%(asctime)s: %(levelname)s: %(message)s',
+                    level=logging.INFO)
 
     def __init__(self):
         self.inverter = minimalmodbus.Instrument(self.device,self.slaveAddress) # throws error here if USB device not found, if the slave is not found it throws an error on access
@@ -26,16 +30,30 @@ class modbusRTUnaController:
 
         print("connecting to Slave "+str(self.slaveAddress))
         startTime = time.time()
+        
         registerToSwitch = 0 #this is the on-off register of the inverter
-        registerToSwitch = 3082 #to switch backup box state
-        self.inverter.write_register(registerToSwitch,newSystemState,0) # takes aprox 37 ms to complete, throws error if slave id is not existing
+
+        # if the NA controller requests the system to shut down, we check if the system is in off-grid mode. If so, the system shutdown is denied, otherwhise it is performed
+        if newSystemState == 0:
+            time.sleep(0.05)
+            backupState = self.getBackupState()
+            if backupState == 0:
+                self.logger.info("system is in off-grid mode, shut down request was denied")
+                print("system is in off-grid mode, shut down request was denied")
+            else:
+                self.inverter.write_register(registerToSwitch,newSystemState,0) # takes aprox 37 ms to complete, throws error if slave id is not existing
+        else:
+            self.inverter.write_register(registerToSwitch,newSystemState,0) # takes aprox 37 ms to complete, throws error if slave id is not existing
+
         endTime = time.time()
 
         deltaTime = endTime-startTime
 
         print("switched State to "+ self.stateDictionary[newSystemState] + "(took "+str(deltaTime)+"seconds)")
         
-    
+    def getBackupState(self):
+        backupState = self.inverter.read_register(3282,0,4) # 0 is off-grid, 1 is on-grid, 2 is generator mode
+        return backupState
     
     def switchSystemState(self, newSystemState):
         
