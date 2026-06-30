@@ -22,11 +22,11 @@ class modbusRTUnaController:
     
     def switchInverterState(self, bTurnOff): # this is called from grottNAcontrol
         if bTurnOff:
-            #newSystemState = 0 #this is for inverter switching
-            newSystemState = 1 #this is for backup switching
+            newSystemState = 0 #this is for inverter switching
+            
         else:
-            #newSystemState = 1 #this is for inverter switching
-            newSystemState = 0 #this is for backup switching
+            newSystemState = 1 #this is for inverter switching
+            
 
         print("connecting to Slave "+str(self.slaveAddress))
         startTime = time.time()
