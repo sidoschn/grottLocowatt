@@ -35,7 +35,7 @@ class modbusRTUnaController:
 
         # if the NA controller requests the system to shut down, we check if the system is in off-grid mode. If so, the system shutdown is denied, otherwhise it is performed
         if newSystemState == 0:
-            time.sleep(0.05)
+            time.sleep(0.05) #delay here to give the system time to actually go into off-grid mode during power outage, this time is empirical and still needs testing
             backupState = self.getBackupState()
             if backupState == 0:
                 self.logger.info("system is in off-grid mode, shut down request was denied")
