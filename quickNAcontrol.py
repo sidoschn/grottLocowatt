@@ -36,14 +36,18 @@ class modbusRTUnaController:
         # if the NA controller requests the system to shut down, we check if the system is in off-grid mode. If so, the system shutdown is denied, otherwhise it is performed
         if newSystemState == 0:
             self.logger.info("checking system grid-state")
+            self.logger.handlers[0].flush()
             time.sleep(0.5) #delay here to give the system time to actually go into off-grid mode during power outage, this time is empirical and still needs testing (50ms was too short)
             backupState = self.getBackupState()
             self.logger.info("grid state is "+str(backupState))
+            self.logger.handlers[0].flush()
             if backupState == 0:
                 self.logger.info("system is in off-grid mode, shut down request was denied")
                 print("system is in off-grid mode, shut down request was denied")
+                self.logger.handlers[0].flush()
             else:
                 self.logger.info("system is on-grid, shutting down now..")
+                self.logger.handlers[0].flush()
                 self.inverter.write_register(registerToSwitch,newSystemState,0) # takes aprox 37 ms to complete, throws error if slave id is not existing
         else:
             self.inverter.write_register(registerToSwitch,newSystemState,0) # takes aprox 37 ms to complete, throws error if slave id is not existing
