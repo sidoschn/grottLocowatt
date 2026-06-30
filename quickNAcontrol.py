@@ -43,8 +43,9 @@ class modbusRTUnaController:
             self.logger.handlers[0].flush()
             if backupState == 0:
                 self.logger.info("system is in off-grid mode, shut down request was denied")
-                print("system is in off-grid mode, shut down request was denied")
                 self.logger.handlers[0].flush()
+                print("system is in off-grid mode, shut down request was denied")
+                
             else:
                 self.logger.info("system is on-grid, shutting down now..")
                 self.logger.handlers[0].flush()
