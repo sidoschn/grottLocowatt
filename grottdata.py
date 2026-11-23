@@ -15,6 +15,7 @@ import json, codecs
 from typing import Dict
 import sensorGenerator
 import dashboardGenerator
+import batterySleepAdjuster
 # requests
 
 #import mqtt                       
@@ -570,12 +571,16 @@ def procdata(conf,data, rRCRcontrollers):
         else:
             if conf.verbose: print("\t - " + 'No MQTT message sent, MQTT disabled') 
 
-        # device generation is performed here
         
+
+        # device generation is performed here
 
         sensorGenerator.updateSensors(conf.recorddict[layout], definedkey["pvserial"], deviceid, jsondate, rRCRcontrollers)
 
         dashboardGenerator.generateDashboard(definedkey, deviceid, jsondate, conf.recorddict[layout], rRCRcontrollers)
+
+        # adjust battery SoCs to last known value if Battery disconnects (definedkey is a mutable dict and will be changed by the module)
+        batterySleepAdjuster.adjustForBatterySleep(definedkey)
 
         # process pvoutput if enabled
         if conf.pvoutput :      
