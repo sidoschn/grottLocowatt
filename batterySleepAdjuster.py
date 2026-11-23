@@ -28,34 +28,37 @@ def initMemoryFile(fileName):
 
 def adjustForBatterySleep(definedkey):
 
-    memoryData = loadMemoryFile()
-    newMemory = memoryData
+    try:
+        memoryData = loadMemoryFile()
+        newMemory = memoryData
 
-    # checking for battery connection states
-    # bcdonoffstates: 0=no battery, 1 = battery1 connected, 2 = battery2 connected, 3 = battery1 and battery2 connected
-    if (definedkey["bdconoffstate"] == 1):
-        # battery 1 is connected
-        newMemory = memorizeBatterySoC(definedkey, 1, newMemory)
-        if memoryData[bdc2Section]["everConnected"]=="yes":
-            recallBatterySoC(definedkey, 2, memoryData)
-    elif(definedkey["bdconoffstate"] == 2):
-        # battery 2 is connected
-        newMemory= memorizeBatterySoC(definedkey, 2, newMemory)
-        if memoryData[bdc1Section]["everConnected"]=="yes":
+        # checking for battery connection states
+        # bcdonoffstates: 0=no battery, 1 = battery1 connected, 2 = battery2 connected, 3 = battery1 and battery2 connected
+        if (definedkey["bdconoffstate"] == 1):
+            # battery 1 is connected
+            newMemory = memorizeBatterySoC(definedkey, 1, newMemory)
+            if memoryData[bdc2Section]["everConnected"]=="yes":
+                recallBatterySoC(definedkey, 2, memoryData)
+        elif(definedkey["bdconoffstate"] == 2):
+            # battery 2 is connected
+            newMemory= memorizeBatterySoC(definedkey, 2, newMemory)
+            if memoryData[bdc1Section]["everConnected"]=="yes":
+                recallBatterySoC(definedkey, 1, memoryData)
+        elif (definedkey["bdconoffstate"] == 3):
+            # battery 1 and 2 are connected
+            newMemory = memorizeBatterySoC(definedkey, 1, newMemory)
+            newMemory = memorizeBatterySoC(definedkey, 2, newMemory)
+        else:
             recallBatterySoC(definedkey, 1, memoryData)
-    elif (definedkey["bdconoffstate"] == 3):
-        # battery 1 and 2 are connected
-        newMemory = memorizeBatterySoC(definedkey, 1, newMemory)
-        newMemory = memorizeBatterySoC(definedkey, 2, newMemory)
-    else:
-        recallBatterySoC(definedkey, 1, memoryData)
-        recallBatterySoC(definedkey, 2, memoryData)
+            recallBatterySoC(definedkey, 2, memoryData)
 
-    if newMemory!=memoryData:
-        print("SoC values adjusted for sleeping Battery")
-        saveMemoryFile(newMemory)
-    else:
-        print("No sleep SoC value adjustment needed")
+        if newMemory!=memoryData:
+            print("SoC values adjusted for sleeping Battery")
+            saveMemoryFile(newMemory)
+        else:
+            print("No sleep SoC value adjustment needed")
+    except:
+        print("battery SoC adjustment failed")
 
 def memorizeBatterySoC(definedkey, batteryIndex, memoryData):
     #save SOC to file for later use
