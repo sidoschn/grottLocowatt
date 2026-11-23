@@ -51,12 +51,12 @@ def adjustForBatterySleep(definedkey):
         else:
             recallBatterySoC(definedkey, 1, memoryData)
             recallBatterySoC(definedkey, 2, memoryData)
-
-        if newMemory!=memoryData:
-            print("SoC values adjusted for sleeping Battery")
+        # !! needs debugging !! memory data is never written!
+        #if newMemory!=memoryData:
+            print("SoC values saved to file")
             saveMemoryFile(newMemory)
-        else:
-            print("No sleep SoC value adjustment needed")
+        #else:
+            #print("No sleep SoC value adjustment needed")
     except:
         print("battery SoC adjustment failed")
 
